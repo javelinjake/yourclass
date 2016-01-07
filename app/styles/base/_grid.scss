@@ -1,0 +1,18 @@
+//**
+// 12 Column Responsive Grid
+//**
+
+.container {
+	margin: 0 auto;
+	max-width: 1200px;
+	padding: 0 10px;
+}
+
+// Grid columns are stacked until the display size is greater than min-width
+@include mobilefirst($small-break) {
+
+	.container {
+		padding: 0 40px;
+	}
+
+}

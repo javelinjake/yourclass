@@ -1,0 +1,54 @@
+<form ng-submit="home.sendUser()" class="form-container">
+		
+	<h3>Add User</h3>
+		
+	<div class="field">
+		<label>Username</label>
+		<input ng-model="home.username" type="text"/>
+	</div>
+	<div class="field">
+		<label>First Name</label>
+		<input ng-model="home.firstname" type="text"/>
+	</div>
+	<div class="field">
+		<label>Last Name</label>
+		<input ng-model="home.lastname" type="text"/>
+	</div>
+	<div class="field">
+		<label>Email</label>
+		<input ng-model="home.email" type="email"/>
+	</div>
+	<div class="field">
+		<label>Password</label>
+		<input ng-model="home.password" type="password"/>
+	</div>
+	<div class="field">
+		<select multiple ng-model="home.role">
+			<option value="student">
+				Student
+			</option>
+			<option value="teacher">
+				Teacher
+			</option>
+		</select>
+	</div>
+	<div class="field">
+		<button type="submit" class="btn btn-primary btn-full">Send</button>
+	</div>
+		
+	<div ng-if="home.formSent" class="alert" ng-class="home.formDone ? 'alert-success' : 'alert-danger'">
+		<span ng-if="home.formDone">Form Sent</span>
+		<span ng-if="!home.formDone">Form Error</span>
+	</div>
+	
+</form>
+	
+<h3>Get Users</h3>
+	
+<div ng-repeat="user in home.userList">
+	<h4>{{ user.username }}</h4>
+</div>
+	
+<pre>
+	{{ home.userList | json }}
+</pre>

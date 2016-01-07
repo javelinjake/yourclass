@@ -1,0 +1,54 @@
+//**
+// Homepage
+//**
+.hero-image {
+	height: $hero-height+$nav-height;
+	z-index: 10;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.4);
+	}
+}
+
+.hero-content {
+	height: $hero-height;
+	z-index: 20;
+	position: relative;
+	text-align: center;
+	color: $white;
+	font-weight: light;
+	h1 {
+		margin-bottom: 0;
+	}
+	h2 {
+		font-style: italic;
+	}
+}
+
+
+
+// Responsive styles if needed
+// @include responsive($big-break) {
+// }
+// @include responsive($small-break) {
+// }
+
+// Mobile first styles if needed
+// @include mobilefirst($big-break) {
+// }
+// @include mobilefirst($small-break) {
+// }
