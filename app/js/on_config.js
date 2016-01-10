@@ -12,10 +12,22 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
     templateUrl: 'home.html',
     title: 'Home'
   })
-  .state('About', {
-    url: '/about',
-    templateUrl: 'about.html',
-    title: 'About'
+  .state('Search', {
+    url: '/search',
+	controller: 'SearchCtrl as search',
+    templateUrl: 'search.html',
+    title: 'Search'
+  })
+  .state('Class', {
+    url: '/class/:classId',
+	controller: 'ClassCtrl as class',
+    templateUrl: 'class.html',
+    title: 'Class',
+	  resolve: {
+		  getClassId: function($stateParams){
+              return $stateParams.classId;
+          }
+	  }
   })
   .state('Teach', {
     url: '/teach',

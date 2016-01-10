@@ -1,0 +1,10 @@
+<h1 class="heading -large">Search classes</h1>
+
+<div ng-repeat="classes in search.classesList">
+	<h4>{{ classes.title }}</h4>
+	<a ui-sref="Class({ classId:classes.id })">Click here</a>
+</div>
+	
+<pre>
+	{{ search.classesList | json }}
+</pre>
