@@ -29,6 +29,12 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
           }
 	  }
   })
+  .state('Admin', {
+    url: '/admin',
+	controller: 'AdminCtrl as admin',
+    templateUrl: 'admin.html',
+    title: 'Admin'
+  })
   .state('Teach', {
     url: '/teach',
     templateUrl: 'teach.html',

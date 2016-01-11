@@ -1,8 +1,7 @@
 <h1 class="heading -large">Search classes</h1>
 
-<div ng-repeat="classes in search.classesList">
-	<h4>{{ classes.title }}</h4>
-	<a ui-sref="Class({ classId:classes.id })">Click here</a>
+<div class="alert alert-empty" ng-repeat="classes in search.classesList">
+	<a ui-sref="Class({ classId:classes.id })">{{ classes.title }}</a>
 </div>
 	
 <pre>
