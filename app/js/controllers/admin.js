@@ -6,6 +6,20 @@ function AdminCtrl($http, $rootScope) {
 	// ViewModel
 	const vm = this;
 	
+	vm.bookingList = [
+	   {id: 'approval', title: 'Approval'},
+	   {id: 'instant', title: 'Instant'}
+	];
+	
+	vm.venueList = [
+	   {id: 'private', title: 'Private'},
+	   {id: 'public', title: 'Public'},
+	   {id: 'private-indoors', title: 'Private Indoors'},
+	   {id: 'private-outdoors', title: 'Private Outdoors'},
+	   {id: 'public-indoors', title: 'Public Indoors'},
+	   {id: 'public-outdoors', title: 'Public Outdoors'}
+	];
+	
 	vm.intervalList = [
 	   {id: '1', title: 'Every Day'},
 	   {id: '2', title: 'Every Week'},
@@ -37,12 +51,14 @@ function AdminCtrl($http, $rootScope) {
 			'endTime': vm.endTime, //'05:00 PM'
 			'startDate': vm.startDate, //'2015-12-22'
 			'endDate': vm.endDate, //'2015-12-30'
-			'dayIds': vm.dayIds, //[2,4,6]
+			'dayIds': [vm.dayIds], //[2,4,6]
 			'price': vm.price, //'60.25'
 			'size': vm.size, //20
 			'bookingType': vm.bookingType, //'instant'
 			'venueType': vm.venueType //'private'
 		};
+		
+		console.log(classData);
 		  
 		$http.post($rootScope.apiUrl + 'classes/create', classData).success((data) => {
 			if (data.result === 0) {

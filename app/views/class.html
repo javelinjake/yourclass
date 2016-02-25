@@ -1,10 +1,41 @@
-<h1 class="heading -large">Class</h1>
+<div class="container">
 
-<div class="alert alert-empty">
-	<h4>Class Name: {{ class.class.title }}</h4>
-	<div>Class ID: {{ class.class.id }}</div>
+  <h1 class="heading">Class</h1>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h2>
+        {{ class.class.title }}
+      </h2>
+    </div>
+
+    <div class="panel-body">
+      <div>
+        <strong>
+          Class Description:
+        </strong>{{ class.class.description }}
+      </div>
+      <div>
+        <strong>
+          Class ID:
+        </strong>{{ class.class.id }}
+      </div>
+    </div>
+
+    <div class="panel-footer">
+      <div>
+        <strong>Teacher email:
+        </strong>{{ class.class.teacher.email }}
+      </div>
+      <div>
+        <strong>Spots left:
+        </strong>{{ class.class.spotsLeft }}
+      </div>
+    </div>
+  </div>
+
 </div>
-	
+
 <pre>
 	{{ class.class | json }}
 </pre>

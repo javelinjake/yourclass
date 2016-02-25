@@ -1,42 +1,40 @@
-//**
-// Project Mixins
-//**
+// Mixins
+// --------------------------------------------------
 
-// Clear after floats
-@mixin clearfix {
-  zoom: 1;
+// Utilities
+@import "mixins/hide-text";
+@import "mixins/opacity";
+@import "mixins/image";
+@import "mixins/labels";
+@import "mixins/reset-filter";
+@import "mixins/resize";
+@import "mixins/responsive-visibility";
+@import "mixins/size";
+@import "mixins/tab-focus";
+@import "mixins/reset-text";
+@import "mixins/text-emphasis";
+@import "mixins/text-overflow";
+@import "mixins/vendor-prefixes";
 
-  &:before,
-  &:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    overflow: hidden;
-  }
+// Components
+@import "mixins/alerts";
+@import "mixins/buttons";
+@import "mixins/panels";
+@import "mixins/pagination";
+@import "mixins/list-group";
+@import "mixins/nav-divider";
+@import "mixins/forms";
+@import "mixins/progress-bar";
+@import "mixins/table-row";
 
-  &:after {
-    clear: both;
-  }
-}
+// Skins
+@import "mixins/background-variant";
+@import "mixins/border-radius";
+@import "mixins/gradients";
 
-// Apply clearfix to this classes by default
-.clearfix,
-.group {
-  @include clearfix;
-}
-
-
-
-
-// Responsive mixins
-@mixin responsive($res) {
-  @media screen and (max-width: $res) {
-    @content;
-  }
-}
-
-@mixin mobilefirst($res) {
-  @media screen and (min-width: $res) {
-    @content;
-  }
-}
+// Layout
+@import "mixins/clearfix";
+@import "mixins/center-block";
+@import "mixins/nav-vertical-align";
+@import "mixins/grid-framework";
+@import "mixins/grid";

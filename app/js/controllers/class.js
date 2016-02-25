@@ -1,13 +1,13 @@
 'use strict';
 
-function ClassCtrl($http, $rootScope, $scope, getClassId) {
+function ClassCtrl($http, $rootScope, $scope, getClassAlias) {
 	'ngInject';
 	
 	// ViewModel
 	const vm = this;
 	
 	// Get Classes
-	$http.get($rootScope.apiUrl + 'classes/one', {params: {_id: getClassId}}).success((data) => {
+	$http.get($rootScope.apiUrl + 'classes/one', {params: {_alias: getClassAlias}}).success((data) => {
 		vm.class = data.data;
 	}).error((err, status) => {});
 

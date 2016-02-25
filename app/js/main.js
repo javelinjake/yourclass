@@ -4,6 +4,8 @@ import angular from 'angular';
 
 // angular modules
 import 'angular-ui-router';
+import 'angular-ui-bootstrap';
+import 'angular-animate';
 import './templates';
 import './filters';
 import './controllers';
@@ -13,6 +15,7 @@ import './directives';
 // create and bootstrap application
 const requires = [
   'ui.router',
+  'ui.bootstrap',
   'templates',
   'app.filters',
   'app.controllers',

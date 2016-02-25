@@ -1,69 +1,109 @@
-<form ng-submit="admin.addClass()" class="form-container">
-		
-	<h3>Add Class</h3>
-	
-	<!-- 'title': vm.title, //'rest class title'
-	'brief': vm.brief, //'rest brief'
-	'description': vm.description, //'some description'
-	'teacherId': vm.teacherId, //'78'
-	'intervalId': vm.intervalId, //2
-	'startTime': vm.startTime, //'02:30 PM'
-	'endTime': vm.endTime, //'05:00 PM'
-	'startDate': vm.startDate, //'2015-12-22'
-	'endDate': vm.endDate, //'2015-12-30'
-	'dayIds': vm.dayIds, //[2,4,6]
-	'price': vm.price, //'60.25'
-	'size': vm.size, //20
-	'bookingType': vm.bookingType, //'instant'
-	'venueType': vm.venueType //'private' -->
-		
-	<div class="field">
-		<label>Title <span class="required">*</span></label>
-		<input ng-model="admin.title" type="text"/>
-	</div>
-	<div class="field">
-		<label>Brief</label>
-		<textarea ng-model="admin.brief"></textarea>
-	</div>
-	<div class="field">
-		<label>Description</label>
-		<textarea ng-model="admin.description"></textarea>
-	</div>
-	<div class="field">
-		<label>Teacher <span class="required">*</span></label>
-		<select ng-model="admin.teacherId" ng-options="teacher.id as teacher.username for teacher in admin.teachers track by teacher.id"></select>
-	</div>
-	<div class="field">
-		<label>Interval <span class="required">*</span></label>
-		<select ng-model="admin.intervalId" ng-options="interval.id as interval.title for interval in admin.intervalList track by interval.id"></select>
-	</div>
-	<div class="field">
-		<label>Start time</label>
-		<input ng-model="admin.startTime" type="time"/>
-	</div>
-	<div class="field">
-		<label>End time</label>
-		<input ng-model="admin.endTime" type="time"/>
-	</div>
-	<div class="field">
-		<label>Start Date</label>
-		<input ng-model="admin.startDate" type="date"/>
-	</div>
-	<div class="field">
-		<label>End Date</label>
-		<input ng-model="admin.endDate" type="date"/>
-	</div>
-	<div class="field">
-		<label>Days <span class="required">*</span></label>
-		<select ng-model="admin.dayIds" ng-options="day.id as day.title for day in admin.dayList track by day.id"></select>
-	</div>
-	<div class="field">
-		<button type="submit" class="btn btn-primary btn-full">Send</button>
-	</div>
-		
-	<div ng-if="home.formSent" class="alert" ng-class="home.formDone ? 'alert-success' : 'alert-danger'">
-		<span ng-if="admin.formDone">Form Sent</span>
-		<span ng-if="!admin.formDone">Form Error</span>
-	</div>
-	
-</form>
+<div class="container">
+
+  <h1 class="text-center">Add Class</h1>
+  <form ng-submit="admin.addClass()" class="form-horizontal">
+    <fieldset>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">Title</label>
+        <div class="col-md-10">
+          <input ng-model="admin.title" type="text" class="form-control" placeholder="Class title"/>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Brief</label>
+        <div class="col-md-10">
+          <textarea ng-model="admin.brief" class="form-control" rows="3" placeholder="Class brief description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+          <textarea ng-model="admin.description" class="form-control" rows="3" placeholder="Class description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Teacher</label>
+        <div class="col-md-10">
+          <select ng-model="admin.teacherId" class="form-control" ng-options="teacher.id as teacher.username for teacher in admin.teachers track by teacher.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Interval</label>
+        <div class="col-md-10">
+          <select ng-model="admin.intervalId" class="form-control" ng-options="interval.id as interval.title for interval in admin.intervalList track by interval.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Start time</label>
+        <div class="col-md-10">
+          <!-- <uib-timepicker ng-model="admin.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker> -->
+          <input ng-model="admin.startTime" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">End time</label>
+        <div class="col-md-10">
+          <input ng-model="admin.endTime" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Start date</label>
+        <div class="col-md-10">
+          <input ng-model="admin.startDate" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">End date</label>
+        <div class="col-md-10">
+          <input ng-model="admin.endDate" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Days</label>
+        <div class="col-md-10">
+          <select ng-model="admin.dayIds" class="form-control" ng-options="day.id as day.title for day in admin.dayList track by day.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Price</label>
+        <div class="col-md-10">
+          <input ng-model="admin.price" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Size</label>
+        <div class="col-md-10">
+          <input ng-model="admin.size" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Booking type</label>
+        <div class="col-md-10">
+          <select ng-model="admin.bookingType" class="form-control" ng-options="booking.id as booking.title for booking in admin.bookingList track by booking.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Venue type</label>
+        <div class="col-md-10">
+          <select ng-model="admin.venueType" class="form-control" ng-options="venue.id as venue.title for venue in admin.venueList track by venue.id"></select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+          <button type="reset" class="btn btn-primary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+
+      <div ng-if="home.formSent" class="alert" ng-class="home.formDone ? 'alert-success' : 'alert-danger'">
+        <span ng-if="admin.formDone">Form Sent</span>
+        <span ng-if="!admin.formDone">Form Error</span>
+      </div>
+    </fieldset>
+
+  </form>
+
+</div>

@@ -5,15 +5,7 @@ function UserService($http) {
 
   const service = {};
 
-  service.get = function() {
-    return new Promise((resolve, reject) => {
-      $http.get('http://yourclass.vkonovalenko.dev.ideus.biz/web/rest/users').success((data) => {
-        resolve(data);
-      }).error((err, status) => {
-        reject(err, status);
-      });
-    });
-  };
+
 
   return service;
 
