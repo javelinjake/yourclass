@@ -40,12 +40,30 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('Admin', {
-      url: '/admin',
-      controller: 'AdminCtrl as admin',
-      templateUrl: 'admin.html',
-      title: 'Admin',
-      class: 'admin'
+    .state('user', {
+      controller: 'UserCtrl as user',
+      templateUrl: 'user/user.html'
+    })
+    .state('user.dashboard', {
+      url: '/user/dashboard',
+      controller: 'userDashboardCtrl as dashboard',
+      templateUrl: 'user/dashboard.html',
+      title: 'User Dashboard',
+      class: 'user-dashboard'
+    })
+    .state('user.edit', {
+      url: '/user/edit',
+      controller: 'userEditCtrl as edit',
+      templateUrl: 'user/edit.html',
+      title: 'User Edit',
+      class: 'user-edit'
+    })
+    .state('user.class', {
+      url: '/user/class',
+      controller: 'userClassCtrl as class',
+      templateUrl: 'user/class.html',
+      title: 'User Class',
+      class: 'user-class'
     });
 
   $urlRouterProvider.otherwise('/');

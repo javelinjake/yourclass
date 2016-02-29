@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>User page</h1>
+
+  <div>
+    <h2>Select profile</h2>
+    <select ng-change="user.teacherEmailClick()" ng-model="user.teacherEmail" class="form-control" ng-options="teacher.email as teacher.email for teacher in user.teachers.data track by teacher.email"></select>
+  </div>
+
+  <ul>
+    <li ng-class="{ 'active': pageClass === 'user-dashboard' }">
+      <a href="/user/dashboard">Dashboard</a>
+    </li>
+    <li ng-class="{ 'active': pageClass === 'user-edit' }">
+      <a href="/user/edit">Edit</a>
+    </li>
+    <li ng-class="{ 'active': pageClass === 'user-class' }">
+      <a href="/user/class">Class</a>
+    </li>
+  </ul>
+</div>
+
+<div ui-view></div>
+
+<pre>
+  {{ user.teachersTwo | json }}
+</pre>

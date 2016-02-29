@@ -1,0 +1,109 @@
+<div class="container">
+
+  <h1 class="text-center">Add Class</h1>
+  <form ng-submit="class.addClass()" class="form-horizontal">
+    <fieldset>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">Title</label>
+        <div class="col-md-10">
+          <input ng-model="class.title" type="text" class="form-control" placeholder="Class title"/>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Brief</label>
+        <div class="col-md-10">
+          <textarea ng-model="class.brief" class="form-control" rows="3" placeholder="Class brief description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+          <textarea ng-model="class.description" class="form-control" rows="3" placeholder="Class description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Teacher</label>
+        <div class="col-md-10">
+          <select ng-model="class.teacherId" class="form-control" ng-options="teacher.id as teacher.username for teacher in class.teachers track by teacher.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Interval</label>
+        <div class="col-md-10">
+          <select ng-model="class.intervalId" class="form-control" ng-options="interval.id as interval.title for interval in class.intervalList track by interval.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Start time</label>
+        <div class="col-md-10">
+          <!-- <uib-timepicker ng-model="class.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker> -->
+          <input ng-model="class.startTime" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">End time</label>
+        <div class="col-md-10">
+          <input ng-model="class.endTime" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Start date</label>
+        <div class="col-md-10">
+          <input ng-model="class.startDate" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">End date</label>
+        <div class="col-md-10">
+          <input ng-model="class.endDate" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Days</label>
+        <div class="col-md-10">
+          <select ng-model="class.dayIds" class="form-control" ng-options="day.id as day.title for day in class.dayList track by day.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Price</label>
+        <div class="col-md-10">
+          <input ng-model="class.price" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Size</label>
+        <div class="col-md-10">
+          <input ng-model="class.size" type="text" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Booking type</label>
+        <div class="col-md-10">
+          <select ng-model="class.bookingType" class="form-control" ng-options="booking.id as booking.title for booking in class.bookingList track by booking.id"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Venue type</label>
+        <div class="col-md-10">
+          <select ng-model="class.venueType" class="form-control" ng-options="venue.id as venue.title for venue in class.venueList track by venue.id"></select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+          <button type="reset" class="btn btn-primary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+
+      <div ng-if="home.formSent" class="alert" ng-class="home.formDone ? 'alert-success' : 'alert-danger'">
+        <span ng-if="class.formDone">Form Sent</span>
+        <span ng-if="!class.formDone">Form Error</span>
+      </div>
+    </fieldset>
+
+  </form>
+
+</div>

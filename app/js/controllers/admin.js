@@ -5,12 +5,12 @@ function AdminCtrl($http, $rootScope) {
 
 	// ViewModel
 	const vm = this;
-	
+
 	vm.bookingList = [
 	   {id: 'approval', title: 'Approval'},
 	   {id: 'instant', title: 'Instant'}
 	];
-	
+
 	vm.venueList = [
 	   {id: 'private', title: 'Private'},
 	   {id: 'public', title: 'Public'},
@@ -19,7 +19,7 @@ function AdminCtrl($http, $rootScope) {
 	   {id: 'public-indoors', title: 'Public Indoors'},
 	   {id: 'public-outdoors', title: 'Public Outdoors'}
 	];
-	
+
 	vm.intervalList = [
 	   {id: '1', title: 'Every Day'},
 	   {id: '2', title: 'Every Week'},
@@ -27,7 +27,7 @@ function AdminCtrl($http, $rootScope) {
 	   {id: '4', title: 'Every Month'},
 	   {id: '5', title: 'Every Year'}
 	];
-	
+
 	vm.dayList = [
 	   {id: '1', title: 'Sunday'},
 	   {id: '2', title: 'Monday'},
@@ -37,10 +37,10 @@ function AdminCtrl($http, $rootScope) {
 	   {id: '6', title: 'Friday'},
 	   {id: '7', title: 'Saturday'}
 	];
-  
-	// Create user
+
+	// Create class
 	vm.addClass = function() {
-	  
+
 		var classData = {
 			'title': vm.title, //'rest class title'
 			'brief': vm.brief, //'rest brief'
@@ -57,22 +57,22 @@ function AdminCtrl($http, $rootScope) {
 			'bookingType': vm.bookingType, //'instant'
 			'venueType': vm.venueType //'private'
 		};
-		
+
 		console.log(classData);
-		  
+
 		$http.post($rootScope.apiUrl + 'classes/create', classData).success((data) => {
 			if (data.result === 0) {
 				vm.formDone = false;
 			} else {
 				vm.formDone = true;
 			}
-		  
+
 			vm.formSent = true;
 		}).error((err, status) => {
 			vm.formSent = true;
 		});
 	}
-	
+
 	// Get Users
 	$http.get($rootScope.apiUrl + 'users/list').success((data) => {
 		vm.teachers = data.data;
