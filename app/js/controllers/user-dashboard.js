@@ -1,4 +1,4 @@
-'use strict';
+
 
 function userDashboardCtrl($http, $rootScope, $log) {
 	'ngInject';

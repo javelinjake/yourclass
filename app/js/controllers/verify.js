@@ -1,5 +1,5 @@
 function VerifyCtrl($http, $rootScope, $location) {
-  'use strict';
+  
   'ngInject';
 
   // ViewModel

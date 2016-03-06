@@ -1,12 +1,7 @@
 function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
-  'use strict';
   'ngInject';
 
   $locationProvider.html5Mode(true);
-
-  app.config(function($mdThemingProvider) {
-    $mdThemingProvider.setDefaultTheme('none');
-  });
 
   $stateProvider
     .state('Home', {

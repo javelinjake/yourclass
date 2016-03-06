@@ -1,26 +1,49 @@
 <div class="container">
-  <h1>User page</h1>
 
-  <div>
-    <h2>Select profile</h2>
-    <select ng-change="user.teacherEmailClick()" ng-model="user.teacherEmail" class="form-control" ng-options="teacher.email as teacher.email for teacher in user.teachers.data track by teacher.email"></select>
+  <div class="row">
+    <div class="col-sm-3">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h5>Select a user</h5>
+          <select ng-change="user.teacherEmailClick()" ng-model="user.teacherEmail" class="form-control" ng-options="teacher.email as teacher.email for teacher in user.teachers track by teacher.email"></select>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{ 'active': pageClass === 'user-dashboard' }">
+              <a href="/user/dashboard">Dashboard</a>
+            </li>
+            <li ng-class="{ 'active': pageClass === 'user-edit' }">
+              <a href="/user/edit">Edit</a>
+            </li>
+            <li ng-class="{ 'active': pageClass === 'user-class' }">
+              <a href="/user/class">Class</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div ui-view class="col-sm-9"></div>
   </div>
 
-  <ul>
-    <li ng-class="{ 'active': pageClass === 'user-dashboard' }">
-      <a href="/user/dashboard">Dashboard</a>
-    </li>
-    <li ng-class="{ 'active': pageClass === 'user-edit' }">
-      <a href="/user/edit">Edit</a>
-    </li>
-    <li ng-class="{ 'active': pageClass === 'user-class' }">
-      <a href="/user/class">Class</a>
-    </li>
-  </ul>
+  <hr>
+  <button type="button" class="btn btn-default" ng-click="user.isCollapsed = !user.isCollapsed">View JSON</button>
+  <hr>
+  <div uib-collapse="user.isCollapsed">
+    <div class="well well-lg">
+
+      <pre>
+        {{ user.teachersTwo | json }}
+      </pre>
+
+    </div>
+  </div>
+
 </div>
-
-<div ui-view></div>
-
-<pre>
-  {{ user.teachersTwo | json }}
-</pre>

@@ -1,4 +1,4 @@
-'use strict';
+
 
 const AppSettings = {
   appTitle: 'Your Class',

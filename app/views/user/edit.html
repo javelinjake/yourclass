@@ -1,3 +1,44 @@
-<div>
-  <h1>User edit page</h1>
+<h3>Edit</h3>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Edit details</h3>
+  </div>
+  <div class="panel-body">
+    <form ng-submit="user.editDetails()">
+
+
+    <p>
+      <span class="label label-success" ng-repeat="role in user.teachersTwo.roles">{{ role.title }}</span>
+    </p>
+    <p>
+      <strong>First name: </strong>
+      <input ng-model="user.teachersTwo.profile.firstName" type="text" class="form-control" />
+    </p>
+    <p>
+      <strong>Last name: </strong>
+      <input ng-model="user.teachersTwo.profile.lastName" type="text" class="form-control" />
+    </p>
+    <p>
+      <strong>Birthday: </strong>
+      <input ng-model="user.newBirthday" type="date" class="form-control" />
+    </p>
+    <p>
+      <strong>Brief: </strong>
+      <textarea ng-model="user.teachersTwo.profile.brief" trows="2" class="form-control"></textarea>
+    </p>
+    <p>
+      <strong>About: </strong>
+      <textarea ng-model="user.teachersTwo.profile.about" rows="4" class="form-control"></textarea>
+    </p>
+    <div class="">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+      </form>
+
+
+  </div>
 </div>
+
+<h3>{{ user.teachersTwo.profile.firstName }} {{ user.teachersTwo.profile.lastName }}</h3>

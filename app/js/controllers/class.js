@@ -1,4 +1,4 @@
-'use strict';
+
 
 function ClassCtrl($http, $rootScope, $scope, getClassAlias) {
 	'ngInject';

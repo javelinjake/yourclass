@@ -1,5 +1,5 @@
 function MainCtrl($http, $rootScope, $uibModal, $log) {
-	'use strict';
+	
   'ngInject';
 
   // ViewModel

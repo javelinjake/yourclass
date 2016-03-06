@@ -1,5 +1,40 @@
-<div>
-  <h1>User dashboard page</h1>
+<h3>Dashboard</h3>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Personal details</h3>
+  </div>
+  <div class="panel-body">
+    <p>
+      <span class="label label-success" ng-repeat="role in user.teachersTwo.roles">{{ role.title }}</span>
+    </p>
+    <p>
+      <strong>Name: </strong>
+      <span>{{ user.teachersTwo.profile.firstName }} {{ user.teachersTwo.profile.lastName }}</span>
+    </p>
+    <p>
+      <strong>Email: </strong>
+      <span>{{ user.teachersTwo.email }}</span>
+    </p>
+    <p>
+      <strong>Birthday: </strong>
+      <span>{{ user.newBirthday | date:'dd/MM/yyyy' }}</span>
+    </p>
+    <p>
+      <strong>Brief: </strong>
+      <span>{{ user.teachersTwo.profile.brief }}</span>
+    </p>
+    <p>
+      <strong>About: </strong>
+      <span>{{ user.teachersTwo.profile.about }}</span>
+    </p>
+    <!-- <p>
+      <strong>Rating: </strong>
+      <uib-rating ng-model="user.teachersTwo.rating | number:0" max="5" readonly="true" aria-labelledby="default-rating"></uib-rating>
+    </p> -->
+
+
+  </div>
 </div>
 
 <h3>{{ user.teachersTwo.profile.firstName }} {{ user.teachersTwo.profile.lastName }}</h3>
