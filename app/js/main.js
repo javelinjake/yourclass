@@ -7,6 +7,7 @@ import onRun     from './on_run';
 import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-animate';
+import 'angular-cookies';
 import './templates';
 import './filters';
 import './controllers';
@@ -17,6 +18,7 @@ import './directives';
 const requires = [
   'ui.router',
   'ui.bootstrap',
+  'ngCookies',
   'templates',
   'app.filters',
   'app.controllers',

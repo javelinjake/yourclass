@@ -4,36 +4,36 @@ function UserCtrl($http, $rootScope, $log, $filter) {
   // ViewModel
   const vm = this;
 
-  vm.teacherEmail = "";
+  //vm.teacherEmail = "";
   vm.isCollapsed = true;
 
   // Get Users to be displayed in select input
-  $http.get($rootScope.apiUrl + 'users/list')
-    .then(function successCallback(response) {
+  // $http.get($rootScope.apiUrl + 'users/list')
+  //   .then(function successCallback(response) {
+	//
+  //     // The scope output
+  //     vm.teachers = response.data.data;
+	//
+  //     // Log the response
+  //     $log.info('success', response);
+	//
+  //   }, function errorCallback(response) {
+	//
+  //     // Log the response
+  //     $log.error('error', response);
+	//
+  //   });
 
-      // The scope output
-      vm.teachers = response.data.data;
-
-      // Log the response
-      $log.info('success', response);
-
-    }, function errorCallback(response) {
-
-      // Log the response
-      $log.error('error', response);
-
-    });
-
-  // Select user to view and edit
-  vm.teacherEmailClick = function() {
-    $http.get($rootScope.apiUrl + 'users/one?_email=' + vm.teacherEmail)
+  // Get current logged in user
+  //vm.teacherEmailClick = function() {
+    $http.get($rootScope.apiUrl + 'users/one')
       .then(function successCallback(response) {
 
         // The scope output
         vm.teachersTwo = response.data.data;
 
         // Need to output birthday as accepted date
-        vm.newBirthday = new Date(response.data.data.profile.birthday)
+        //vm.newBirthday = new Date(vm.teachersTwo.profile.birthday)
 
         // Log the response
         $log.info('success', response);
@@ -44,20 +44,20 @@ function UserCtrl($http, $rootScope, $log, $filter) {
         $log.error('error', response);
 
       });
-  }
+  //}
 
-	// Edit user form
+  // Edit user form
   vm.editDetails = function() {
 
-		vm.newBirthday = $filter('date')(vm.newBirthday, "yyyy-MM-dd");
+    //vm.newBirthday = $filter('date')(vm.newBirthday, "yyyy-MM-dd");
 
-		$log.info(vm.newBirthday);
+    //$log.info(vm.newBirthday);
 
     var userData = {
-      '_email': vm.teacherEmail, // Email of current user
+      //'_email': $rootScope.rootUserEmail, // Email of current user
       'firstName': vm.teachersTwo.profile.firstName,
       'lastName': vm.teachersTwo.profile.lastName,
-      'birthday': vm.newBirthday,
+      //'birthday': vm.newBirthday,
       'brief': vm.teachersTwo.profile.brief,
       'about': vm.teachersTwo.profile.about
     };
@@ -75,6 +75,37 @@ function UserCtrl($http, $rootScope, $log, $filter) {
 
       });
 
+  }
+
+  vm.addImage = function() {
+    var f = document.getElementById('file').files[0],
+      	r = new FileReader();
+    r.onloadend = function(e) {
+      var photo = e.target.result;
+      //send you binary data via $http or $resource or do anything else with it
+
+			$log.info(photo);
+			$log.info(f);
+
+			var imageData = {
+				//'_email': $rootScope.rootUserEmail, // Email of current user
+				'photos': f,
+			};
+
+      $http.post($rootScope.apiUrl + 'users/upload', imageData)
+        .then(function successCallback(response) {
+
+          // Log the response
+          $log.info('success', response);
+
+        }, function errorCallback(response) {
+
+          // Log the response
+          $log.error('error', response);
+
+        });
+    }
+    r.readAsBinaryString(f);
   }
 
 }

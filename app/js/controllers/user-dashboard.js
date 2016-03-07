@@ -6,7 +6,7 @@ function userDashboardCtrl($http, $rootScope, $log) {
 	// ViewModel
 	const vm = this;
 
-	$log.info(vm.profileName);
+	//$log.info(vm.profileName);
 
 }
 

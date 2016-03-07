@@ -73,11 +73,6 @@ function userClassCtrl($http, $rootScope) {
 		});
 	}
 
-	// Get Users
-	$http.get($rootScope.apiUrl + 'users/list').success((data) => {
-		vm.teachers = data.data;
-	}).error((err, status) => {});
-
 }
 
 export default {
