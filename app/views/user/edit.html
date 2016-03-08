@@ -39,10 +39,24 @@
 
     </form>
 
-    <form ng-submit="user.addImage()">
+    <!-- <form ng-submit="user.addImage()">
       <input type="file" id="file" name="file"/>
       <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+    </form> -->
+
+    <button ngf-select="user.uploadFiles($files)" multiple
+            accept="image/*">Select Files</button>
+    <br>
+    <br>Files:
+    <ul>
+        <li ng-repeat="f in user.files" style="font:smaller">
+            {{f.name}}
+        </li>
+    </ul>
+    <span class="progress" ng-show="user.progress >= 0">
+        <div style="width:{{user.progress}}%" ng-bind="user.progress + '%'"></div>
+    </span>
+  {{user.errorMsg}}
 
   </div>
 </div>

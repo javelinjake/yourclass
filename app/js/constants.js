@@ -3,7 +3,7 @@
 const AppSettings = {
   appTitle: 'Your Class',
   apiUrl: 'http://dev.yourclass.co/web/rest/',
-  rootUserEmail: 'jake@jakeefefe.com',
+  rootUserEmail: 'jakepeterlewis@gmail.com',
   rootUserId: '83'
 };
 

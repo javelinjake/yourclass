@@ -8,6 +8,7 @@ import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-animate';
 import 'angular-cookies';
+import 'ng-file-upload';
 import './templates';
 import './filters';
 import './controllers';
@@ -19,6 +20,7 @@ const requires = [
   'ui.router',
   'ui.bootstrap',
   'ngCookies',
+  'ngFileUpload',
   'templates',
   'app.filters',
   'app.controllers',
