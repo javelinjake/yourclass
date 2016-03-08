@@ -1,19 +1,20 @@
-'use strict';
+function SearchCtrl($http, $rootScope, $log) {
+  'ngInject';
 
-function SearchCtrl($http, $rootScope) {
-	'ngInject';
-	
-	// ViewModel
-	const vm = this;
-	
-	// Get Classes
-	$http.get($rootScope.apiUrl + 'classes/list').success((data) => {
-		vm.classesList = data.data;
-	}).error((err, status) => {});
-	
+  // ViewModel
+  const vm = this;
+
+  $http.get($rootScope.apiUrl + 'classes/list')
+    .then(function successCallback(response) {
+      vm.classesList = response.data.data;
+      $log.info('success' + response);
+    }, function errorCallback(response) {
+      $log.error('error' + response);
+    });
+
 }
 
 export default {
-	name: 'SearchCtrl',
-	fn: SearchCtrl
+  name: 'SearchCtrl',
+  fn: SearchCtrl
 };

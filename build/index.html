@@ -1,39 +1,28 @@
 <!doctype html>
 <html class="no-js">
-<head>
-	<base href="/">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title ng-bind="pageTitle"></title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title ng-bind="pageTitle"></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-	<link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-	  	
-	<nav class="clearfix">
-		<div class="logo">
-			<a href="/">
-				<img src="images/your-class-logo-basic.png">
-			</a>
-		</div>
-		
-		<div class="navigation">
-			<a href="/search">
-				Search
-			</a>
-			<a href="/teach">
-				Teach
-			</a>
-			<a href="/learn">
-				Learn
-			</a>
-		</div>
-	</nav>
+    <style type="text/css">
+      [ng-cloak] { display: none; }
+    </style>
 
-	<div ui-view class="container"></div>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body class="{{pageClass}}">
 
-	<script src="js/main.js"></script>
-</body>
+    <header ng-include="'globals/header.html'"></header>
+
+    <div ui-view class="main"></div>
+
+    <footer ng-include="'globals/footer.html'"></footer>
+
+    <script src="js/main.js"></script>
+
+  </body>
 </html>

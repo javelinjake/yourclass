@@ -1,10 +1,39 @@
-<h1 class="heading -large">Search classes</h1>
+<div class="container">
 
-<div ng-repeat="classes in search.classesList">
-	<h4>{{ classes.title }}</h4>
-	<a ui-sref="Class({ classId:classes.id })">Click here</a>
+  <h1 class="heading center-text">Search classes</h1>
+
+  <div class="panel panel-primary" ng-repeat="classes in search.classesList">
+    <div class="panel-heading">
+      <h2>
+        {{ classes.title }}
+      </h2>
+    </div>
+
+    <div class="panel-body">
+      <p>
+        <strong>
+          Class Description:
+        </strong>{{ classes.description }}
+      </p>
+      <div>
+        <a class="btn btn-primary" ui-sref="Class({ classAlias:classes.alias })">Go to class</a>
+      </div>
+    </div>
+
+    <div class="panel-footer">
+      <div>
+        <strong>Teacher email:
+        </strong>{{ classes.teacher.email }}
+      </div>
+      <div>
+        <strong>Spots left:
+        </strong>{{ classes.spotsLeft }}
+      </div>
+    </div>
+  </div>
+
 </div>
-	
+
 <pre>
 	{{ search.classesList | json }}
 </pre>

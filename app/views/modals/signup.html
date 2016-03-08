@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h3 class="modal-title">Sign Up</h3>
+</div>
+
+<div class="modal-body">
+  <form ng-submit="SignUpForm()">
+    <fieldset>
+
+      <div class="form-group">
+        <label class="control-label">First Name</label>
+        <input ng-model="firstname" type="text" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Last Name</label>
+        <input ng-model="lastname" type="text" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Email</label>
+        <input ng-model="email" type="email" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Password</label>
+        <input ng-model="password" type="password" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Send</button>
+      </div>
+
+    </fieldset>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <div ng-if="formSent" class="alert text-center" ng-class="formDone ? 'alert-success' : 'alert-danger'">
+    <span ng-if="formDone">You have signed up</span>
+    <span ng-if="!formDone">Please fill in all form-groups</span>
+  </div>
+</div>

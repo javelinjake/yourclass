@@ -1,22 +1,1 @@
-'use strict';
-
-function OnRun($rootScope, $stateParams, AppSettings) {
-  'ngInject';
-
-  // change page title based on state
-  $rootScope.$on('$stateChangeSuccess', (event, toState) => {
-    $rootScope.pageTitle = '';
-
-    if ( toState.title ) {
-      $rootScope.pageTitle += toState.title;
-      $rootScope.pageTitle += ' \u2014 ';
-    }
-
-    $rootScope.pageTitle += AppSettings.appTitle;
-	
-	$rootScope.apiUrl = AppSettings.apiUrl;
-  });
-
-}
-
-export default OnRun;
+function OnRun($rootScope, $stateParams, AppSettings, $uibModal, $log, $cookies) {  'ngInject';  //change page title based on state  $rootScope.$on('$stateChangeSuccess', (event, toState) => {    $rootScope.pageTitle = '';    $rootScope.pageClass = '';    if (toState.title) {      $rootScope.pageTitle += toState.title;      $rootScope.pageTitle += ' \u2014 ';    }    if (toState.class) {      $rootScope.pageClass += toState.class;    }    $rootScope.pageTitle += AppSettings.appTitle;  });  $rootScope.apiUrl = AppSettings.apiUrl;  $rootScope.rootUserEmail = AppSettings.rootUserEmail;  $rootScope.rootUserId = AppSettings.rootUserId;  $rootScope.userLoggedIn = false;  if ($cookies.get('auth_key')) {    $rootScope.authToken = $cookies.get('auth_key');    $rootScope.userLoggedIn = true;  }  $log.info('User logged in:', $rootScope.userLoggedIn);  $rootScope.SignUpModal = function(size) {    var modalInstance = $uibModal.open({      animation: $rootScope.animationsEnabled,      templateUrl: 'modals/signup.html',      controller: ['$scope', '$http', '$rootScope', SignUpCtrl],      size: size    });  };  $rootScope.SignInModal = function(size) {    var modalInstance = $uibModal.open({      animation: $rootScope.animationsEnabled,      templateUrl: 'modals/signin.html',      controller: ['$scope', '$http', '$rootScope', '$cookies', '$log', '$state', SignInCtrl],      size: size    });  };  function SignUpCtrl($scope, $http, $rootScope) {    // Create user    $scope.SignUpForm = function() {      var signUpData = {        'firstName': $scope.firstname,        'lastName': $scope.lastname,        'email': $scope.email,        'password': $scope.password      };      $http.post($rootScope.apiUrl + 'users/create', signUpData).success((data) => {        if (data.result === 0) {          $scope.formDone = false;        } else {          $scope.formDone = true;        }        $scope.formSent = true;      }).error((err, status) => {        $scope.formSent = true;      });    };  }  function SignInCtrl($scope, $http, $rootScope, $cookies, $log, $state) {    // Create user    $scope.SignInForm = function() {      var signInData = {        'email': $scope.email,        'password': $scope.password      };      $http.post($rootScope.apiUrl + 'users/login', signInData).success((data) => {        if (data.result === 0) {          $scope.formDone = false;        } else {          $scope.formDone = true;        }        var authKey = data.data.auth_key;        $rootScope.userLoggedIn = true;        $cookies.put('auth_key', authKey);        $rootScope.authToken = $cookies.get('auth_key');        $state.reload();        $scope.formSent = true;      }).error((err, status) => {        $scope.formSent = true;      });    };  }}export default OnRun;

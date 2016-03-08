@@ -1,0 +1,6 @@
+<h3>Verify Email Address</h3>
+
+<div ng-if="verify.verifySent" class="alert" ng-class="home.verified ? 'alert-danger' : 'alert-success'">
+  <span ng-if="verify.verified">You are verified!</span>
+  <span ng-if="!verify.verified">Error, not verified</span>
+</div>
