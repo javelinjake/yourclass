@@ -58,29 +58,32 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
 
   }
 
-  vm.uploadFiles = function(files) {
+  vm.uploadFiles = function(files, errFiles) {
     vm.files = files;
-    if (files && files.length) {
-      Upload.upload({
+    vm.errFiles = errFiles;
+    angular.forEach(files, function(file) {
+      file.upload = Upload.upload({
         url: $rootScope.apiUrl + 'users/upload',
         data: {
           '_auth_key': $rootScope.authToken, // Authentication token of current user
-          'imageFiles': files
+          'file': file
         }
-      }).then(function(response) {
+      });
+
+      file.upload.then(function(response) {
         $timeout(function() {
-          vm.result = response.data;
+          file.result = response.data;
+          $state.reload();
         });
       }, function(response) {
-        if (response.status > 0) {
+        if (response.status > 0)
           vm.errorMsg = response.status + ': ' + response.data;
-        }
       }, function(evt) {
-        vm.progress =
-          Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        file.progress = Math.min(100, parseInt(100.0 *
+          evt.loaded / evt.total));
       });
-    }
-  };
+    });
+  }
 
 }
 
