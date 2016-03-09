@@ -4,35 +4,39 @@
   </div>
   <div class="panel-body">
     <p>
-      <span class="label label-success" ng-repeat="role in user.teachersTwo.roles">{{ role.title }}</span>
+      <span class="label label-success" ng-repeat="userRole in user.userData.roles">{{ userRole.title }}</span>
     </p>
-    <p>
+    <p ng-if="user.userData.profile.firstName">
       <strong>Name: </strong>
-      <span>{{ user.teachersTwo.profile.firstName }} {{ user.teachersTwo.profile.lastName }}</span>
+      <span>{{ user.userData.profile.firstName }} {{ user.userData.profile.lastName }}</span>
     </p>
-    <p>
+    <p ng-if="user.userData.email">
       <strong>Email: </strong>
-      <span>{{ user.teachersTwo.email }}</span>
+      <span>{{ user.userData.email }}</span>
     </p>
-    <p>
+    <!-- <p>
       <strong>Birthday: </strong>
       <span>{{ user.newBirthday | date:'dd/MM/yyyy' }}</span>
+    </p> -->
+    <p ng-if="user.userData.profile.phone">
+      <strong>Phone number: </strong>
+      <span>{{ user.userData.profile.phone }}</span>
     </p>
-    <p>
+    <p ng-if="user.userData.profile.brief">
       <strong>Brief: </strong>
-      <span>{{ user.teachersTwo.profile.brief }}</span>
+      <span>{{ user.userData.profile.brief }}</span>
     </p>
-    <p>
+    <p ng-if="user.userData.profile.about">
       <strong>About: </strong>
-      <span>{{ user.teachersTwo.profile.about }}</span>
+      <span>{{ user.userData.profile.about }}</span>
     </p>
     <!-- <p>
       <strong>Rating: </strong>
-      <uib-rating ng-model="user.teachersTwo.rating | number:0" max="5" readonly="true" aria-labelledby="default-rating"></uib-rating>
+      <uib-rating ng-model="user.userData.rating | number:0" max="5" readonly="true" aria-labelledby="default-rating"></uib-rating>
     </p> -->
 
 
   </div>
 </div>
 
-<h3>{{ user.teachersTwo.profile.firstName }} {{ user.teachersTwo.profile.lastName }}</h3>
+<h3>{{ user.userData.profile.firstName }} {{ user.userData.profile.lastName }}</h3>

@@ -12,16 +12,13 @@
       </a>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+    <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li ng-class="{ 'active': pageClass === 'home' }">
           <a href="/">Home</a>
         </li>
         <li ng-class="{ 'active': pageClass === 'search' }">
           <a href="/search">Search</a>
-        </li>
-        <li ng-class="{ 'active': pageClass === 'admin' }">
-          <a href="/admin">Admin</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -31,9 +28,9 @@
         <li>
           <a href="#" ng-click="SignInModal('sm')">Sign In</a>
         </li>
-        <li class="dropdown" uib-dropdown>
+        <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
           <a href="/user/dashboard" role="button" uib-dropdown-toggle>
-            My profile
+            {{ userProfile.firstName }} {{ userProfile.lastName }}
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
@@ -48,7 +45,7 @@
             </li>
             <li class="divider"></li>
             <li role="menuitem">
-              <a href="#">Log out</a>
+              <a href="#" ng-click="logOut()">Log out</a>
             </li>
           </ul>
         </li>

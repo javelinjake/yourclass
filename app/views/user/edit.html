@@ -6,32 +6,37 @@
     <form ng-submit="user.editDetails()">
 
       <p>
-        <span class="label label-success" ng-repeat="role in user.teachersTwo.roles">{{ role.title }}</span>
+        <span class="label label-success" ng-repeat="role in user.userData.roles">{{ role.title }}</span>
       </p>
       <p>
         <strong>First name:
         </strong>
-        <input ng-model="user.teachersTwo.profile.firstName" type="text" class="form-control"/>
+        <input ng-model="user.userData.profile.firstName" type="text" class="form-control"/>
       </p>
       <p>
         <strong>Last name:
         </strong>
-        <input ng-model="user.teachersTwo.profile.lastName" type="text" class="form-control"/>
+        <input ng-model="user.userData.profile.lastName" type="text" class="form-control"/>
       </p>
-      <p>
+      <!-- <p>
         <strong>Birthday:
         </strong>
         <input ng-model="user.newBirthday" type="date" class="form-control"/>
+      </p> -->
+      <p>
+        <strong>Phone number:
+        </strong>
+        <input ng-model="user.userData.profile.phone" type="tel" class="form-control"/>
       </p>
       <p>
         <strong>Brief:
         </strong>
-        <textarea ng-model="user.teachersTwo.profile.brief" trows="2" class="form-control"></textarea>
+        <textarea ng-model="user.userData.profile.brief" trows="2" class="form-control"></textarea>
       </p>
       <p>
         <strong>About:
         </strong>
-        <textarea ng-model="user.teachersTwo.profile.about" rows="4" class="form-control"></textarea>
+        <textarea ng-model="user.userData.profile.about" rows="4" class="form-control"></textarea>
       </p>
       <div class="">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -61,5 +66,5 @@
   </div>
 </div>
 
-<h3>{{ user.teachersTwo.profile.firstName }}
-  {{ user.teachersTwo.profile.lastName }}</h3>
+<h3>{{ user.userData.profile.firstName }}
+  {{ user.userData.profile.lastName }}</h3>

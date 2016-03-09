@@ -1,14 +1,9 @@
 function MainCtrl($http, $rootScope, $uibModal, $log) {
-	
+
   'ngInject';
 
   // ViewModel
   const vm = this;
-
-  // Get Users
-  $http.get($rootScope.apiUrl + 'users/list').success((data) => {
-    vm.userList = data.data;
-  }).error((err, status) => {});
 
 }
 

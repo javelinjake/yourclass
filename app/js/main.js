@@ -9,6 +9,7 @@ import 'angular-ui-bootstrap';
 import 'angular-animate';
 import 'angular-cookies';
 import 'ng-file-upload';
+import 'angular-breadcrumb';
 import './templates';
 import './filters';
 import './controllers';
@@ -22,6 +23,7 @@ const requires = [
   'ngCookies',
   'ngFileUpload',
   'templates',
+  'ncy-angular-breadcrumb',
   'app.filters',
   'app.controllers',
   'app.services',

@@ -1,4 +1,4 @@
-function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
+function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadcrumbProvider) {
   'ngInject';
 
   $locationProvider.html5Mode(true);
@@ -9,20 +9,29 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
       controller: 'MainCtrl as home',
       templateUrl: 'home.html',
       title: 'Home',
-      class: 'home'
+      class: 'home',
+      ncyBreadcrumb: {
+        label: 'Home'
+      }
     })
     .state('Search', {
       url: '/search',
       controller: 'SearchCtrl as search',
       templateUrl: 'search.html',
       title: 'Search',
-      class: 'search'
+      class: 'search',
+      ncyBreadcrumb: {
+        label: 'Search'
+      }
     })
     .state('Verify', {
       url: '/verificate',
       controller: 'VerifyCtrl as verify',
       templateUrl: 'verify.html',
-      title: 'Verify Email Address'
+      title: 'Verify Email Address',
+      ncyBreadcrumb: {
+        label: 'Verify'
+      }
     })
     .state('Class', {
       url: '/class/:classAlias',
@@ -33,35 +42,54 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
         getClassAlias: function($stateParams) {
           return $stateParams.classAlias;
         }
+      },
+      ncyBreadcrumb: {
+        label: 'Class'
       }
     })
     .state('user', {
       controller: 'UserCtrl as user',
-      templateUrl: 'user/user.html'
+      templateUrl: 'user/user.html',
+      ncyBreadcrumb: {
+        skip: true
+      }
     })
     .state('user.dashboard', {
       url: '/user/dashboard',
       controller: 'userDashboardCtrl as dashboard',
       templateUrl: 'user/dashboard.html',
       title: 'User Dashboard',
-      class: 'user-dashboard'
+      class: 'user-dashboard',
+      ncyBreadcrumb: {
+        label: 'Account Dashboard'
+      }
     })
     .state('user.edit', {
       url: '/user/edit',
       controller: 'userEditCtrl as edit',
       templateUrl: 'user/edit.html',
       title: 'User Edit',
-      class: 'user-edit'
+      class: 'user-edit',
+      ncyBreadcrumb: {
+        label: 'Account Edit'
+      }
     })
     .state('user.class', {
       url: '/user/class',
       controller: 'userClassCtrl as class',
       templateUrl: 'user/class.html',
       title: 'User Class',
-      class: 'user-class'
+      class: 'user-class',
+      ncyBreadcrumb: {
+        label: 'Add class'
+      }
     });
 
   $urlRouterProvider.otherwise('/');
+
+  $breadcrumbProvider.setOptions({
+      prefixStateName: 'Home'
+    });
 
 }
 
