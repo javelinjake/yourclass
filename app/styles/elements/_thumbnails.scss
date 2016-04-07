@@ -6,11 +6,11 @@
 // Mixin and adjust the regular image class
 .thumbnail {
   display: block;
-  padding: $thumbnail-padding;
+  //padding: $thumbnail-padding;
   margin-bottom: $line-height-computed;
   line-height: $line-height-base;
   background-color: $thumbnail-bg;
-  border: 1px solid $thumbnail-border;
+  //border: 1px solid $thumbnail-border;
   border-radius: $thumbnail-border-radius;
   @include transition(border .2s ease-in-out);
 
@@ -35,4 +35,35 @@ a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
   border-color: $link-color;
+}
+
+.user-dashboard,
+.user-edit {
+  .thumbnail {
+    max-width: 150px;
+  }
+}
+.user-edit {
+  .thumbnail {
+    opacity: 0.6;
+    position: relative;
+    overflow: hidden;
+    &.default {
+      opacity: 1;
+      &:before {
+        content: "Default image";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30px;
+        text-align: center;
+        font-size: 12px;
+        line-height: 30px;
+        background-color: rgba(0,0,0,0.6);
+        color: #fff;
+      }
+    }
+  }
 }

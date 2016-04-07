@@ -8,6 +8,15 @@
       <p>
         <span class="label label-success" ng-repeat="role in user.userData.roles">{{ role.title }}</span>
       </p>
+      <div ng-repeat="userImage in user.userData.photos" class="thumbnail" ng-class="{default: userImage.isMain == 1}">
+        <button class="delete-photo" ng-click="user.userImageDelete(userImage.id)">Delete</button>
+        <button class="default-photo" ng-click="user.userImageDefault(userImage.id)">
+          <span ng-if="userImage.isMain == 1">Remove as profile</span>
+          <span ng-if="userImage.isMain == 0">Set as profile</span>
+        </button>
+        <img class="img-rounded" ng-src="{{imageUrl}}{{userImage.src}}"/>
+
+      </div>
       <p>
         <strong>First name:
         </strong>
@@ -49,25 +58,25 @@
       <button type="submit" class="btn btn-primary">Save</button>
     </form> -->
 
-    <button ngf-select="user.uploadFiles($files, $invalidFiles)" multiple
-          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
-      Select Files</button>
-  <br><br>
-  Files:
-  <ul>
-    <li ng-repeat="f in user.files" style="font:smaller">{{f.name}} {{f.$errorParam}}
-      <span class="progress" ng-show="f.progress >= 0">
-        <div style="width:{{f.progress}}%"
-            ng-bind="f.progress + '%'"></div>
-      </span>
-    </li>
-    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
-    </li>
-  </ul>
-  {{user.errorMsg}}
+    <button ngf-select="user.uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
+      Select Files
+    </button>
+    <br><br>
+    Files:
+    <ul>
+      <li ng-repeat="f in user.files" style="font:smaller">{{f.name}}
+        {{f.$errorParam}}
+        <span class="progress" ng-show="f.progress >= 0">
+          <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+        </span>
+      </li>
+      <li ng-repeat="f in user.errFiles" style="font:smaller">
+        {{f.name}}
+        {{f.$error}}
+        {{f.$errorParam}}
+      </li>
+    </ul>
+    {{user.errorMsg}}
 
   </div>
 </div>
-
-<h3>{{ user.userData.profile.firstName }}
-  {{ user.userData.profile.lastName }}</h3>

@@ -38,6 +38,16 @@ function userClassCtrl($http, $rootScope) {
 	   {id: '7', title: 'Saturday'}
 	];
 
+	vm.startTime = new Date();
+
+  vm.hstep = 1;
+  vm.mstep = 15;
+
+  // vm.options = {
+  //   hstep: [1, 2, 3],
+  //   mstep: [1, 5, 10, 15, 25, 30]
+  // };
+
 	// Create user
 	vm.addClass = function() {
 
