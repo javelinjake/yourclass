@@ -6,7 +6,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
   $stateProvider
     .state('Home', {
       url: '/',
-      controller: 'MainCtrl as home',
+      controller: 'HomeCtrl as home',
       templateUrl: 'home.html',
       title: 'Home',
       class: 'home',
@@ -56,7 +56,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
     })
     .state('user.dashboard', {
       url: '/user/dashboard',
-      controller: 'userDashboardCtrl as dashboard',
+      controller: 'UserCtrl as dashboard',
       templateUrl: 'user/dashboard.html',
       title: 'User Dashboard',
       class: 'user-dashboard',
@@ -66,7 +66,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
     })
     .state('user.edit', {
       url: '/user/edit',
-      controller: 'userEditCtrl as edit',
+      controller: 'UserCtrl as edit',
       templateUrl: 'user/edit.html',
       title: 'User Edit',
       class: 'user-edit',
@@ -76,7 +76,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
     })
     .state('user.class', {
       url: '/user/class',
-      controller: 'userClassCtrl as class',
+      controller: 'UserCtrl as class',
       templateUrl: 'user/class.html',
       title: 'User Class',
       class: 'user-class',
@@ -86,7 +86,6 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
     });
 
   $urlRouterProvider.otherwise('/');
-
   $breadcrumbProvider.setOptions({
       prefixStateName: 'Home'
     });
