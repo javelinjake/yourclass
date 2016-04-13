@@ -34,21 +34,7 @@
 
     </style>
 
-    <script>
-      var cb = function() {
-        var l = document.createElement('link');
-        l.rel = 'stylesheet';
-        l.href = 'css/main.css';
-        var h = document.getElementsByTagName('head')[0];
-        h.parentNode.insertBefore(l, h);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf)
-        raf(cb);
-      else
-        window.addEventListener('load', cb);
-    </script>
-
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body class="{{pageClass}}">
     <div ng-if="false">
@@ -64,19 +50,7 @@
 
     <footer ng-include="'globals/footer.html'"></footer>
 
-    <script type="text/javascript">
-      function downloadJSAtOnload() {
-        var element = document.createElement("script");
-        element.src = "js/main.js";
-        document.body.appendChild(element);
-      }
-      if (window.addEventListener)
-        window.addEventListener("load", downloadJSAtOnload, false);
-      else if (window.attachEvent)
-        window.attachEvent("onload", downloadJSAtOnload);
-      else
-        window.onload = downloadJSAtOnload;
-    </script>
+    <script src="js/main.js"></script>
 
   </body>
 </html>
