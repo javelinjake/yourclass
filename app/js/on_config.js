@@ -38,6 +38,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       controller: 'ClassCtrl as class',
       templateUrl: 'class.html',
       title: 'Class',
+      class: 'class',
       resolve: {
         getClassAlias: function($stateParams) {
           return $stateParams.classAlias;

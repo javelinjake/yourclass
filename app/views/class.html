@@ -1,41 +1,120 @@
 <div class="container">
 
-  <h1 class="heading">Class</h1>
+  <!--
+
+  Class title
+
+  Teacher pic
+  Teacher name
+
+  Class reviews
+  Location
+  Tags
+  Mini description
+
+  About class name
+  Big description
+  Images
+
+  Class fee
+  List of class dates
+  Number of students
+  Book button
+  Spots left
+
+
+ -->
+
+  <h1 class="heading">{{ class.class.title }}</h1>
 
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h2>
-        {{ class.class.title }}
-      </h2>
+      <h3 class="panel-title">Class teacher</h3>
     </div>
-
     <div class="panel-body">
-      <div>
-        <strong>
-          Class Description:
-        </strong>{{ class.class.description }}
+      <div class="thumbnail">
+        <img class="img-rounded" ng-src="http://dev.yourclass.co/web/uploads/images/user_photos/200/34.png" />
       </div>
       <div>
-        <strong>
-          Class ID:
-        </strong>{{ class.class.id }}
+        <!-- {{ user.userData.profile.firstName }} {{ user.userData.profile.lastName }} -->
+        <!-- placeholder -->{{ class.class.teacher.username }}
       </div>
     </div>
+  </div>
 
-    <div class="panel-footer">
-      <div>
-        <strong>Teacher email:
-        </strong>{{ class.class.teacher.email }}
-      </div>
-      <div>
-        <strong>Spots left:
-        </strong>{{ class.class.spotsLeft }}
-      </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Class quick details</h3>
+    </div>
+    <div class="panel-body">
+      <p>
+        Class average review rating:
+      </p>
+      <p>
+        Venue location:
+      </p>
+      <p>
+        Category: {{ class.class.category.title }}
+      </p>
+      <p>
+        Sub category:
+      </p>
+      <p>
+        Short description: {{ class.class.brief }}
+      </p>
+
+    </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Class more details</h3>
+    </div>
+    <div class="panel-body">
+      <h2>
+        More about {{ class.class.title | lowercase }} by {{ class.class.teacher.username }}
+      </h2>
+      <p>
+        Long description: {{ class.class.description }}
+      </p>
+      <p>
+        Class images
+      </p>
+
+    </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Register</h3>
+    </div>
+    <div class="panel-body">
+      <h3>
+        ${{ class.class.price }}
+      </h3>
+      <p>
+        Dates available:
+        <div ng-repeat="classDate in class.class.validDates | limitTo:5">
+          {{ classDate }}
+        </div>
+      </p>
+      <p>
+        Spots left: {{ class.class.spotsLeft }}
+      </p>
+
     </div>
   </div>
 
 </div>
 
-<pre>
-	{{ class.class | json }}
-</pre>
+<button type="button" class="btn btn-default" ng-click="user.isCollapsed = !user.isCollapsed">View JSON</button>
+<hr>
+<div uib-collapse="user.isCollapsed">
+  <div class="well well-lg">
+
+    <pre>
+      {{ class.class | json }}
+    </pre>
+
+  </div>
+</div>
