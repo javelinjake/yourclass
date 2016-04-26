@@ -245,6 +245,9 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
 			vm.formSent = true;
 		}).error((err, status) => {
 			vm.formSent = true;
+
+      $log.error(err);
+      $log.error(status);
 		});
 	}
 

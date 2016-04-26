@@ -36,9 +36,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
 
 @mixin btn($class,$bg){
   .btn-#{$class} {
-    background-size: 200%;
-    background-position: 50%;
-
     &:focus {
       background-color: $bg;
     }
@@ -50,9 +47,8 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
 
     &:active {
       background-color: darken($bg, 12%);
-      @include gradient-radial(darken($bg, 12%) 10%, $bg 11%);
-      background-size: 1000%;
-      @include box-shadow(2px 2px 4px rgba(0,0,0,.4));
+      @include gradient-radial(none);
+      @include box-shadow(none);
     }
   }
 }
@@ -68,7 +64,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
 .btn {
   text-transform: uppercase;
   border: none;
-  @include box-shadow(1px 1px 4px rgba(0,0,0,.4));
+  @include box-shadow(none);
   @include transition(all 0.4s);
 
   &-link {
@@ -161,15 +157,18 @@ input[type=number],
 [type=email].form-control,
 [type=tel].form-control,
 [contenteditable].form-control {
-  padding: 0;
-  border: none;
+  border: 1px solid #efefef;
   border-radius: 0;
   -webkit-appearance: none;
-  @include box-shadow(inset 0 -1px 0 #ddd);
-  font-size: 16px;
+  @include box-shadow(0 0 0 0 transparent);
+
+  &:hover {
+    @include box-shadow(0 0 1px 0 #efefef);
+  }
 
   &:focus {
-    @include box-shadow(inset 0 -2px 0 $brand-primary);
+    border: 1px solid #ddd;
+    @include box-shadow(0 0 1px 0 #ddd);
   }
 
   &[disabled],

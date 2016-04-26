@@ -78,7 +78,8 @@
 // Top section of the modal w/ title and dismiss
 .modal-header {
   padding: $modal-title-padding;
-  border-bottom: 1px solid $modal-header-border-color;
+  padding-bottom: 0;
+  //border-bottom: 1px solid $modal-header-border-color;
   @include clearfix;
 }
 // Close icon
@@ -102,8 +103,9 @@
 // Footer (for actions)
 .modal-footer {
   padding: $modal-inner-padding;
-  text-align: right; // right align buttons
-  border-top: 1px solid $modal-footer-border-color;
+  padding-top: 0;
+  //text-align: right; // right align buttons
+  //border-top: 1px solid $modal-footer-border-color;
   @include clearfix; // clear it in case folks use .pull-* classes on buttons
 
   // Properly space out buttons

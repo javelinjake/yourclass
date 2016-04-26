@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">Sign Up</h3>
+  <h3 class="modal-title text-center">Sign Up</h3>
 </div>
 
 <div class="modal-body">
@@ -7,32 +7,25 @@
     <fieldset>
 
       <div class="form-group">
-        <label class="control-label">First Name</label>
-        <input ng-model="firstname" type="text" class="form-control"/>
+        <label class="control-label hidden">First Name</label>
+        <input ng-model="firstname" type="text" class="form-control" placeholder="First Name"/>
       </div>
       <div class="form-group">
-        <label class="control-label">Last Name</label>
-        <input ng-model="lastname" type="text" class="form-control"/>
+        <label class="control-label hidden">Last Name</label>
+        <input ng-model="lastname" type="text" class="form-control" placeholder="Last Name"/>
       </div>
       <div class="form-group">
-        <label class="control-label">Email</label>
-        <input ng-model="email" type="email" class="form-control"/>
+        <label class="control-label hidden">Email</label>
+        <input ng-model="email" type="email" class="form-control" placeholder="Email"/>
       </div>
       <div class="form-group">
-        <label class="control-label">Password</label>
-        <input ng-model="password" type="password" class="form-control"/>
+        <label class="control-label hidden">Password</label>
+        <input ng-model="password" type="password" class="form-control" placeholder="Password"/>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="submit" class="btn btn-primary btn-block">Sign up</button>
       </div>
 
     </fieldset>
   </form>
-</div>
-
-<div class="modal-footer">
-  <div ng-if="formSent" class="alert text-center" ng-class="formDone ? 'alert-success' : 'alert-danger'">
-    <span ng-if="formDone">You have signed up</span>
-    <span ng-if="!formDone">Please fill in all form-groups</span>
-  </div>
 </div>
