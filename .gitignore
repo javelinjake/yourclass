@@ -1,0 +1,10 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Build
+.idea/
+test/
+bower_components/
+build/
+node_modules/
