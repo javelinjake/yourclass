@@ -76,7 +76,7 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  @include tab-focus;
+  //@include tab-focus;
 }
 
 // Adjust output element
@@ -115,6 +115,7 @@ output {
   display: block;
   width: 100%;
   height: $input-height-large; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  position: relative;
   padding: $padding-base-vertical $padding-base-horizontal;
   font-size: $font-size-base;
   line-height: $input-height-large;
@@ -123,8 +124,8 @@ output {
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   border: 1px solid $input-border;
   border-radius: $input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
-  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
-  @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+  @include box-shadow(0 0 0 rgba(0,0,0,0));
+  @include transition(border-color ease-in-out .3s, box-shadow ease-in-out .15s);
 
   // Customize the `:focus` state to imitate native WebKit styles.
   @include form-control-focus;
@@ -155,7 +156,81 @@ output {
     cursor: $cursor-disabled;
   }
 
+  &.ng-touched {
+    &.ng-invalid {
+      border-bottom-color: $brand-pink;
+      &:focus {
+        border-bottom-color: $brand-pink;
+      }
+      &.password {
+        border-bottom-color: $input-border;
+        &:focus {
+          border-bottom-color: $input-border-focus;
+        }
+      }
+    }
+  }
+
   // [converter] extracted textarea& to textarea.form-control
+}
+
+.pass-meter {
+	width: 100%;
+  &.hidden {
+    display: block !important;
+  }
+  .pass-meter-message {
+  	display: none;
+  }
+}
+.pass-meter-col {
+	float: left;
+	width: 25%;
+  .indicator {
+    background-color: $input-border;
+    height: 1px;
+    width: 0;
+    @include transition(background-color ease-in-out .3s, width ease-in-out .3s);
+  }
+  &.poor .indicator {
+    background-color: $brand-pink;
+    width: 100%
+  }
+  &.weak .indicator {
+    background-color: $brand-orange;
+    width: 100%
+  }
+  &.good .indicator {
+    background-color: $brand-blue;
+    width: 100%
+  }
+  &.strong .indicator {
+    background-color: $brand-green;
+    width: 100%
+  }
+}
+
+.signup-separator {
+  background: none;
+  height: 34px;
+  position: relative;
+  text-align: center;
+  margin: 10px 0;
+  hr {
+    margin: -16px auto 10px;
+    width: 100%;
+  }
+  span {
+    background-color: #fff;
+    display: inline-block;
+    padding: 4px 8px;
+  }
+}
+
+.login-switch {
+  height: 31px;
+  line-height: 31px;
+  font-weight: 300;
 }
 
 // Reset height for `textarea`s

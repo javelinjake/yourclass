@@ -196,6 +196,8 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
 	// Create user
 	vm.addClass = function() {
 
+    $log.info(vm.startTime);
+
     var startTimeHour = vm.startTime.getHours(),
         startTimeSuffix = (startTimeHour >= 12)? 'pm' : 'am',
         startTimeHour = (startTimeHour > 12)? startTimeHour -12 : startTimeHour,

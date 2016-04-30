@@ -16,12 +16,22 @@ $gray-light:             #bbb !default;
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 $white:                  #fff;
 
-$brand-primary:         #2196F3 !default;
-$brand-success:         #4CAF50 !default;
+$brand-primary:         #00a7bb !default;
+$brand-success:         #26973c !default;
 $brand-info:            #9C27B0 !default;
-$brand-warning:         #ff9800 !default;
+$brand-warning:         #f78333 !default;
 $brand-danger:          #e51c23 !default;
 
+$brand-blue: #00a7bb !default;
+$brand-dark-purple: #54004f !default;
+$brand-purple: #642891 !default;
+$brand-green: #26973c !default;
+$brand-light-green: #69b87c !default;
+$brand-yuck-yellow: #d5e000 !default;
+$brand-yellow: #f6ee00 !default;
+$brand-salmon: #f45c69 !default;
+$brand-orange: #f78333 !default;
+$brand-pink: #ef0069 !default;
 
 //== Scaffolding
 //
@@ -44,22 +54,27 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
-//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
-$font-family-base:        $font-family-sans-serif !default;
+$web-font-path: "https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Muli:400,300|Merriweather+Sans:400,700|Varela+Round'" !default;
+@import url($web-font-path);
+
+$font-family-oxygen:       "Oxygen", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-muli:         "Muli", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-merriweather: "Merriweather Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-varela:       "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+
+$font-family-base:        $font-family-oxygen !default;
+$font-family-heading:     $font-family-oxygen !default;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.1)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.9)) !default; // ~12px
 
-$font-size-h1:            40px !default;
+$font-size-h1:            35px !default;
 $font-size-h2:            30px !default;
-$font-size-h3:            25px !default;
-$font-size-h4:            20px !default;
-$font-size-h5:            18px !default;
-$font-size-h6:            15px !default;
+$font-size-h3:            20px !default;
+$font-size-h4:            15px !default;
+$font-size-h5:            12px !default;
+$font-size-h6:            10px !default;
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.846 !default; // 20/14
@@ -67,8 +82,8 @@ $line-height-base:        1.846 !default; // 20/14
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
-$headings-font-family:    inherit !default;
-$headings-font-weight:    400 !default;
+$headings-font-family:    $font-family-heading !default;
+$headings-font-weight:    600 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          #444 !default;
 
@@ -80,9 +95,9 @@ $headings-color:          #444 !default;
 //** Load fonts from this directory.
 $icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../../fonts/") !default;
 //** File name for all font files.
-$icon-font-name:          "glyphicons-halflings-regular" !default;
+$icon-font-name:          "yourclass" !default;
 //** Element ID within SVG icon file.
-$icon-font-svg-id:        "glyphicons_halflingsregular" !default;
+$icon-font-svg-id:        "yourclass" !default;
 
 
 //== Components
@@ -170,6 +185,10 @@ $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
 $btn-danger-border:              transparent !default;
 
+$btn-alternative-color:          $brand-primary !default;
+$btn-alternative-bg:             #fff !default;
+$btn-alternative-border:         $brand-primary !default;
+
 $btn-link-disabled-color:        $gray-light !default;
 
 // Allows for customizing button radius independently from global border radius
@@ -190,7 +209,7 @@ $input-bg-disabled:              transparent !default;
 //** Text color for `<input>`s
 $input-color:                    $gray !default;
 //** `<input>` border color
-$input-border:                   transparent !default;
+$input-border:                   #efefef !default;
 
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -202,7 +221,7 @@ $input-border-radius-large:      $border-radius-large !default;
 $input-border-radius-small:      $border-radius-small !default;
 
 //** Border color for inputs on focus
-$input-border-focus:             #66afe9 !default;
+$input-border-focus:             #ddd !default;
 
 //** Placeholder text color
 $input-color-placeholder:        $gray-light !default;
@@ -498,20 +517,20 @@ $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-$state-success-text:             $brand-success !default;
-$state-success-bg:               #dff0d8 !default;
+$state-success-text:             $white !default;
+$state-success-bg:               $brand-green !default;
 $state-success-border:           darken(adjust-hue($state-success-bg, -10), 5%) !default;
 
-$state-info-text:                $brand-info !default;
-$state-info-bg:                  #e1bee7 !default;
+$state-info-text:                $white !default;
+$state-info-bg:                  $brand-blue !default;
 $state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%) !default;
 
-$state-warning-text:             $brand-warning !default;
-$state-warning-bg:               #ffe0b2 !default;
+$state-warning-text:             $white !default;
+$state-warning-bg:               $brand-orange !default;
 $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%) !default;
 
-$state-danger-text:              $brand-danger !default;
-$state-danger-bg:                #f9bdbb !default;
+$state-danger-text:              $white !default;
+$state-danger-bg:                $brand-pink !default;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
 
@@ -615,7 +634,7 @@ $modal-footer-border-color:   $modal-header-border-color !default;
 
 $modal-lg:                    900px !default;
 $modal-md:                    600px !default;
-$modal-sm:                    300px !default;
+$modal-sm:                    350px !default;
 
 
 //== Alerts

@@ -15,17 +15,20 @@
   touch-action: manipulation;
   cursor: pointer;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   white-space: nowrap;
+  @include opacity(1);
   @include button-size($padding-base-vertical + 4, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
   @include user-select(none);
+  @include transition(color ease-in-out .15s, background ease-in-out .15s, opacity ease-in-out .15s, border ease-in-out, .15s);
 
   &,
   &:active,
   &.active {
     &:focus,
     &.focus {
-      @include tab-focus;
+      //@include tab-focus;
+      outline: 0;
     }
   }
 
@@ -40,15 +43,73 @@
   &.active {
     outline: 0;
     background-image: none;
-    @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+    //@include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
   }
 
   &.disabled,
   &[disabled],
   fieldset[disabled] & {
     cursor: $cursor-disabled;
-    @include opacity(.65);
+    @include opacity(.40);
     @include box-shadow(none);
+  }
+
+  .text {
+    @include translate(0, 0);
+    @include opacity(1);
+    visibility: visible;
+    @include transition(all ease-in-out .2s);
+  }
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.6);
+    @include opacity(0);
+    visibility: hidden;
+    @include transition-transform(ease-in 5s);
+    @include translate(-100%, 0);
+  }
+  &:after {
+    content: "Submitting...";
+    font-size: 14px;
+    line-height: 1;
+    display: block;
+    position: absolute;
+    top: 16px;
+    left: 0;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.6);
+    @include opacity(0);
+    visibility: hidden;
+    @include transition(all ease-in-out .2s);
+    @include translate(0, -40px);
+  }
+
+  &.loading {
+    cursor: $cursor-disabled;
+    overflow: hidden;
+    position: relative;
+    .text {
+      display: block;
+      @include translate(0, 40px);
+      @include opacity(0);
+      visibility: hidden;
+    }
+    &:before {
+      @include opacity(1);
+      visibility: visible;
+      @include translate(0, 0);
+    }
+    &:after {
+      @include opacity(1);
+      visibility: visible;
+      @include translate(0, 0);
+    }
   }
 
   // [converter] extracted a& to a.btn
@@ -56,6 +117,7 @@
 
 a.btn {
   &.disabled,
+  &.loading,
   fieldset[disabled] & {
     pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
   }
@@ -86,6 +148,9 @@ a.btn {
 // Danger and error appear as red
 .btn-danger {
   @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+}
+.btn-alternative {
+  @include button-variant($btn-alternative-color, $btn-alternative-bg, $btn-alternative-border);
 }
 
 
@@ -127,7 +192,13 @@ a.btn {
     }
   }
 }
-
+.btn-alternative {
+  &:hover, &:focus, &:active {
+    background-color: $btn-alternative-color;
+    color: $btn-alternative-bg;
+    border-color: $btn-alternative-color;
+  }
+}
 
 // Button Sizes
 // --------------------------------------------------
@@ -155,7 +226,7 @@ a.btn {
 
 // Vertically space out multiple block buttons
 .btn-block + .btn-block {
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 // Specificity overrides
@@ -164,5 +235,41 @@ input[type="reset"],
 input[type="button"] {
   &.btn-block {
     width: 100%;
+  }
+}
+
+.btn-social {
+  position: relative;
+  .icon, .image {
+    position: absolute;
+    top: $padding-base-horizontal - 2;
+    left: $padding-base-horizontal;
+  }
+}
+
+.btn-google {
+  background-color: #ffffff;
+  border: 1px solid #c4c4c4;
+  color: #565a5c;
+  &:hover {
+    border-color: darken(#c4c4c4, 15%);
+  }
+  .image-google {
+    background-image: url(../images/google-icon.png);
+    background-size: contain;
+    height: 18px;
+    width: 18px;
+  }
+}
+.btn-facebook {
+  background-color: #3B5998;
+  color: #ffffff;
+  border: 1px solid transparent;
+  &:hover, &:focus {
+    background-color: lighten(#3B5998, 10%);
+    color: #ffffff;
+  }
+  .icon {
+    font-size: 18px;
   }
 }

@@ -10,6 +10,7 @@ import 'angular-animate';
 import 'angular-cookies';
 import 'ng-file-upload';
 import 'angular-breadcrumb';
+import 'ng-password-meter';
 import './templates';
 import './filters';
 import './controllers';
@@ -19,11 +20,13 @@ import './directives';
 // create and bootstrap application
 const requires = [
   'ui.router',
+  'ngAnimate',
   'ui.bootstrap',
   'ngCookies',
   'ngFileUpload',
   'templates',
   'ncy-angular-breadcrumb',
+  'ngPasswordMeter',
   'app.filters',
   'app.controllers',
   'app.services',

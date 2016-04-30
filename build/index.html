@@ -37,22 +37,28 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body class="{{pageClass}}">
-    <div ng-if="false">
-      <!-- <h1>Loading the application, please hold on</h1>
-      <div class="aCssSpinner"></div> -->
+
+      <div class="alert text-center" ng-class="alertResponse" ng-if="alert">
+        {{ alertMessage }}
+      </div>
+
+      <header ng-include="'globals/header.html'"></header>
+
+      <div class="progress" ng-class="{active: !pageRendered}">
+        <div class="progress-bar"></div>
+      </div>
+
+      <div ng-if="pageRendered" ng-cloak>
+
+        <div ncy-breadcrumb></div>
+
+        <div ui-view class="main"></div>
+
+        <footer ng-include="'globals/footer.html'"></footer>
+
+      </div>
+
     </div>
-
-    <div class="alert alert-success text-center">
-      {{ alert }}
-    </div>
-
-    <header ng-include="'globals/header.html'"></header>
-
-    <div ncy-breadcrumb></div>
-
-    <div ui-view class="main"></div>
-
-    <footer ng-include="'globals/footer.html'"></footer>
 
     <script src="js/main.js"></script>
 
