@@ -416,7 +416,7 @@ $navbar-inverse-bg:                         $brand-primary !default;
 $navbar-inverse-border:                     transparent !default;
 
 // Inverted navbar links
-$navbar-inverse-link-color:                 lighten($brand-primary, 30%) !default;
+$navbar-inverse-link-color:                 lighten($brand-primary, 100%) !default;
 $navbar-inverse-link-hover-color:           #fff !default;
 $navbar-inverse-link-hover-bg:              transparent !default;
 $navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color !default;

@@ -151,6 +151,7 @@ a.btn {
 }
 .btn-alternative {
   @include button-variant($btn-alternative-color, $btn-alternative-bg, $btn-alternative-border);
+  border-width: 1px;
 }
 
 
