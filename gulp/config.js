@@ -62,10 +62,10 @@ export default {
     prodSourcemap: false
   },
 
-  test: {
-    karma: 'test/karma.conf.js',
-    protractor: 'test/protractor.conf.js'
-  },
+  // test: {
+  //   karma: 'test/karma.conf.js',
+  //   protractor: 'test/protractor.conf.js'
+  // },
 
   init: function() {
     this.views.watch = [
