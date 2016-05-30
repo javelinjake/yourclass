@@ -10,7 +10,7 @@ import 'angular-animate';
 import 'angular-cookies';
 import 'ng-file-upload';
 import 'angular-breadcrumb';
-import 'ng-password-meter';
+//import 'ng-password-meter';
 import './templates';
 import './filters';
 import './controllers';
@@ -26,7 +26,7 @@ const requires = [
   'ngFileUpload',
   'templates',
   'ncy-angular-breadcrumb',
-  'ngPasswordMeter',
+  //'ngPasswordMeter',
   'app.filters',
   'app.controllers',
   'app.services',
