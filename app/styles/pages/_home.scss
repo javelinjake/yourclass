@@ -6,6 +6,10 @@
   .navbar-inverse {
     background-color: transparent;
     z-index: 10;
+
+    .search-form {
+      display: none; // For now
+    }
   }
   .navbar-inverse .navbar-nav > .open > a {background-color: transparent;}
 

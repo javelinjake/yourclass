@@ -1,26 +1,46 @@
 // Only page specific CSS and only if needed
 .class {
-
-  .navbar-inverse {
-    background-color: transparent;
-    z-index: 10;
-  }
-  .navbar-inverse .navbar-nav > .open > a {background-color: transparent;}
-
-  .hero {margin-top: -($navbar-height)}
-
-  .search-form {
-    display: none; // For now
-  }
-
-  .hero .content {
-    padding: 65px 0;
-    max-width: 450px;
-    margin: 0 auto;
-  }
-
-  h1.heading {
-    margin-bottom: 0;
-  }
-
+    .navbar-inverse {
+        background-color: transparent;
+        z-index: 10;
+    }
+    .navbar-inverse .navbar-nav > .open > a {
+        background-color: transparent;
+    }
+    .hero {
+        margin-top: -($navbar-height);
+    }
+    .search-form {
+        display: none; // For now
+    }
+    .hero .content {
+        padding: 65px 0;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+    h1.heading {
+        margin-bottom: 0;
+    }
+    .container {
+      position: relative;
+    }
+}
+.class-teacher {
+    width: 150px;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+}
+.class-content {
+  padding-right: 315px;
+}
+.class-booking-wrapper {
+  position: absolute;
+  top: 280px;
+  right: 0;
+  width: 300px;
+}
+.class-booking {
+  background-color: $white;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
 }

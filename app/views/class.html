@@ -1,36 +1,50 @@
 <section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
-  <div class="container clear">
-    <div class="content">
+    <div class="container clear">
 
-      <div class="text-center text">
-        <h1 class="heading no-margin-bottom">{{ class.class.title }}</h1>
-        <small class="italic">
-          Sydney, NSW
-        </small>
-        <div class="review-stars">
-          <div class="stars">
-            <span class="icon icon-star"></span>
-            <span class="icon icon-star"></span>
-            <span class="icon icon-star"></span>
-            <span class="icon icon-star_half"></span>
-            <span class="icon icon-star_border"></span>
-          </div>
-          <div class="">
-            4 Reviews
-          </div>
+        <div class="class-teacher">
+            <div class="thumbnail">
+                <img class="img-rounded" ng-src="http://dev.yourclass.co/web/uploads/images/user_photos/200/34.png"/>
+            </div>
+            <div class="text-center text">
+                <div>
+                    {{ class.class.teacher.profile.firstName | capitalize }}
+                    {{ class.class.teacher.profile.lastName | capitalize }}
+                </div>
+                <small class="italic">
+                    Teacher
+                </small>
+            </div>
         </div>
-        <div class="">
-          Football skills class is based in Moore Park, Sydney. It is an hour long session and takes up to 10 students.
-        </div>
-      </div>
 
+        <div class="content">
+
+            <div class="text-center text">
+                <h1>{{ class.class.title }}</h1>
+                <small class="italic">
+                    Sydney, NSW
+                </small>
+                <div class="review-stars">
+                    <div class="stars">
+                        <span class="icon icon-star"></span>
+                        <span class="icon icon-star"></span>
+                        <span class="icon icon-star"></span>
+                        <span class="icon icon-star_half"></span>
+                        <span class="icon icon-star_border"></span>
+                    </div>
+                    <div class="">
+                        4 Reviews
+                    </div>
+                </div>
+                <div class="">
+                    Football skills class is based in Moore Park, Sydney. It is an hour long session and takes up to 10 students.
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 </section>
 
-<div class="container">
-
-  <!--
+<!--
 
   Class title
 
@@ -54,96 +68,184 @@
 
 
  -->
+<section>
+    <div class="container">
+        <div class="class-content">
 
-  <h1 class="heading">{{ class.class.title }}</h1>
+            <h2>{{ class.class.title }}
+                taught by
+                {{ class.class.teacher.profile.firstName | capitalize }}
+                {{ class.class.teacher.profile.lastName | capitalize }}</h2>
+            <div class="class-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu mattis nunc. Nam cursus metus ac scelerisque sollicitudin. Phasellus viverra sed dolor vel ornare. Pellentesque nunc felis, congue in eros et, imperdiet consectetur erat. Mauris a
+                libero posuere, convallis mi ut, interdum diam. Nunc iaculis dapibus lorem, quis pellentesque justo tempus et. Nulla bibendum lectus scelerisque, facilisis sem vel, ornare augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Sed iaculis dignissim dolor vitae ultricies. Nullam fringilla orci eros. Phasellus vel lectus augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vestibulum id augue eu porta. In hac
+                habitasse platea dictumst.
+            </div>
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Class teacher</h3>
-    </div>
-    <div class="panel-body">
-      <div class="thumbnail">
-        <img class="img-rounded" ng-src="http://dev.yourclass.co/web/uploads/images/user_photos/200/34.png" />
-      </div>
-      <div>
-        {{ class.class.teacher.profile.firstName | capitalize }} {{ class.class.teacher.profile.lastName | capitalize }}
-      </div>
-    </div>
-  </div>
-
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Class quick details</h3>
-    </div>
-    <div class="panel-body">
-      <p>
-        Class average review rating:
-      </p>
-      <p>
-        Venue location:
-      </p>
-      <p>
-        Category: {{ class.class.category.title }}
-      </p>
-      <p>
-        Sub category: {{ class.class.subcategory.title }}
-      </p>
-      <p>
-        Short description: {{ class.class.brief }}
-      </p>
-
-    </div>
-  </div>
-
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Class more details</h3>
-    </div>
-    <div class="panel-body">
-      <h2>
-        More about {{ class.class.title | lowercase }} by {{ class.class.teacher.username }} {{ class.class.teacher.profile.firstName | capitalize }} {{ class.class.teacher.profile.lastName | capitalize }}
-      </h2>
-      <p>
-        Long description: {{ class.class.description }}
-      </p>
-      <p>
-        Class images
-      </p>
-
-    </div>
-  </div>
-
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Register</h3>
-    </div>
-    <div class="panel-body">
-      <h3>
-        ${{ class.class.price }}
-      </h3>
-      <p>
-        Dates available:
-        <div ng-repeat="classDate in class.class.validDates | limitTo:5">
-          {{ classDate }}
         </div>
-      </p>
-      <p>
-        Spots left: {{ class.class.spotsLeft }}
-      </p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="class-content">
+
+            <h2>Photos</h2>
+            <div class="class-photos">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Photo 1
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Photo 1
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Photo 1
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Photo 1
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Photo 1
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Photo 1
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="class-content">
+
+            <h2>Reviews</h2>
+            <div class="class-reviews">
+                <ul>
+                    <li>Review 1</li>
+                    <li>Review 2</li>
+                    <li>Review 3</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="class-booking-wrapper">
+  <div class="class-booking text-center">
+    <div class="class-price text-uppercase">
+      $30 per person
+    </div>
+    <div class="">
+      Next available classes <span class="right">View all</span>
+    </div>
+    <ul>
+      <li>Class time 1</li>
+      <li>Class time 2</li>
+      <li>Class time 3</li>
+      <li>Class time 4</li>
+    </ul>
+  </div>
+</section>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Class quick details</h3>
+    </div>
+    <div class="panel-body">
+        <p>
+            Class average review rating:
+        </p>
+        <p>
+            Venue location:
+        </p>
+        <p>
+            Category:
+            {{ class.class.category.title }}
+        </p>
+        <p>
+            Sub category:
+            {{ class.class.subcategory.title }}
+        </p>
+        <p>
+            Short description:
+            {{ class.class.brief }}
+        </p>
 
     </div>
-  </div>
+</div>
 
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Class more details</h3>
+    </div>
+    <div class="panel-body">
+        <h2>
+            More about
+            {{ class.class.title | lowercase }}
+            by
+            {{ class.class.teacher.username }}
+            {{ class.class.teacher.profile.firstName | capitalize }}
+            {{ class.class.teacher.profile.lastName | capitalize }}
+        </h2>
+        <p>
+            Long description:
+            {{ class.class.description }}
+        </p>
+        <p>
+            Class images
+        </p>
+
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Register</h3>
+    </div>
+    <div class="panel-body">
+        <h3>
+            ${{ class.class.price }}
+        </h3>
+        <p>
+            Dates available:
+            <div ng-repeat="classDate in class.class.validDates | limitTo:5">
+                {{ classDate }}
+            </div>
+        </p>
+        <p>
+            Spots left:
+            {{ class.class.spotsLeft }}
+        </p>
+
+    </div>
 </div>
 
 <button type="button" class="btn btn-default" ng-click="user.isCollapsed = !user.isCollapsed">View JSON</button>
 <hr>
 <div uib-collapse="user.isCollapsed">
-  <div class="well well-lg">
+    <div class="well well-lg">
 
-    <pre>
+        <pre>
       {{ class.class | json }}
     </pre>
 
-  </div>
+    </div>
 </div>
