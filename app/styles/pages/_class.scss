@@ -1,0 +1,26 @@
+// Only page specific CSS and only if needed
+.class {
+
+  .navbar-inverse {
+    background-color: transparent;
+    z-index: 10;
+  }
+  .navbar-inverse .navbar-nav > .open > a {background-color: transparent;}
+
+  .hero {margin-top: -($navbar-height)}
+
+  .search-form {
+    display: none; // For now
+  }
+
+  .hero .content {
+    padding: 65px 0;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  h1.heading {
+    margin-bottom: 0;
+  }
+
+}

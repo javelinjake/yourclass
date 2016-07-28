@@ -8,25 +8,37 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand logo" href="/">
-        <img src="images/your-class-logo-basic.png">
+        <img src="images/logo.png">
       </a>
     </div>
 
+    <form name="form" ng-submit="search()" class="search-form clearfix">
+      <fieldset>
+
+        <div class="form-group">
+          <label class="control-label hidden">Keyword</label>
+          <input ng-model="class" type="text" class="form-control" placeholder="Class"/>
+        </div>
+        <div class="form-group">
+          <label class="control-label hidden">Location</label>
+          <input ng-model="location" type="text" class="form-control" placeholder="Location"/>
+        </div>
+        <div class="search-submit">
+          <button type="submit" class="btn btn-primary btn-block">
+            <span class="text">Search</span>
+          </button>
+        </div>
+
+      </fieldset>
+    </form>
+
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li ng-class="{ 'active': pageClass === 'home' }">
-          <a href="/">Home</a>
-        </li>
-        <li ng-class="{ 'active': pageClass === 'search' }">
-          <a href="/search">Search</a>
-        </li>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="#" ng-click="SignUpModal('sm')">Sign Up</a>
+          <a href="#" ng-click="SignUpModal('sm')" ng-if="!userLoggedIn">Sign Up</a>
         </li>
         <li>
-          <a href="#" ng-click="LogInModal('sm')">Log In</a>
+          <a href="#" ng-click="LogInModal('sm')" ng-if="!userLoggedIn">Log In</a>
         </li>
         <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
           <a href="/user/dashboard" role="button" uib-dropdown-toggle>

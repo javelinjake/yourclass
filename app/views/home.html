@@ -1,14 +1,87 @@
-<section class="hero" style="background-image: url(http://yourclass.co/wp-content/uploads/2016/02/cooking-class-copy.jpg)">
+<section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
   <div class="container clear">
     <div class="content">
 
+      <div class="logo-wrapper">
+        <img src="/images/logo.png" alt="Your Class - logo"/>
+      </div>
+
       <h1 class="text-center">
-        Teach &amp; Learn with Your Class
+        Your Class
       </h1>
+
       <div class="text-center lead">
-        Removing barriers for teaching and learning
+        Inspiring everyone to learn, share and teach what you love
+      </div>
+
+      <form name="form" ng-submit="search()" class="search-form clearfix">
+        <fieldset>
+
+          <div class="form-group">
+            <label class="control-label hidden">Keyword</label>
+            <input ng-model="class" type="text" class="form-control" placeholder="Class"/>
+          </div>
+          <div class="form-group">
+            <label class="control-label hidden">Location</label>
+            <input ng-model="location" type="text" class="form-control" placeholder="Location"/>
+          </div>
+          <div class="search-submit">
+            <button type="submit" class="btn btn-primary btn-block">
+              <span class="text">Search</span>
+            </button>
+          </div>
+
+        </fieldset>
+      </form>
+
+      <div class="info-button center-block">
+        <button type="submit" ng-click="home.aboutModal('lg')" class="btn btn-info btn-block btn-shadow">
+          <span class="text">Who are we?</span>
+        </button>
       </div>
 
     </div>
   </div>
+</section>
+
+<section class="top-categories container">
+  <h2 class="text-center">Top categories</h2>
+
+  <ul class="list-unstyled row">
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Sports</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Academic</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Arts</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Cooking</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Life skills</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Hobbies</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Yoga</a>
+    </li>
+    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a href="#">Fitness</a>
+    </li>
+  </ul>
+</section>
+
+<section class="top-categories container">
+  <h2 class="text-center">Latest classes</h2>
+
+  <ul class="list-unstyled row">
+    <li ng-repeat="classes in home.classesList | limitTo: '-8'" class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
+      <a ui-sref="Class({ classAlias:classes.alias })">{{ classes.title }}</a>
+    </li>
+  </ul>
+
 </section>

@@ -11,6 +11,7 @@
   margin-bottom: 0; // For input.btn
   font-weight: $btn-font-weight;
   text-align: center;
+  text-transform: uppercase;
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
@@ -140,6 +141,7 @@ a.btn {
 // Info appears as blue-green
 .btn-info {
   @include button-variant($btn-info-color, $btn-info-bg, $btn-info-border);
+  font-size: $font-size-xsmall;
 }
 // Warning appears as orange
 .btn-warning {
@@ -210,7 +212,7 @@ a.btn {
 }
 .btn-sm {
   // line-height: ensure proper height of button next to small input
-  @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
+  @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-xsmall, $line-height-small, $btn-border-radius-small);
 }
 .btn-xs {
   @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
@@ -237,6 +239,9 @@ input[type="button"] {
   &.btn-block {
     width: 100%;
   }
+}
+.btn-shadow {
+  @include box-shadow(0 2px 2px 0 rgba(0, 0, 0, 0.2));
 }
 
 .btn-social {

@@ -6,7 +6,6 @@
 // inline element with the appropriate classes, like so:
 //
 // <a href="#"><span class="glyphicon glyphicon-star"></span> Star</a>
-
 // @at-root {
 //   // Import the fonts
 //   @font-face {
@@ -305,35 +304,60 @@
 // .glyphicon-menu-right             { &:before { content: "\e258"; } }
 // .glyphicon-menu-down              { &:before { content: "\e259"; } }
 // .glyphicon-menu-up                { &:before { content: "\e260"; } }
-
-
 @at-root {
-  // Import the fonts
-  @font-face {
-    font-family: 'Your Class Icon Font';
-    src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.eot'), '#{$icon-font-path}#{$icon-font-name}.eot'));
-    src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.eot?#iefix'), '#{$icon-font-path}#{$icon-font-name}.eot?#iefix')) format('embedded-opentype'),
-         url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.woff'), '#{$icon-font-path}#{$icon-font-name}.woff')) format('woff'),
-         url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.ttf'), '#{$icon-font-path}#{$icon-font-name}.ttf')) format('truetype'),
-         url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}'), '#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}')) format('svg');
-  }
+    // Import the fonts
+    @font-face {
+        font-family: 'yourclass';
+        src:
+          url('#{$icon-font-path}#{$icon-font-name}.ttf?3dvxqs') format('truetype'),
+          url('#{$icon-font-path}#{$icon-font-name}.woff?3dvxqs') format('woff'),
+          url('#{$icon-font-path}#{$icon-font-name}.svg?3dvxqs#yourclass') format('svg');
+    }
 }
-
 // Catchall baseclass
 .icon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Your Class Icon Font';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'yourclass';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-
-.icon-mail:before {
+.icon-check:before {
+    content: "\e5ca";
+}
+.icon-check_box:before {
+    content: "\e834";
+}
+.icon-check_box_outline_blank:before {
+    content: "\e835";
+}
+.icon-navigate_before:before {
+    content: "\e408";
+}
+.icon-navigate_next:before {
+    content: "\e409";
+}
+.icon-expand_less:before {
+    content: "\e5ce";
+}
+.icon-expand_more:before {
+    content: "\e5cf";
+}
+.icon-mail_outline:before {
     content: "\e0e1";
+}
+.icon-star_border:before {
+    content: "\e83a";
+}
+.icon-star_half:before {
+    content: "\e839";
+}
+.icon-star:before {
+    content: "\e838";
 }
 .icon-facebook:before {
     content: "\e900";

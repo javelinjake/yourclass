@@ -55,7 +55,7 @@ $link-hover-decoration: underline !default;
 //## Font, line-height, and color for body text, headings, and more.
 
 $web-font-path: "https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Muli:400,300|Merriweather+Sans:400,700|Varela+Round'" !default;
-@import url($web-font-path);
+//@import url($web-font-path);
 
 $font-family-oxygen:       "Oxygen", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-muli:         "Muli", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
@@ -68,22 +68,25 @@ $font-family-heading:     $font-family-oxygen !default;
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.1)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.9)) !default; // ~12px
+$font-size-xsmall:        ceil(($font-size-base * 0.7)) !default; // ~12px
 
-$font-size-h1:            35px !default;
-$font-size-h2:            30px !default;
+$font-size-h1:            30px !default;
+$font-size-h2:            25px !default;
 $font-size-h3:            20px !default;
 $font-size-h4:            15px !default;
 $font-size-h5:            12px !default;
 $font-size-h6:            10px !default;
 
+$font-weight:             300 !default;
+
 //** Unit-less `line-height` for use in components like buttons.
-$line-height-base:        1.846 !default; // 20/14
+$line-height-base:        1.5 !default; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    $font-family-heading !default;
-$headings-font-weight:    600 !default;
+$headings-font-weight:    300 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          #444 !default;
 
@@ -93,7 +96,7 @@ $headings-color:          #444 !default;
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
 
 //** Load fonts from this directory.
-$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../../fonts/") !default;
+$icon-font-path:          "../../fonts/" !default;
 //** File name for all font files.
 $icon-font-name:          "yourclass" !default;
 //** Element ID within SVG icon file.
@@ -159,14 +162,14 @@ $table-border-color:            #ddd !default;
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-$btn-font-weight:                normal !default;
+$btn-font-weight:                300 !default;
 
 $btn-default-color:              #444 !default;
 $btn-default-bg:                 #fff !default;
 $btn-default-border:             transparent !default;
 
 $btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-bg:                 $brand-orange !default;
 $btn-primary-border:             transparent !default;
 
 $btn-success-color:              #fff !default;
@@ -174,7 +177,7 @@ $btn-success-bg:                 $brand-success !default;
 $btn-success-border:             transparent !default;
 
 $btn-info-color:                 #fff !default;
-$btn-info-bg:                    $brand-info !default;
+$btn-info-bg:                    $brand-pink !default;
 $btn-info-border:                transparent !default;
 
 $btn-warning-color:              #fff !default;
@@ -841,7 +844,7 @@ $carousel-caption-color:                      #fff !default;
 //
 //##
 
-$close-font-weight:           normal !default;
+$close-font-weight:           300 !default;
 $close-color:                 #000 !default;
 $close-text-shadow:           none !default;
 
@@ -888,3 +891,16 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 $dl-horizontal-breakpoint:    $grid-float-breakpoint !default;
 //** Horizontal line color.
 $hr-border:                   $gray-lighter !default;
+
+
+
+// hero
+$hero-padding: 100px;
+$hero-logo-width: 150px;
+$info-button-width: 100px;
+
+
+
+// search-form
+$search-button-width: 100px;
+$search-form-width: 600px;
