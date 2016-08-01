@@ -6,10 +6,10 @@
 // Base class
 .panel {
   margin-bottom: $line-height-computed;
-  background-color: $panel-bg;
-  border: 1px solid transparent;
-  border-radius: $panel-border-radius;
-  @include box-shadow(0 1px 1px rgba(0,0,0,.05));
+  background-color: $white;
+  //border: 1px solid transparent;
+  //border-radius: $panel-border-radius;
+  //@include box-shadow(0 1px 1px rgba(0,0,0,.05));
 }
 
 // Panel contents
@@ -257,6 +257,9 @@
 // Contextual variations
 .panel-default {
   @include panel-variant($panel-default-border, $panel-default-text, $panel-default-heading-bg, $panel-default-border);
+}
+.panel-grey {
+  background-color: $gray-lighter;
 }
 .panel-primary {
   @include panel-variant($panel-primary-border, $panel-primary-text, $panel-primary-heading-bg, $panel-primary-border);

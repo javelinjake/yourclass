@@ -1,0 +1,14 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Listings</h3>
+  </div>
+  <div class="panel-body">
+
+    <ul ng-repeat="listing in user.userListings">
+      <li>
+        <a ui-sref="Class({ classAlias:listing.alias })">{{ listing.title }}</a>
+      </li>
+    </ul>
+
+  </div>
+</div>

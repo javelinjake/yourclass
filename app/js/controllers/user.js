@@ -253,6 +253,13 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
 		});
 	}
 
+  // Get list of listings from user
+  $http.get($rootScope.apiUrl + 'classes/list',  {params: {'_teacherId': $rootScope.userId}})
+    .then(function successCallback(response) {
+      vm.userListings = response.data.data;
+    }, function errorCallback(response) {
+    });
+
 }
 
 export default {

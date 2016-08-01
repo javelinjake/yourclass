@@ -1,7 +1,33 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Personal details</h3>
+<div class="row">
+  <div class="col-sm-3">
+    <div ng-repeat="userImage in user.userData.photos" ng-if="userImage.isMain == 1" class="thumbnail">
+      <img class="img-rounded" ng-src="{{imageUrl}}{{userImage.src}}" />
+    </div>
+    <div class="text-center" ng-if="user.userData.profile.firstName">
+      <span>{{ user.userData.profile.firstName }} {{ user.userData.profile.lastName }}</span>
+      <div>
+        <a href="/user/edit-profile">Edit Profile</a>
+      </div>
+    </div>
   </div>
+  <div class="col-sm-9">
+    <div class="panel">
+      <h2>Listings</h2>
+      <div class="panel">
+        <ul ng-repeat="listing in user.userListings">
+          <li>
+            <a ui-sref="Class({ classAlias:listing.alias })">{{ listing.title }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel panel-grey">
+      <h3>Classes</h3>
+    </div>
+  </div>
+</div>
+
+<div class="panel hide">
   <div class="panel-body">
     <p ng-if="user.userData.roles[0]">
       <span class="label label-success" ng-repeat="userRole in user.userData.roles">{{ userRole.title }}</span>
