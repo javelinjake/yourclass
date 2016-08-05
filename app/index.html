@@ -36,7 +36,7 @@
 
     <link rel="stylesheet" href="css/main.css">
   </head>
-  <body class="{{$state.current.class}}">
+  <body class="{{$state.current.class}} {{$loggedInUser}}">
 
       <div class="alert text-center" ng-class="alertResponse" ng-if="alert">
         {{ alertMessage }}

@@ -6,10 +6,11 @@
 // Base class
 .panel {
   margin-bottom: $line-height-computed;
+  margin-bottom: 30px;
   background-color: $white;
-  //border: 1px solid transparent;
+  border: 1px solid #efefef;
   //border-radius: $panel-border-radius;
-  //@include box-shadow(0 1px 1px rgba(0,0,0,.05));
+  //@include box-shadow(0 1px 1px rgba(0,0,0,.2));
 }
 
 // Panel contents
@@ -21,15 +22,17 @@
 // Optional heading
 .panel-heading {
   padding: $panel-heading-padding;
-  border-bottom: 1px solid transparent;
-  @include border-top-radius(($panel-border-radius - 1));
+  background-color: #efefef;
+  //border-bottom: 1px solid transparent;
+  //@include border-top-radius(($panel-border-radius - 1));
 
   > .dropdown .dropdown-toggle {
     color: inherit;
   }
-  h2 {
-    color: $panel-primary-text;
+  h2, h3, h4, h5 {
+    //color: $panel-primary-text;
     margin: 0;
+    padding: 0;
   }
 }
 

@@ -104,8 +104,8 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
 
   $urlRouterProvider.otherwise('/');
   $breadcrumbProvider.setOptions({
-      prefixStateName: 'Home'
-    });
+    prefixStateName: 'Home'
+  });
 
 }
 
