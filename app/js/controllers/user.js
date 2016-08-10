@@ -193,65 +193,113 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
     vm.subCategory = category;
   }
 
-	// Create user
+  vm.showAddClass = true;
+  vm.showAddClassOptional = false;
+  vm.showAddClassDates = false;
+  vm.showAddClassSuccess = false;
+
+	// Add class basic
 	vm.addClass = function() {
-
-    $log.info(vm.startTime);
-
-    var startTimeHour = vm.startTime.getHours(),
-        startTimeSuffix = (startTimeHour >= 12)? 'pm' : 'am',
-        startTimeHour = (startTimeHour > 12)? startTimeHour -12 : startTimeHour,
-        startTimeHour = (startTimeHour == '00')? 12 : startTimeHour,
-        startTimeMinute = vm.startTime.getMinutes(),
-
-        // The start time - e.g. 12:00pm
-        startTime = startTimeHour + ":" + startTimeMinute + startTimeSuffix;
-
-    var endTimeHour = vm.endTime.getHours(),
-        endTimeSuffix = (endTimeHour >= 12)? 'pm' : 'am',
-        endTimeHour = (endTimeHour > 12)? endTimeHour -12 : endTimeHour,
-        endTimeHour = (endTimeHour == '00')? 12 : endTimeHour,
-        endTimeMinute = vm.endTime.getMinutes(),
-
-        // The end time - e.g. 3:00pm
-        endTime = endTimeHour + ":" + endTimeMinute + endTimeSuffix;
 
 		var classData = {
 			'title': vm.title, //'rest class title'
-			'brief': vm.brief, //'rest brief'
-			//'description': vm.description, //'some description'
 			'teacherId': $rootScope.userId, //'78'
       'categoryId': vm.categoryId, //2
       'subcategoryId': vm.subcategoryId, //2
-			'intervalId': 1, //2
-			'startTime': startTime, //'02:30 PM'
-			'endTime': endTime, //'05:00 PM'
-			'startDate': '2016-03-29', //'2015-12-22'
-			'endDate': '2017-03-29', //'2015-12-30'
-			'dayIds': [1,2,3,4,5,6,7], //[2,4,6]
 			'price': vm.price, //'60.25'
 			'size': vm.size, //20
-			'bookingType': 'instant', //'instant'
 			'venueType': 'private' //'private'
 		};
 
-		console.log(classData);
-
 		$http.post($rootScope.apiUrl + 'classes/create', classData).success((data) => {
-			if (data.result === 0) {
-				vm.formDone = false;
-			} else {
-				vm.formDone = true;
-			}
+      vm.showAddClass = false;
+      vm.showAddClassOptional = true;
 
-			vm.formSent = true;
+      vm.currentClassTitle = vm.title;
 		}).error((err, status) => {
-			vm.formSent = true;
 
-      $log.error(err);
-      $log.error(status);
 		});
 	}
+
+  // Add class optional
+  vm.addClassOptional = function() {
+
+    // Get list of latest class added
+    $http.get($rootScope.apiUrl + 'classes/one',  {params: {'_title': vm.currentClassTitle}})
+      .then(function successCallback(response) {
+        vm.currentClassId = response.data.data.id;
+
+        // Update the class
+        var classOptionalData = {
+          '_auth_key': $rootScope.authToken,
+          '_id': vm.currentClassId,
+    			'brief': vm.brief, //'rest brief'
+          'description': vm.description, //'some description'
+        };
+
+        $http.post($rootScope.apiUrl + 'classes/update', classOptionalData).success((data) => {
+          vm.showAddClassOptional = false;
+          vm.showAddClassDates = true;
+        }).error((err, status) => {
+
+        });
+
+      }, function errorCallback(response) {
+      });
+
+
+  }
+
+  vm.classOptionalSkip = function() {
+    vm.showAddClassOptional = false;
+    vm.showAddClassDates = true;
+  }
+
+  // Add class basic
+  vm.addClassDates = function() {
+
+    // $log.info(vm.startTime);
+    //
+    // var startTimeHour = vm.startTime.getHours(),
+    //     startTimeSuffix = (startTimeHour >= 12)? 'pm' : 'am',
+    //     startTimeHour = (startTimeHour > 12)? startTimeHour -12 : startTimeHour,
+    //     startTimeHour = (startTimeHour == '00')? 12 : startTimeHour,
+    //     startTimeMinute = vm.startTime.getMinutes(),
+    //
+    //     // The start time - e.g. 12:00pm
+    //     startTime = startTimeHour + ":" + startTimeMinute + startTimeSuffix;
+    //
+    // var endTimeHour = vm.endTime.getHours(),
+    //     endTimeSuffix = (endTimeHour >= 12)? 'pm' : 'am',
+    //     endTimeHour = (endTimeHour > 12)? endTimeHour -12 : endTimeHour,
+    //     endTimeHour = (endTimeHour == '00')? 12 : endTimeHour,
+    //     endTimeMinute = vm.endTime.getMinutes(),
+    //
+    //     // The end time - e.g. 3:00pm
+    //     endTime = endTimeHour + ":" + endTimeMinute + endTimeSuffix;
+
+    var classDateData = {
+			'brief': vm.brief, //'rest brief'
+      'description': vm.description, //'some description'
+      //'intervalId': 1, //2
+      //'startTime': startTime, //'02:30 PM'
+      //'endTime': endTime, //'05:00 PM'
+      //'startDate': '2016-03-29', //'2015-12-22'
+      //'endDate': '2017-03-29', //'2015-12-30'
+    };
+
+    $http.post($rootScope.apiUrl + 'classes/update', classDateData).success((data) => {
+      vm.showAddClassDates = false;
+      vm.showAddClassSuccess = true;
+    }).error((err, status) => {
+
+    });
+  }
+
+  vm.classDatesSkip = function() {
+    vm.showAddClassDates = false;
+    vm.showAddClassSuccess = true;
+  }
 
   // Get list of listings from user
   $http.get($rootScope.apiUrl + 'classes/list',  {params: {'_teacherId': $rootScope.userId}})

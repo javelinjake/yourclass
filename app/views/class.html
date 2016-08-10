@@ -2,8 +2,8 @@
     <div class="container clear">
 
         <div class="class-teacher">
-            <div class="thumbnail">
-                <img class="img-rounded" ng-src="http://dev.yourclass.co/web/uploads/images/user_photos/200/34.png"/>
+            <div class="thumbnail" ng-repeat="image in userImage" ng-if="image.isMain == 1">
+              <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
             </div>
             <div class="text-center text">
                 <div>
@@ -37,7 +37,6 @@
                 </div>
                 <div class="">
                   {{ class.class.brief }}
-                    Football skills class is based in Moore Park, Sydney. It is an hour long session and takes up to 10 students.
                 </div>
             </div>
 
@@ -79,10 +78,6 @@
                 {{ class.class.teacher.profile.lastName | capitalize }}</h2>
             <div class="class-description">
               {{ class.class.description }}
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu mattis nunc. Nam cursus metus ac scelerisque sollicitudin. Phasellus viverra sed dolor vel ornare. Pellentesque nunc felis, congue in eros et, imperdiet consectetur erat. Mauris a
-                libero posuere, convallis mi ut, interdum diam. Nunc iaculis dapibus lorem, quis pellentesque justo tempus et. Nulla bibendum lectus scelerisque, facilisis sem vel, ornare augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Sed iaculis dignissim dolor vitae ultricies. Nullam fringilla orci eros. Phasellus vel lectus augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vestibulum id augue eu porta. In hac
-                habitasse platea dictumst.
             </div>
 
         </div>
