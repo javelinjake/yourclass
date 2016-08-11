@@ -15,4 +15,8 @@
 
   .hero {margin-top: -($navbar-height)}
 
+  .navbar-links {
+    z-index: 20;
+  }
+
 }

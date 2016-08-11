@@ -258,42 +258,45 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
   // Add class basic
   vm.addClassDates = function() {
 
-    // $log.info(vm.startTime);
-    //
-    // var startTimeHour = vm.startTime.getHours(),
-    //     startTimeSuffix = (startTimeHour >= 12)? 'pm' : 'am',
-    //     startTimeHour = (startTimeHour > 12)? startTimeHour -12 : startTimeHour,
-    //     startTimeHour = (startTimeHour == '00')? 12 : startTimeHour,
-    //     startTimeMinute = vm.startTime.getMinutes(),
-    //
-    //     // The start time - e.g. 12:00pm
-    //     startTime = startTimeHour + ":" + startTimeMinute + startTimeSuffix;
-    //
-    // var endTimeHour = vm.endTime.getHours(),
-    //     endTimeSuffix = (endTimeHour >= 12)? 'pm' : 'am',
-    //     endTimeHour = (endTimeHour > 12)? endTimeHour -12 : endTimeHour,
-    //     endTimeHour = (endTimeHour == '00')? 12 : endTimeHour,
-    //     endTimeMinute = vm.endTime.getMinutes(),
-    //
-    //     // The end time - e.g. 3:00pm
-    //     endTime = endTimeHour + ":" + endTimeMinute + endTimeSuffix;
+    var dateString = vm.classDate,
+        dateDay = dateString.getDate(),
+        dateMonth = dateString.getMonth() + 1,
+        dateYear = dateString.getFullYear(),
+        date = dateYear + "-" + dateMonth + "-" + dateDay;
 
-    var classDateData = {
-			'brief': vm.brief, //'rest brief'
-      'description': vm.description, //'some description'
-      //'intervalId': 1, //2
-      //'startTime': startTime, //'02:30 PM'
-      //'endTime': endTime, //'05:00 PM'
-      //'startDate': '2016-03-29', //'2015-12-22'
-      //'endDate': '2017-03-29', //'2015-12-30'
-    };
+    vm.date = date;
 
-    $http.post($rootScope.apiUrl + 'classes/update', classDateData).success((data) => {
-      vm.showAddClassDates = false;
-      vm.showAddClassSuccess = true;
-    }).error((err, status) => {
+    var startTimeHour = vm.classStartTime.getHours(),
+        startTimeMinute = vm.classStartTime.getMinutes(),
+        startTime = startTimeHour + ":" + startTimeMinute;
 
-    });
+    var endTimeHour = vm.classEndTime.getHours(),
+        endTimeMinute = vm.classEndTime.getMinutes(),
+        endTime = endTimeHour + ":" + endTimeMinute;
+
+    // Get list of latest class added
+    $http.get($rootScope.apiUrl + 'classes/one',  {params: {'_title': vm.currentClassTitle}})
+      .then(function successCallback(response) {
+        vm.currentClassId = response.data.data.id;
+
+        // Add class date
+        var classOptionalData = {
+          'id': vm.currentClassId,
+          'datetimes': {[date]:[{"startTime": startTime, "endTime": endTime, "spots": vm.size}]}
+        };
+
+        //console.log(classOptionalData);
+
+        $http.post($rootScope.apiUrl + 'classes/adddates', classOptionalData).success((data) => {
+          vm.showAddClassDates = false;
+          vm.showAddClassSuccess = true;
+          console.log(data);
+        }).error((err, status) => {
+
+        });
+
+      }, function errorCallback(response) {
+      });
   }
 
   vm.classDatesSkip = function() {
