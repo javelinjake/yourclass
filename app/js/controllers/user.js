@@ -194,7 +194,7 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
   }
 
   vm.showAddClass = true;
-  vm.showAddClassOptional = false;
+  vm.showAddClassOptional = true;
   vm.showAddClassDates = false;
   vm.showAddClassSuccess = false;
 
@@ -248,6 +248,34 @@ function UserCtrl($http, $rootScope, $log, $filter, Upload, $timeout, $state) {
       });
 
 
+  }
+
+  vm.uploadClassPhotos = function(photos, errFiles) {
+    vm.files = photos;
+    vm.errFiles = errFiles;
+    angular.forEach(photos, function(file) {
+      file.upload = Upload.upload({
+        url: $rootScope.apiUrl + 'classes/upload',
+        data: {
+          'id': 76,
+          '_auth_key': $rootScope.authToken, // Authentication token of current user
+          'file': file
+        }
+      });
+
+      file.upload.then(function(response) {
+        $timeout(function() {
+          file.result = response.data;
+          $state.reload();
+        });
+      }, function(response) {
+        if (response.status > 0)
+          vm.errorMsg = response.status + ': ' + response.data;
+      }, function(evt) {
+        file.progress = Math.min(100, parseInt(100.0 *
+          evt.loaded / evt.total));
+      });
+    });
   }
 
   vm.classOptionalSkip = function() {

@@ -4,6 +4,8 @@ function SearchCtrl($http, $rootScope, $log) {
   // ViewModel
   const vm = this;
 
+
+  // At the moment I am just calling all of the classes, we will need to have pagination (20 per page)
   $http.get($rootScope.apiUrl + 'classes/list')
     .then(function successCallback(response) {
       vm.classesList = response.data.data;

@@ -48,20 +48,21 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
         label: 'Class'
       }
     })
-    .state('user', {
+    .state('User', {
       controller: 'UserCtrl as user',
       templateUrl: 'user/user.html',
       ncyBreadcrumb: {
         skip: true
       }
     })
-    .state('user.dashboard', {
+    .state('User-Dashboard', {
       url: '/user/dashboard',
+      controller: 'UserDashboardCtrl as userDashboard',
       templateUrl: 'user/dashboard.html',
-      title: 'Dashboard',
+      title: 'User Dashboard',
       class: 'user-dashboard',
       ncyBreadcrumb: {
-        label: 'Dashboard'
+        label: 'User Dashboard'
       }
     })
     .state('user.add-class', {
@@ -71,6 +72,15 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       class: 'user-add-class',
       ncyBreadcrumb: {
         label: 'Add class'
+      }
+    })
+    .state('user.edit-class', {
+      url: '/user/edit-class',
+      templateUrl: 'user/edit-class.html',
+      title: 'User Edit Class',
+      class: 'user-edit-class',
+      ncyBreadcrumb: {
+        label: 'Edit Class'
       }
     })
     .state('user.listings', {
