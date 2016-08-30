@@ -4,7 +4,7 @@
     <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title ng-bind="pageTitle">{{pageTitle}}</title>
+    <title ng-bind="$state.current.title">{{$state.current.title}}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -36,19 +36,29 @@
 
     <link rel="stylesheet" href="css/main.css">
   </head>
-  <body class="{{pageClass}}">
-    <div ng-if="false">
-      <!-- <h1>Loading the application, please hold on</h1>
-      <div class="aCssSpinner"></div> -->
+  <body class="{{$state.current.class}} {{$loggedInUser}}">
+
+      <div class="alert text-center" ng-class="alertResponse" ng-if="alert">
+        {{ alertMessage }}
+      </div>
+
+      <header ng-include="'globals/header.html'"></header>
+
+      <div class="progress" ng-class="{active: !pageRendered}">
+        <div class="progress-bar"></div>
+      </div>
+
+      <div ng-if="pageRendered" ng-cloak>
+
+        <div class="hide" ncy-breadcrumb></div>
+
+        <div ui-view class="main"></div>
+
+        <footer ng-include="'globals/footer.html'"></footer>
+
+      </div>
+
     </div>
-
-    <header ng-include="'globals/header.html'"></header>
-
-    <div ncy-breadcrumb></div>
-
-    <div ui-view class="main"></div>
-
-    <footer ng-include="'globals/footer.html'"></footer>
 
     <script src="js/main.js"></script>
 

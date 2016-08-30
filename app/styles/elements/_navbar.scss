@@ -12,7 +12,7 @@
   position: relative;
   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
   //margin-bottom: $navbar-margin-bottom;
-  border: 1px solid transparent;
+  border-bottom: 1px solid #efefef;
 
   // Prevent floats from breaking the navbar
   @include clearfix;
@@ -27,6 +27,51 @@
     margin-bottom: 0;
   }
 }
+
+// Main top navigation
+$logo-width: 72px;
+$links-width: 200px;
+$links-width-logged-in: 150px;
+$nav-item-padding: 20px;
+
+.nav-wrapper {
+  position: relative;
+  width: 100%;
+  padding-left: $logo-width + $nav-item-padding; // Width of logo
+  padding-right: $links-width + $nav-item-padding; // Width of links
+}
+.navbar-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $logo-width;
+}
+.navbar-links {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: $links-width;
+}
+
+.logged-in {
+  .nav-wrapper {
+    padding-right: $links-width-logged-in + $nav-item-padding; // Width of links
+  }
+  .navbar-links {
+    width: $links-width-logged-in;
+  }
+}
+
+.nav-image {
+  width: 40px;
+  float: right;
+  margin-top: -10px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+
 
 
 // Navbar heading
@@ -168,7 +213,7 @@
 
 .navbar-brand {
   float: left;
-  padding: $navbar-padding-vertical $navbar-padding-horizontal;
+  padding: $navbar-padding-horizontal;
   font-size: $font-size-large;
   line-height: $line-height-computed;
   height: $navbar-height;

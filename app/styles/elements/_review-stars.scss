@@ -1,0 +1,11 @@
+.review-stars {
+  margin: 10px 0;
+  line-height: 1;
+  .icon {
+    font-size: 22px;
+    color: lighten($brand-yellow, 10%);
+  }
+  .stars {
+    margin-bottom: 5px;
+  }
+}

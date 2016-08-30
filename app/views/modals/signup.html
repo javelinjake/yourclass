@@ -1,38 +1,65 @@
 <div class="modal-header">
-  <h3 class="modal-title">Sign Up</h3>
+  <h3 class="modal-title text-center">Sign Up</h3>
 </div>
 
 <div class="modal-body">
-  <form ng-submit="SignUpForm()">
+
+<a href="#" class="btn btn-social btn-block btn-google">
+  <span class="image image-google"></span>
+  Google
+</a>
+<a href="#" class="btn btn-social btn-block btn-facebook">
+  <span class="icon icon-facebook"></span>
+  Facebook
+</a>
+
+<div class="signup-separator">
+  <span>or</span>
+  <hr/>
+</div>
+
+  <form name="form" ng-submit="SignUpForm()">
     <fieldset>
 
       <div class="form-group">
-        <label class="control-label">First Name</label>
-        <input ng-model="firstname" type="text" class="form-control"/>
+        <label class="control-label hidden">First Name</label>
+        <input ng-model="firstname" type="text" class="form-control" placeholder="First Name" required/>
       </div>
       <div class="form-group">
-        <label class="control-label">Last Name</label>
-        <input ng-model="lastname" type="text" class="form-control"/>
+        <label class="control-label hidden">Last Name</label>
+        <input ng-model="lastname" type="text" class="form-control" placeholder="Last Name" required/>
       </div>
       <div class="form-group">
-        <label class="control-label">Email</label>
-        <input ng-model="email" type="email" class="form-control"/>
+        <label class="control-label hidden">Email</label>
+        <input ng-model="email" type="email" class="form-control" placeholder="Email" required/>
       </div>
       <div class="form-group">
-        <label class="control-label">Password</label>
-        <input ng-model="password" type="password" class="form-control"/>
+        <label class="control-label hidden">Password</label>
+        <input ng-model="password" type="password" class="form-control password" placeholder="Password" minlength="6" required/>
+        <!-- <ng-password-meter password="password"></ng-password-meter> -->
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid" ng-class="{loading: isSubmitting}">
+          <span class="text">Sign up</span>
+        </button>
+      </div>
+
+      <div class="alert alert-danger" ng-if="formError">
+        <span ng-repeat="error in formErrorData">
+          {{ error }}
+        </span>
       </div>
 
     </fieldset>
   </form>
-</div>
 
-<div class="modal-footer">
-  <div ng-if="formSent" class="alert text-center" ng-class="formDone ? 'alert-success' : 'alert-danger'">
-    <span ng-if="formDone">You have signed up</span>
-    <span ng-if="!formDone">Please fill in all form-groups</span>
+  <hr/>
+
+  <div class="login-switch clear">
+    Already a Your Class member?
+    <button type="button" name="Log in" class="btn btn-alternative btn-sm pull-right" ng-click="LoginSwitch()">
+      Log in
+    </button>
   </div>
+
 </div>

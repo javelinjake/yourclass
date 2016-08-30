@@ -12,6 +12,7 @@ h1, h2, h3, h4, h5, h6,
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
   color: $headings-color;
+  text-transform: uppercase;
 
   small,
   .small {
@@ -61,13 +62,18 @@ p {
 
 .lead {
   margin-bottom: $line-height-computed;
-  font-size: floor(($font-size-base * 1.15));
+  font-size: floor(($font-size-base * 1.25));
   font-weight: 300;
   line-height: 1.4;
+  font-style: italic;
 
   @media (min-width: $screen-sm-min) {
-    font-size: ($font-size-base * 1.5);
+    //font-size: ($font-size-base * 1.5);
   }
+}
+
+.italic {
+  font-style: italic;
 }
 
 
@@ -149,7 +155,8 @@ mark,
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: ($line-height-computed / 2);
+  //margin-bottom: ($line-height-computed / 2);
+  margin-bottom: 0;
   ul,
   ol {
     margin-bottom: 0;

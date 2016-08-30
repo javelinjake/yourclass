@@ -38,6 +38,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       controller: 'ClassCtrl as class',
       templateUrl: 'class.html',
       title: 'Class',
+      class: 'class',
       resolve: {
         getClassAlias: function($stateParams) {
           return $stateParams.classAlias;
@@ -47,48 +48,74 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
         label: 'Class'
       }
     })
-    .state('user', {
+    .state('User', {
       controller: 'UserCtrl as user',
       templateUrl: 'user/user.html',
       ncyBreadcrumb: {
         skip: true
       }
     })
-    .state('user.dashboard', {
+    .state('User-Dashboard', {
       url: '/user/dashboard',
-      controller: 'UserCtrl as dashboard',
+      controller: 'UserDashboardCtrl as userDashboard',
       templateUrl: 'user/dashboard.html',
       title: 'User Dashboard',
       class: 'user-dashboard',
       ncyBreadcrumb: {
-        label: 'Account Dashboard'
+        label: 'User Dashboard'
       }
     })
-    .state('user.edit', {
-      url: '/user/edit',
-      controller: 'UserCtrl as edit',
-      templateUrl: 'user/edit.html',
-      title: 'User Edit',
-      class: 'user-edit',
-      ncyBreadcrumb: {
-        label: 'Account Edit'
-      }
-    })
-    .state('user.class', {
-      url: '/user/class',
-      controller: 'UserCtrl as class',
-      templateUrl: 'user/class.html',
-      title: 'User Class',
-      class: 'user-class',
+    .state('user.add-class', {
+      url: '/user/add-class',
+      templateUrl: 'user/add-class.html',
+      title: 'Add Class',
+      class: 'user-add-class',
       ncyBreadcrumb: {
         label: 'Add class'
       }
+    })
+    .state('user.edit-class', {
+      url: '/user/edit-class',
+      templateUrl: 'user/edit-class.html',
+      title: 'User Edit Class',
+      class: 'user-edit-class',
+      ncyBreadcrumb: {
+        label: 'Edit Class'
+      }
+    })
+    .state('user.listings', {
+      url: '/user/listings',
+      templateUrl: 'user/listings.html',
+      title: 'Listings',
+      class: 'user-listings',
+      ncyBreadcrumb: {
+        label: 'Listings'
+      }
+    })
+    .state('user.classes', {
+      url: '/user/classes',
+      templateUrl: 'user/classes.html',
+      title: 'classes',
+      class: 'user-classes',
+      ncyBreadcrumb: {
+        label: 'classes'
+      }
+    })
+    .state('user.edit-profile', {
+      url: '/user/edit-profile',
+      templateUrl: 'user/edit-profile.html',
+      title: 'User Edit Profile',
+      class: 'user-edit-profile',
+      ncyBreadcrumb: {
+        label: 'Edit Profile'
+      }
     });
+
 
   $urlRouterProvider.otherwise('/');
   $breadcrumbProvider.setOptions({
-      prefixStateName: 'Home'
-    });
+    prefixStateName: 'Home'
+  });
 
 }
 

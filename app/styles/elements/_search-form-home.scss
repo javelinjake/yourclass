@@ -1,0 +1,27 @@
+// Overwrites _form.scss
+.search-form {
+  position: relative;
+  max-width: $search-form-width;
+  padding-right: $search-button-width;
+  @include box-shadow(0 0 0 4px rgba(0,0,0,0.2));
+  margin: $hero-padding/2 auto 0 auto;
+
+  .form-group {
+    width: 50%;
+    float: left;
+    margin-bottom: 0;
+    &:first-child {
+      border-right: 1px solid $gray-lighter;
+    }
+  }
+  .search-submit {
+    width: $search-button-width;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .form-control {
+    border: 0;
+    background-color: $white;
+  }
+}

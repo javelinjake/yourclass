@@ -1,43 +1,109 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Personal details</h3>
-  </div>
-  <div class="panel-body">
-    <p ng-if="user.userData.roles[0]">
-      <span class="label label-success" ng-repeat="userRole in user.userData.roles">{{ userRole.title }}</span>
-    </p>
-    <div ng-repeat="userImage in user.userData.photos" ng-if="userImage.isMain == 1" class="thumbnail">
-      <img class="img-rounded" ng-src="{{imageUrl}}{{userImage.src}}" />
+<div class="container">
+
+  <div ng-include="'globals/user-nav.html'"></div>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+
+      <div ng-repeat="userImage in userData.photos" ng-if="userImage.isMain == 1" class="thumbnail">
+        <img class="img-rounded" ng-src="{{imageUrl}}{{userImage.src}}" />
+      </div>
+
+      <div class="text-center" ng-if="userData.profile.firstName">
+        <span>{{ userData.profile.firstName }} {{ userData.profile.lastName }}</span>
+        <div>
+          <a href="/user/edit-profile">Edit Profile</a>
+        </div>
+      </div>
+
     </div>
-    <p ng-if="user.userData.profile.firstName">
-      <strong>Name: </strong>
-      <span>{{ user.userData.profile.firstName }} {{ user.userData.profile.lastName }}</span>
-    </p>
-    <p ng-if="user.userData.email">
-      <strong>Email: </strong>
-      <span>{{ user.userData.email }}</span>
-    </p>
-    <!-- <p>
-      <strong>Birthday: </strong>
-      <span>{{ user.newBirthday | date:'dd/MM/yyyy' }}</span>
-    </p> -->
-    <p ng-if="user.userData.profile.phone">
-      <strong>Phone number: </strong>
-      <span>{{ user.userData.profile.phone }}</span>
-    </p>
-    <p ng-if="user.userData.profile.brief">
-      <strong>Brief: </strong>
-      <span>{{ user.userData.profile.brief }}</span>
-    </p>
-    <p ng-if="user.userData.profile.about">
-      <strong>About: </strong>
-      <span>{{ user.userData.profile.about }}</span>
-    </p>
-    <!-- <p>
-      <strong>Rating: </strong>
-      <uib-rating ng-model="user.userData.rating | number:0" max="5" readonly="true" aria-labelledby="default-rating"></uib-rating>
-    </p> -->
 
+    <div class="col-sm-9">
+
+      <div class="panel">
+
+        <div class="panel-heading">
+          <h2 class="panel-title">Listings</h2>
+        </div>
+
+        <div class="panel-body">
+          <ul class="list-unstyled row list-block">
+            <li ng-repeat="listing in userDashboard.userListings" class="col-sm-4">
+              <div class="block clearfix">
+
+                <div class="name">
+                  {{ listing.title }}
+                </div>
+                <a ui-sref="Class({ classAlias:listing.alias })">View</a>
+                <a ui-sref="Class({ classAlias:listing.alias })">Edit</a>
+
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="panel">
+
+        <div class="panel-heading">
+          <h2 class="panel-title">Classes</h2>
+        </div>
+
+        <div class="panel-body">
+          <ul class="list-unstyled row list-block">
+            <li ng-repeat="listing in userDashboard.userListings" class="col-sm-4">
+              <a ui-sref="Class({ classAlias:listing.alias })">{{ listing.title }}</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
+
+  <div class="panel hide">
+    <div class="panel-body">
+      <p ng-if="userData.roles[0]">
+        <span class="label label-success" ng-repeat="userRole in user.userData.roles">{{ userRole.title }}</span>
+      </p>
+      <div ng-repeat="userImage in user.userData.photos" ng-if="userImage.isMain == 1" class="thumbnail">
+        <img class="img-rounded" ng-src="{{imageUrl}}{{userImage.src}}" />
+      </div>
+      <p ng-if="user.userData.profile.firstName">
+        <strong>Name: </strong>
+        <span>{{ user.userData.profile.firstName }} {{ user.userData.profile.lastName }}</span>
+      </p>
+      <p ng-if="user.userData.email">
+        <strong>Email: </strong>
+        <span>{{ user.userData.email }}</span>
+      </p>
+      <!-- <p>
+        <strong>Birthday: </strong>
+        <span>{{ user.newBirthday | date:'dd/MM/yyyy' }}</span>
+      </p> -->
+      <p ng-if="user.userData.profile.phone">
+        <strong>Phone number: </strong>
+        <span>{{ user.userData.profile.phone }}</span>
+      </p>
+      <p ng-if="user.userData.profile.brief">
+        <strong>Brief: </strong>
+        <span>{{ user.userData.profile.brief }}</span>
+      </p>
+      <p ng-if="user.userData.profile.about">
+        <strong>About: </strong>
+        <span>{{ user.userData.profile.about }}</span>
+      </p>
+      <!-- <p>
+        <strong>Rating: </strong>
+        <uib-rating ng-model="user.userData.rating | number:0" max="5" readonly="true" aria-labelledby="default-rating"></uib-rating>
+      </p> -->
+
+
+    </div>
+  </div>
+
 </div>

@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h3 class="modal-title text-center">Log In</h3>
+</div>
+
+<div class="modal-body">
+  <form name="form" ng-submit="LogInForm()">
+    <fieldset>
+
+      <div class="form-group">
+        <label class="control-label hidden">Email</label>
+        <input ng-model="email" type="email" class="form-control" placeholder="Email" required/>
+      </div>
+      <div class="form-group">
+        <label class="control-label hidden">Password</label>
+        <input ng-model="password" type="password" class="form-control" placeholder="Password" required/>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid" ng-class="{loading: isSubmitting}">Log in</button>
+      </div>
+
+      <div class="alert alert-danger" ng-if="formError">
+        <span ng-repeat="error in formErrorData">
+          {{ error }}
+        </span>
+      </div>
+
+    </fieldset>
+  </form>
+
+  <hr/>
+
+  <div class="login-switch clear">
+    Not yet a Your Class member?
+    <button type="button" name="Log in" class="btn btn-alternative btn-sm pull-right" ng-click="SignUpSwitch()">
+      Sign up
+    </button>
+  </div>
+
+</div>
