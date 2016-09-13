@@ -6,7 +6,7 @@ const bulk = require('bulk-require');
 const controllersModule = angular.module('app.controllers', []);
 
 const controllers = bulk(__dirname, ['./**/!(*index|*.spec).js']);
-
+console.log(controllers);
 function declare(controllerMap) {
   Object.keys(controllerMap).forEach((key) => {
     let item = controllerMap[key];
@@ -16,8 +16,8 @@ function declare(controllerMap) {
     }
 
     if (item.fn && typeof item.fn === 'function') {
-      controllersModule.controller(item.name, item.fn); 
-    } else { 
+      controllersModule.controller(item.name, item.fn);
+    } else {
       declare(item);
     }
   });

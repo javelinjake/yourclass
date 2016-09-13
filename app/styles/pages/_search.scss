@@ -1,0 +1,254 @@
+// Only page specific CSS and only if needed
+
+
+/* Search filter */
+.search {
+
+  &-filter {
+    margin: 0 0 30px;
+    text-align: center;
+
+    &-panel {
+      position: relative;
+      top: -20px;
+      display: inline-block;
+      background: $white;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      color: #555;
+    }
+
+    &-list {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: stretch;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    &-item {
+      position: relative;
+      padding: 8px 20px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        right: 0;
+        bottom: 12px;
+        display: block;
+        border-left: 1px solid #e8e8e8;
+      }
+    }
+
+    &-title {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    &-widget {}
+
+    .form-control {
+      width: 90px;
+      height: 25px;
+      padding: 2px 12px;
+    }
+
+    /* Price slider */
+    .rz {
+
+      &slider {
+        width: 100px;
+        margin: 8px 0 26px;
+        font-size: 11px;
+      }
+
+      &-bar {
+        background: #e2e2e2;
+
+        &-wrapper {
+          height: 16px;
+          margin-top: -6px;
+          padding-top: 6px;
+        }
+      }
+
+      &-bar.rz-selection {
+        border-radius: 0;
+        background: $brand-orange;
+      }
+
+      &-pointer {
+        top: -6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.2);
+        box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+
+        &:after {
+          display: none;
+        }
+      }
+
+      &-bubble {
+        bottom: -26px;
+        color: #555;
+
+        &.rz-floor { transform: translate(-50%, 0); }
+        &.rz-ceil { transform: translate(50%, 0); }
+      }
+    }
+  }
+}
+
+
+/* Search results */
+.search {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+    margin: 0 -10px;
+  }
+
+  &-item {
+    position: relative;
+    width: 270px;
+    margin: 2em 10px 20px;
+    padding: 16px 30px 20px;
+    border: 1px solid #e1e1e1;
+    background: $white;
+    text-align: center;
+
+    em {
+      color: $brand-orange;
+    }
+
+    &-price {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      z-index: 2;
+      display: block;
+      padding: 4px 10px;
+      border: 1px solid #e1e1e1;
+      background: $white;
+      color: $brand-orange;
+    }
+
+    &-date {
+      position: absolute;
+      top: -1.75em;
+      right: 0;
+      left: 0;
+      font-weight: 700;
+    }
+
+    &-title {
+      margin: 0 20px 0.2em;
+      font-size: 1.3em;
+    }
+    &-location {
+      margin: 0 0 1.2em;
+      font-style: italic;
+    }
+
+    &-rating {
+      margin: 0 0 1.2em;
+    }
+
+    &-description {
+      margin: 0 0 1.2em;
+    }
+  }
+
+  &-more {
+    padding: 15px 30px;
+    border: 1px solid #e1e1e1;
+    background: $white;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    font-size: 1.3em;
+    color: $brand-orange;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($white, 5%);
+    }
+  }
+}
+
+
+/* Half star rating */
+.rating-half-star {
+  font-size: 0;
+
+  /* Read states */
+  &[read-only="true"] { cursor: default; }
+  &[read-only="false"] { cursor: pointer; }
+
+  /* Stars */
+  .glyphicon {
+    width: 14px;
+    padding-left: 3px;
+    font-size: 24px;
+    text-align: left;
+    overflow: hidden;
+
+    &:nth-of-type(2n) {
+      transform: rotateY(180deg);
+    }
+
+    &-star {
+      color: $brand-yellow;
+    }
+    &-star-empty {
+      color: #eaeaea;
+
+      &:before {
+        content: '\e006'; // \e007
+      }
+    }
+  }
+}
+
+
+/* Other */
+.navbar {
+    background-color: transparent;
+    z-index: 10;
+    border-bottom: none;
+}
+.navbar .navbar-nav > .open > a {
+    background-color: transparent;
+}
+.search-form {
+  @include box-shadow(0 0 0 2px rgba(0,0,0,0.2));
+  .search-submit {
+    top: 0;
+    right: 0;
+    .btn {
+      padding: 12px 16px;
+    }
+  }
+}
+.hero {
+    margin-top: -($navbar-height);
+}
+.hero .content {
+    padding: 65px 0;
+    max-width: 450px;
+    margin: 0 auto;
+}
+h1.heading {
+    margin-bottom: 0;
+}
+.container {
+  position: relative;
+}

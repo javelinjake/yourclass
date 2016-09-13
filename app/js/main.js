@@ -7,6 +7,8 @@ import onRun     from './on_run';
 import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-animate';
+import 'angular-material';
+import 'angularjs-slider';
 import 'angular-cookies';
 import 'ng-file-upload';
 import 'angular-breadcrumb';
@@ -21,6 +23,8 @@ import './directives';
 const requires = [
   'ui.router',
   'ngAnimate',
+  'ngMaterial',
+  'rzModule',
   'ui.bootstrap',
   'ngCookies',
   'ngFileUpload',

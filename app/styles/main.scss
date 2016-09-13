@@ -45,10 +45,12 @@
 @import "elements/hero";
 @import "elements/search-form";
 @import "elements/review-stars";
+@import "elements/rzslider"; // Angular js slider
 
 // Pages
 @import "pages/home";
 @import "pages/class";
+@import "pages/search";
 
 // Elements w/ JavaScript
 @import "elements/modals";
@@ -61,3 +63,6 @@
 
 // Google theme
 // @import "core/google";
+
+// Material
+@import "material/angular-material.scss";
