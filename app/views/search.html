@@ -98,29 +98,92 @@ size: {{search.filters.size}}
 
   </div>
 
-  <div class="search-list">
+  <div id="searchList">
 
-    <div class="search-item" ng-repeat="class in search.classesList | limitTo : search.resultsLimit | orderBy : 'rating' : true">
-      <div class="search-item-price">{{class.price}}</div>
-      <div class="search-item-date">{{class.dateStart | date : "dd MMMM" }}</div>
+    <!-- Pagination -->
+    <div class="search-pagination clearfix" aria-label="Search results pages">
+      <ul uib-pagination
+        class="pagination-sm pull-right"
 
-      <div class="search-item-title">{{class.title}}</div>
-      <div class="search-item-location">{{class.venue}}</div>
-      <div class="search-item-rating">
-        <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{search.ratingTitles}}"></span>
-      </div>
-      <div class="search-item-description">
-        {{class.spotsBooked}} {{class.spotsBooked === 1 ? 'student' : students}} going
-        <em>&ndash;</em>
-        {{class.spotsLeft}} {{class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
-        <br>
-        {{class.dateStart | date : "hh:mm a" }} - {{class.dateEnd | date : "hh:mm a" }}</div>
-      <div class="search-item-author">Taught by <strong>{{class.teacher}}</strong></div>
+        ng-model="search.pagination.current"
+        total-items="search.pagination.total"
+        max-size="search.pagination.size"
+        items-per-page="search.pagination.limit"
+
+        boundary-links="true"
+        boundary-link-numbers="true"
+        rotate="true"
+        ng-change="paginationChangeEvent()"
+
+        previous-text="&lsaquo;"
+        next-text="&rsaquo;"
+        first-text="&laquo;"
+        last-text="&raquo;"
+
+        template-url="templates/pagination.html">
+      </ul>
     </div>
 
-  </div>
+    <!-- Search results -->
+    <div class="search-list">
 
-  <div class="search-more" ng-click="search.showMoreResults()">Show More</div>
+      <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : 'rating' : true">
+        <div class="search-item-price">{{class.price}}</div>
+        <div class="search-item-date">{{class.dateStart | date : "dd MMMM" }}</div>
+
+        <div class="search-item-title">{{class.title}}</div>
+        <div class="search-item-location">{{class.venue}}</div>
+        <div class="search-item-rating">
+          <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{search.rating.titles}}"></span>
+        </div>
+        <div class="search-item-description">
+          {{class.spotsBooked}} {{class.spotsBooked === 1 ? 'student' : students}} going
+          <em>&ndash;</em>
+          {{class.spotsLeft}} {{class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
+          <br>
+          {{class.dateStart | date : "hh:mm a" }} - {{class.dateEnd | date : "hh:mm a" }}</div>
+        <div class="search-item-author">Taught by <strong>{{class.teacher}}</strong></div>
+      </div>
+
+    </div>
+    <!-- End of Search results -->
+
+    <!-- Show more button -->
+    <div class="search-more" ng-click="showMoreResults()" ng-show="search.results.more">Show More</div>
+
+    <!-- Pagination -->
+    <div class="search-pagination clearfix" aria-label="Search results pages">
+      <ul uib-pagination
+        class="pagination-sm pull-right"
+
+        ng-model="search.pagination.current"
+        total-items="search.pagination.total"
+        max-size="search.pagination.size"
+        items-per-page="search.pagination.limit"
+
+        boundary-links="true"
+        boundary-link-numbers="true"
+        rotate="true"
+        ng-change="paginationChangeEvent()"
+
+        previous-text="&lsaquo;"
+        next-text="&rsaquo;"
+        first-text="&laquo;"
+        last-text="&raquo;"
+
+        template-url="templates/pagination.html">
+      </ul>
+    </div>
+
+<pre style="color: #ff4000;">
+current: {{search.pagination.current}}
+last: {{search.pagination.last}}
+total: {{search.pagination.total}}
+size: {{search.pagination.size}}
+limit: {{search.pagination.limit}}
+</pre>
+
+  </div>
 
 </div>
 

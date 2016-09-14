@@ -44,6 +44,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
 
 */
 
+  /* Helper functions */
   var SearchItem = function(element, date, time) {
     this.price = element.price || 'free';
 
@@ -63,7 +64,13 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
 
     this.dateStart = dateString ? new Date(dateString + ' ' + timeStart) : undefined;
     this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
-  }
+  };
+  var sliceSearchResults = function(classesList, startIndex, endIndex) {
+    if (!classesList || classesList.length == 0) return [];
+
+    var slicedList = classesList.slice(startIndex, endIndex);
+    return slicedList;
+  };
 
   $http.get($rootScope.apiUrl + 'classes/list')
     .then(function successCallback(response) {
@@ -78,10 +85,16 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
       });
 
       vm.classesList = classesArray;
+      vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
+
+      // AJAX responce data in JSON format
       vm.responseData = data;
 
       // Refresh filter slider:
       vm.slider.refresh();
+
+      // Update length of pagination amount:
+      vm.pagination.total = classesArray.length;
 
       // Console success message:
       $log.info('success' + response);
@@ -91,22 +104,13 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     });
 
 
-
-
-  /* Number of displayed results */
-  var limitStep = 20;
-  vm.resultsLimit = limitStep;
-  vm.showMoreResults = function() {
-    vm.resultsLimit += limitStep;
-  };
-
-  /* Price slider variables */
-  var sliderMin = 5;
-  var sliderMax = 45;
-  var sliderFloor = 0;
-  var sliderCeil = 60;
-
-  /* Slider */
+  /* Filter: */
+  // Filter: Price Slider variables
+  var sliderMin = 5,
+      sliderMax = 45,
+      sliderFloor = 0,
+      sliderCeil = 60;
+  // Filter: Price Slider
   vm.slider = {
     min: sliderMin,
     max: sliderMax,
@@ -138,13 +142,11 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
       });
     }
   };
-
-  /* Rating */
+  // Filter: Rating
   vm.rating = {
     titles: ['0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']
   };
-
-  /* Datepicker Popup */
+  // Filter: Datepicker Popup
   vm.datepicker = {
     state: false,
     format: "dd/MM",
@@ -155,8 +157,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
       this.state = false;
     }
   };
-
-  /* Distance select */
+  // Filter: Distance select
   vm.distances = [
     { id: '0',  title: 'Any'  },
     { id: '2',  title: '2km'  },
@@ -165,8 +166,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     { id: '20', title: '20km' },
     { id: '30', title: '30km' }
   ];
-
-  /* Size select */
+  // Filter: Size select
   vm.sizes = [
     { id: '0',  title: 'Any'  },
     { id: '1',  title: '1'    },
@@ -174,8 +174,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     { id: '5',  title: '5+'   },
     { id: '10', title: '10+'  }
   ];
-
-  /* Search filter */
+  // Filter: Container
   vm.filters = {
     price: {
       start: sliderMin,
@@ -185,6 +184,82 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     date: false,
     distance: vm.distances[2].id,
     size: vm.sizes[2].id
+  };
+
+
+  /* Results */
+  // Results: Pagination
+  vm.pagination = {
+    current: 1,
+    last: 1,
+    total: 0,
+    limit: 50, // 20
+    size: 4
+  };
+  // Results: List
+  vm.results = {
+    more: true,
+    getIndexStart: function() {
+      return ((vm.pagination.current - 1) * vm.pagination.limit);
+    },
+    getIndexEnd:   function() {
+      return (this.getIndexStart() + vm.pagination.limit);
+    }
+  };
+
+
+  /* Watch events */
+  // Pagination:
+  // Slice results according to the current page
+  $scope.$watch('search.pagination.current', function() {
+    var start = vm.results.getIndexStart(),
+        end   = vm.results.getIndexEnd();
+
+    vm.classesListSliced = sliceSearchResults(vm.classesList, start, end);
+  });
+
+
+  /* Functions */
+
+  // Show more button:
+  // Adds more results equal to "limit" step to the shown list
+  $scope.showMoreResults = function() {
+    var start = vm.results.getIndexStart(),
+        end   = vm.results.getIndexEnd() + vm.classesListSliced.length;
+
+    vm.classesListSliced = sliceSearchResults(vm.classesList, start, end);
+
+    vm.pagination.last++;
+    vm.results.more = (end >= vm.pagination.total) ? false : true;
+  };
+
+  // Pagination:
+  // Triggers when pagination item is clicked
+  $scope.paginationChangeEvent = function() {
+
+    // Hide or Show "Show more" search results button
+    vm.results.more = (vm.pagination.current * vm.pagination.limit >= vm.pagination.total) ? false : true;
+
+    vm.pagination.last = vm.pagination.current;
+
+    // Scroll to the top of the block
+    var searchList = document.querySelector('#searchList'),
+        coordinates = searchList.getBoundingClientRect();
+
+    if (coordinates.top >= 0) return false;
+
+    var scrolled  = document.body.scrollTop || document.documentElement.scrollTop;
+    var isbody    = document.body.scrollTop ? true : false;
+    var container = isbody ? document.body : document.documentElement;
+
+    container.scrollTop = scrolled + coordinates.top - 40;
+  };
+
+  // Pagination:
+  // Check if results of clicked button are already shown
+  $scope.paginationCheckPage = function(page) {
+    var result = (page > vm.pagination.current && page <= vm.pagination.last) ? false : true;
+    return result;
   };
 
 }

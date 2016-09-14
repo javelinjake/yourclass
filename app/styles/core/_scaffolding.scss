@@ -30,9 +30,15 @@ body {
   line-height: $line-height-base;
   font-weight: $font-weight;
   color: $text-color;
-  background-color: $body-bg;
   overflow-x: hidden;
 }
+
+
+// Main container
+.main {
+  background-color: $body-bg; // from body
+}
+
 
 // Reset fonts for relevant elements
 input,

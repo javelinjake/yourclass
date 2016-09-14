@@ -112,7 +112,7 @@
   &-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: stretch;
     margin: 0 -10px;
   }
@@ -151,7 +151,7 @@
     }
 
     &-title {
-      margin: 0 20px 0.2em;
+      margin: 0 30px 0.2em;
       font-size: 1.3em;
     }
     &-location {
@@ -181,6 +181,18 @@
     &:hover {
       background: darken($white, 5%);
     }
+  }
+}
+
+
+/* Search pagination */
+.search {
+
+  &-pagination {
+    margin: 30px 0;
+    padding: 10px 0;
+    border-top: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
   }
 }
 
@@ -221,12 +233,12 @@
 
 /* Other */
 .navbar {
-    background-color: transparent;
-    z-index: 10;
-    border-bottom: none;
+  background-color: transparent;
+  z-index: 10;
+  border-bottom: none;
 }
 .navbar .navbar-nav > .open > a {
-    background-color: transparent;
+  background-color: transparent;
 }
 .search-form {
   @include box-shadow(0 0 0 2px rgba(0,0,0,0.2));
@@ -239,15 +251,15 @@
   }
 }
 .hero {
-    margin-top: -($navbar-height);
+  margin-top: -($navbar-height);
 }
 .hero .content {
-    padding: 65px 0;
-    max-width: 450px;
-    margin: 0 auto;
+  padding: 65px 0;
+  max-width: 450px;
+  margin: 0 auto;
 }
 h1.heading {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .container {
   position: relative;
