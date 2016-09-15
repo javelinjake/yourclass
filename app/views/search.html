@@ -1,10 +1,24 @@
+<section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
+  <div class="container clear">
+
+    <div class="content">
+
+      <div class="text-center text">
+        <h1>In</h1>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 <div class="container">
 
-  <h1 class="heading center-text">Search classes</h1>
+  <!--<h1 class="heading center-text">Search classes</h1>-->
 
   <!-- This is just a basic design for now -->
 
-  <div class="panel panel-primary" ng-repeat="classes in search.classesList">
+  <!--<div class="panel panel-primary" ng-repeat="classes in search.classesList">
     <div class="panel-heading">
       <h2>
         {{ classes.title }}
@@ -32,10 +46,147 @@
         </strong>{{ classes.spotsLeft }}
       </div>
     </div>
+  </div>-->
+
+  <div class="search-filter">
+    <div class="search-filter-panel">
+      <ul class="search-filter-list">
+        <li class="search-filter-item">
+          <div class="search-filter-title">Price</div>
+          <div class="search-filter-widget">
+
+            <rzslider rz-slider-model="search.slider.min" rz-slider-high="search.slider.max" rz-slider-options="search.slider.options"></rzslider>
+
+          </div>
+        </li>
+        <li class="search-filter-item">
+          <div class="search-filter-title">Rating</div>
+          <div class="search-filter-widget">
+            <span uib-rating class="rating-half-star" ng-model="search.filters.rating" max="10" read-only="false" titles="{{search.rating.titles}}"></span>
+          </div>
+        </li>
+        <li class="search-filter-item">
+          <div class="search-filter-title">Date</div>
+          <div class="search-filter-widget">
+            <input type="text" class="form-control" uib-datepicker-popup="{{search.datepicker.format}}" ng-model="search.filters.date" is-open="search.datepicker.state" close-on-date-selection="false" ng-click="search.datepicker.show()" />
+          </div>
+        </li>
+        <li class="search-filter-item">
+          <div class="search-filter-title">Distance</div>
+          <div class="search-filter-widget">
+            <select class="form-control" ng-model="search.filters.distance" ng-options="item.id as item.title for item in search.distances track by item.id"></select>
+          </div>
+        </li>
+        <li class="search-filter-item">
+          <div class="search-filter-title">Size</div>
+          <div class="search-filter-widget">
+            <select class="form-control" ng-model="search.filters.size" ng-options="item.id as item.title for item in search.sizes track by item.id"></select>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <br>
+
+<pre style="color: #ff4000;">
+price start: {{search.filters.price.start}}
+price end: {{search.filters.price.end}}
+rating: {{search.filters.rating}}
+date: {{search.filters.date}}
+distance: {{search.filters.distance}}
+size: {{search.filters.size}}
+</pre>
+
+  </div>
+
+  <div id="searchList">
+
+    <!-- Pagination -->
+    <div class="search-pagination clearfix" aria-label="Search results pages">
+      <ul uib-pagination
+        class="pagination-sm pull-right"
+
+        ng-model="search.pagination.current"
+        total-items="search.pagination.total"
+        max-size="search.pagination.size"
+        items-per-page="search.pagination.limit"
+
+        boundary-links="true"
+        boundary-link-numbers="true"
+        rotate="true"
+        ng-change="paginationChangeEvent()"
+
+        previous-text="&lsaquo;"
+        next-text="&rsaquo;"
+        first-text="&laquo;"
+        last-text="&raquo;"
+
+        template-url="templates/pagination.html">
+      </ul>
+    </div>
+
+    <!-- Search results -->
+    <div class="search-list">
+
+      <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : 'rating' : true">
+        <div class="search-item-price">{{class.price}}</div>
+        <div class="search-item-date">{{class.dateStart | date : "dd MMMM" }}</div>
+
+        <div class="search-item-title">{{class.title}}</div>
+        <div class="search-item-location">{{class.venue}}</div>
+        <div class="search-item-rating">
+          <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{search.rating.titles}}"></span>
+        </div>
+        <div class="search-item-description">
+          {{class.spotsBooked}} {{class.spotsBooked === 1 ? 'student' : students}} going
+          <em>&ndash;</em>
+          {{class.spotsLeft}} {{class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
+          <br>
+          {{class.dateStart | date : "hh:mm a" }} - {{class.dateEnd | date : "hh:mm a" }}</div>
+        <div class="search-item-author">Taught by <strong>{{class.teacher}}</strong></div>
+      </div>
+
+    </div>
+    <!-- End of Search results -->
+
+    <!-- Show more button -->
+    <div class="search-more" ng-click="showMoreResults()" ng-show="search.results.more">Show More</div>
+
+    <!-- Pagination -->
+    <div class="search-pagination clearfix" aria-label="Search results pages">
+      <ul uib-pagination
+        class="pagination-sm pull-right"
+
+        ng-model="search.pagination.current"
+        total-items="search.pagination.total"
+        max-size="search.pagination.size"
+        items-per-page="search.pagination.limit"
+
+        boundary-links="true"
+        boundary-link-numbers="true"
+        rotate="true"
+        ng-change="paginationChangeEvent()"
+
+        previous-text="&lsaquo;"
+        next-text="&rsaquo;"
+        first-text="&laquo;"
+        last-text="&raquo;"
+
+        template-url="templates/pagination.html">
+      </ul>
+    </div>
+
+<pre style="color: #ff4000;">
+current: {{search.pagination.current}}
+last: {{search.pagination.last}}
+total: {{search.pagination.total}}
+size: {{search.pagination.size}}
+limit: {{search.pagination.limit}}
+</pre>
+
   </div>
 
 </div>
 
 <pre>
-	{{ search.classesList | json }}
+	{{ search.responseData | json }}
 </pre>
