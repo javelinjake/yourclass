@@ -59,14 +59,15 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       url: '/user/dashboard',
       controller: 'UserDashboardCtrl as userDashboard',
       templateUrl: 'user/dashboard.html',
-      title: 'User Dashboard',
+      title: 'Dashboard',
       class: 'user-dashboard',
       ncyBreadcrumb: {
-        label: 'User Dashboard'
+        label: 'Dashboard'
       }
     })
-    .state('user.add-class', {
+    .state('User-Add-Class', {
       url: '/user/add-class',
+      controller: 'UserAddClassCtrl as userAddClass',
       templateUrl: 'user/add-class.html',
       title: 'Add Class',
       class: 'user-add-class',

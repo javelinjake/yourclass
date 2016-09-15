@@ -1,3 +1,102 @@
+<div class="container">
+
+  <div ng-include="'globals/user-nav.html'"></div>
+
+  <div class="panel">
+    <div class="panel-heading">
+      <h2 class="panel-title">Add class</h2>
+    </div>
+    <div class="panel-body">
+      <form name="addClassForm" ng-submit="userAddClass.addClass()" class="form-horizontal">
+        <fieldset>
+
+          <div class="form-group">
+            <div class="col-md-12">
+              Lets start with the basic details about your class
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+              <input ng-model="userAddClass.title" type="text" class="form-control form-full" placeholder="Class name"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Category</label>
+            <div class="col-md-10">
+              <select ng-model="userAddClass.categoryId" ng-change="userAddClass.classCategory(userAddClass.categoryId)" class="form-control form-full" ng-options="category.id as category.title for category in userAddClass.categories track by category.id"></select>
+            </div>
+          </div>
+
+          <div ng-repeat="category in userAddClass.categories" ng-if="category.id == userAddClass.subCategory && category.subcats[0]" class="form-group">
+              <label class="col-md-2 control-label">Sub category</label>
+              <div class="col-md-10">
+                <select ng-model="userAddClass.subcategoryId" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
+              </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Price</label>
+            <div class="tooltip-wrapper">
+              <div class="tooltip-button question-button">
+                <span>?</span>
+              </div>
+              <span class="tooltip top question">
+                <div class="tooltip-inner">
+                  Per person
+                </div>
+              </span>
+            </div>
+            <div class="col-md-10">
+              <label class="btn btn-default col-md-3" ng-model="userAddClass.priceRadio" uib-btn-radio="0" ng-click="userAddClass.customPrice = false">Free</label>
+              <label class="btn btn-default col-md-2" ng-model="userAddClass.priceRadio" uib-btn-radio="10" ng-click="userAddClass.customPrice = false">$10</label>
+              <label class="btn btn-default col-md-2" ng-model="userAddClass.priceRadio" uib-btn-radio="20" ng-click="userAddClass.customPrice = false">$20</label>
+              <label class="btn btn-default col-md-2" ng-model="userAddClass.priceRadio" uib-btn-radio="30" ng-click="userAddClass.customPrice = false">$30</label>
+              <label class="btn btn-default col-md-3" ng-model="userAddClass.priceRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customPrice = true" ng-if="!userAddClass.customPrice">Custom</label>
+              <input ng-model="userAddClass.priceInput" type="number" class="form-control col-md-3" ng-if="userAddClass.customPrice" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Size</label>
+            <div class="tooltip-wrapper">
+              <div class="tooltip-button question-button">
+                <span>?</span>
+              </div>
+              <span class="tooltip top question">
+                <div class="tooltip-inner">
+                  Max size
+                </div>
+              </span>
+            </div>
+            <div class="col-md-10">
+              <label class="btn btn-default col-md-1" ng-model="userAddClass.sizeRadio" uib-btn-radio="1" ng-click="userAddClass.customSize = false">1</label>
+              <label class="btn btn-default col-md-1" ng-model="userAddClass.sizeRadio" uib-btn-radio="2" ng-click="userAddClass.customSize = false">2</label>
+              <label class="btn btn-default col-md-1" ng-model="userAddClass.sizeRadio" uib-btn-radio="5" ng-click="userAddClass.customSize = false">5</label>
+              <label class="btn btn-default col-md-3" ng-model="userAddClass.sizeRadio" uib-btn-radio="10" ng-click="userAddClass.customSize = false">10</label>
+              <label class="btn btn-default col-md-3" ng-model="userAddClass.sizeRadio" uib-btn-radio="20" ng-click="userAddClass.customSize = false">20</label>
+              <label class="btn btn-default col-md-3" ng-model="userAddClass.sizeRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customSize = true" ng-if="!userAddClass.customSize">Custom</label>
+              <input ng-model="userAddClass.sizeInput" type="number" class="form-control col-md-3" ng-if="userAddClass.customSize" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-12 col-md-offset-2">
+              <button type="submit" class="btn btn-primary" ng-disabled="addClassForm.$invalid">Next</button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<!--
 <div class="panel">
   <div class="panel-heading">
     <h2 class="panel-title">Add class</h2>
@@ -15,35 +114,35 @@
         <div class="form-group">
           <label class="col-md-2 control-label">Name</label>
           <div class="col-md-10">
-            <input ng-model="user.title" type="text" class="form-control" placeholder="Class name" required/>
+            <input ng-model="user.title" type="text" class="form-control form-full" placeholder="Class name" required/>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-2 control-label">Category</label>
           <div class="col-md-10">
-            <select ng-model="user.categoryId" ng-change="user.classCategory(user.categoryId)" class="form-control" ng-options="category.id as category.title for category in user.categories track by category.id" required></select>
+            <select ng-model="user.categoryId" ng-change="user.classCategory(user.categoryId)" class="form-control form-full" ng-options="category.id as category.title for category in user.categories track by category.id" required></select>
           </div>
         </div>
 
         <div ng-repeat="category in user.categories" ng-if="category.id == user.subCategory && category.subcats[0]" class="form-group">
             <label class="col-md-2 control-label">Sub category</label>
             <div class="col-md-10">
-              <select ng-model="user.subcategoryId" class="form-control" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
+              <select ng-model="user.subcategoryId" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
             </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-2 control-label">Price</label>
           <div class="col-md-10">
-            <input ng-model="user.price" type="number" class="form-control" placeholder="Price per person for your class" required/>
+            <input ng-model="user.price" type="number" class="form-control form-full" placeholder="Price per person for your class" required/>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-2 control-label">Size</label>
           <div class="col-md-10">
-            <input ng-model="user.size" type="number" class="form-control" placeholder="The maximum number of pupils you want" required/>
+            <input ng-model="user.size" type="number" class="form-control form-full" placeholder="The maximum number of pupils you want" required/>
           </div>
         </div>
 
@@ -69,14 +168,14 @@
         <div class="form-group">
           <label class="col-md-2 control-label">Short description</label>
           <div class="col-md-10">
-            <textarea ng-model="user.brief" class="form-control" rows="3" placeholder="Short description" required></textarea>
+            <textarea ng-model="user.brief" class="form-control form-full" rows="3" placeholder="Short description" required></textarea>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-2 control-label">Main description</label>
           <div class="col-md-10">
-            <textarea ng-model="user.description" class="form-control" rows="3" placeholder="Main description"></textarea>
+            <textarea ng-model="user.description" class="form-control form-full" rows="3" placeholder="Main description"></textarea>
           </div>
         </div>
 
@@ -91,7 +190,7 @@
           <label class="col-md-2 control-label">Other photos</label>
           <div class="col-md-10">
 
-            
+
             <button ngf-select="user.uploadClassPhotos($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
               Select Photos
             </button>
@@ -145,7 +244,7 @@
           <label class="col-md-2 control-label">Add day</label>
           <div class="col-md-10">
             <uib-datepicker ng-model="user.classDate"></uib-datepicker>
-            <input ng-model="user.classDate" type="text" class="form-control"/>
+            <input ng-model="user.classDate" type="text" class="form-control form-full"/>
           </div>
         </div>
 
@@ -153,12 +252,12 @@
           <label class="col-md-2 control-label">Add time</label>
           <div class="col-md-10">
             <uib-timepicker ng-model="user.classStartTime"></uib-timepicker>
-            <input ng-model="user.classStartTime" type="text" class="form-control"/>
+            <input ng-model="user.classStartTime" type="text" class="form-control form-full"/>
           </div>
           <label class="col-md-2 control-label">End time</label>
           <div class="col-md-10">
             <uib-timepicker ng-model="user.classEndTime"></uib-timepicker>
-            <input ng-model="user.classEndTime" type="text" class="form-control"/>
+            <input ng-model="user.classEndTime" type="text" class="form-control form-full"/>
           </div>
         </div>
 
@@ -183,4 +282,4 @@
 
   </div>
 
-</div>
+</div> -->
