@@ -113,7 +113,6 @@ output {
 
 .form-control {
   display: block;
-  width: 100%;
   height: $input-height-large; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   position: relative;
   padding: $padding-base-vertical $padding-base-horizontal;
@@ -132,6 +131,10 @@ output {
 
   // Placeholder
   @include placeholder;
+
+  &.form-full {
+    width: 100%;
+  }
 
   // Unstyle the caret on `<select>`s in IE10+.
   &::-ms-expand {
