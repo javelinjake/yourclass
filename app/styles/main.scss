@@ -47,11 +47,6 @@
 @import "elements/review-stars";
 @import "elements/rzslider"; // Angular js slider
 
-// Pages
-@import "pages/home";
-@import "pages/class";
-@import "pages/search";
-
 // Elements w/ JavaScript
 @import "elements/modals";
 @import "elements/tooltip";
@@ -61,8 +56,17 @@
 // Not sure
 @import "bootstrap/jumbotron";
 
+// Material
+@import "material/angular-material.scss";
+
 // Google theme
 // @import "core/google";
 
-// Material
-@import "material/angular-material.scss";
+// Pages
+@import "pages/home";
+@import "pages/class";
+@import "pages/search";
+
+// Custom components
+@import "components/rating-half-star";
+@import "components/search-form";

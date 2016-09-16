@@ -1,6 +1,3 @@
-// Only page specific CSS and only if needed
-
-
 /* Search filter */
 .search {
 
@@ -197,40 +194,6 @@
 }
 
 
-/* Half star rating */
-.rating-half-star {
-  font-size: 0;
-
-  /* Read states */
-  &[read-only="true"] { cursor: default; }
-  &[read-only="false"] { cursor: pointer; }
-
-  /* Stars */
-  .glyphicon {
-    width: 14px;
-    padding-left: 3px;
-    font-size: 24px;
-    text-align: left;
-    overflow: hidden;
-
-    &:nth-of-type(2n) {
-      transform: rotateY(180deg);
-    }
-
-    &-star {
-      color: $brand-yellow;
-    }
-    &-star-empty {
-      color: #eaeaea;
-
-      &:before {
-        content: '\e006'; // \e007
-      }
-    }
-  }
-}
-
-
 /* Other */
 .navbar {
   background-color: transparent;
@@ -255,7 +218,6 @@
 }
 .hero .content {
   padding: 65px 0;
-  max-width: 450px;
   margin: 0 auto;
 }
 h1.heading {

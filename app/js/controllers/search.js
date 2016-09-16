@@ -4,66 +4,23 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
   // ViewModel
   const vm = this;
 
-
-  // At the moment I am just calling all of the classes, we will need to have pagination (20 per page)
-  /* $http.get($rootScope.apiUrl + 'classes/list')
-    .then(function successCallback(response) {
-      vm.classesList = response.data.data;
-      $log.info('success' + response);
-    }, function errorCallback(response) {
-      $log.error('error' + response);
-    }); */
-
-  /* Get list of Categories */
-  /* $http.get($rootScope.apiUrl + 'classes/categories')
-    .then(function successCallback(response) {
-      vm.categoriesList = response.data.data;
-    }, function errorCallback(response) {
-    }); */
-
-/*
-  M({
-
-    def: {
-      price: {
-        from: 0,
-        to: 60
-      },
-      raiting: 2.2,
-      date: asd,
-      distance: 30,
-      size: 5
-    }
-
-  });
-
-  this.m = new M();
-  m.toJSON();
-
-  m.set({distance: 20});
-
-*/
-
   /* Helper functions */
-  var SearchItem = function(element, date, time) {
+  var SearchItem = function(element) {
     this.price = element.price || 'free';
-
     this.title = element.title || 'No set title yet';
     this.location = element.venue || 'No set location yet';
-
     this.rating = parseFloat(element.rating) * 2;
+    this.teacher = element.teacher.profile.firstName + element.teacher.profile.lastName;
 
-    this.spotsBooked = parseInt(element.bookings) || 0;
-    this.spotsLeft = (time && parseInt(time.spots)) || 0;
+    this.spotsBooked = element.bookings.length || 0;
+    // this.spotsLeft = (time && parseInt(time.spots)) || 0;
 
-    this.teacher = 'Teacher #' + element.teacher.id;
+    // var dateString = (element.dates[0] && element.dates[0].classDate) || false;
+    // var timeStart  = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].startTime) || '00:00:00';
+    // var timeEnd    = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].endTime) || '00:00:00';
 
-    var dateString = (element.dates[0] && element.dates[0].classDate) || false;
-    var timeStart  = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].startTime) || '00:00:00';
-    var timeEnd    = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].endTime) || '00:00:00';
-
-    this.dateStart = dateString ? new Date(dateString + ' ' + timeStart) : undefined;
-    this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
+    // this.dateStart = dateString ? new Date(dateString + ' ' + timeStart) : undefined;
+    // this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
   };
   var sliceSearchResults = function(classesList, startIndex, endIndex) {
     if (!classesList || classesList.length == 0) return [];
@@ -72,6 +29,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     return slicedList;
   };
 
+  // Get classes list: not filtered yet
   $http.get($rootScope.apiUrl + 'classes/list')
     .then(function successCallback(response) {
       var data = response.data.data;
@@ -86,9 +44,9 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
 
       vm.classesList = classesArray;
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
+      vm.responseData = data;
 
       // AJAX responce data in JSON format
-      vm.responseData = data;
 
       // Refresh filter slider:
       vm.slider.refresh();
@@ -97,12 +55,11 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
       vm.pagination.total = classesArray.length;
 
       // Console success message:
-      $log.info('success' + response);
+      // $log.info('success' + response);
     }, function errorCallback(response) {
       // Console error message:
-      $log.error('error' + response);
+      // $log.error('error' + response);
     });
-
 
   /* Filter: */
   // Filter: Price Slider variables
@@ -193,7 +150,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     current: 1,
     last: 1,
     total: 0,
-    limit: 50, // 20
+    limit: 8, // 20
     size: 4
   };
   // Results: List
@@ -261,7 +218,6 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     var result = (page > vm.pagination.current && page <= vm.pagination.last) ? false : true;
     return result;
   };
-
 }
 
 export default {

@@ -1,0 +1,21 @@
+/* Search form */
+.search-form {
+
+  md-autocomplete {
+    border-radius: 0;
+  }
+
+  md-autocomplete,
+  md-autocomplete md-autocomplete-wrap,
+  md-autocomplete input:not(.md-input) {
+    height: 45px;
+  }
+
+  md-autocomplete input:not(.md-input) {
+    line-height: 45px;
+  }
+
+  .md-whiteframe-z1 {
+    box-shadow: none;
+  }
+}
