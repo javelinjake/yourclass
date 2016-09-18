@@ -30,7 +30,7 @@ const requires = [
   'ngFileUpload',
   'templates',
   'ncy-angular-breadcrumb',
-  //'ngPasswordMeter',
+  // 'ngPasswordMeter',
   'app.filters',
   'app.controllers',
   'app.services',

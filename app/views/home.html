@@ -14,16 +14,44 @@
         Inspiring everyone to learn, share and teach what you love
       </div>
 
-      <form name="form" ng-submit="search()" class="search-form clearfix">
+      <form class="search-form clearfix" name="form" ng-submit="search()" ng-controller="SearchFormCtrl as searchform">
         <fieldset>
 
           <div class="form-group">
             <label class="control-label hidden">Keyword</label>
-            <input ng-model="class" type="text" class="form-control form-full" placeholder="Class"/>
+            <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
+            <md-autocomplete
+              md-selected-item="searchform.categories.selected"
+              md-search-text="searchform.categories.searched"
+              md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
+              md-item-text="category.name"
+              md-min-length="0"
+              placeholder="Category">
+              <md-item-template>
+                <span md-highlight-text="searchform.categories.searched" md-highlight-flags="^i">{{category.name}}</span>
+              </md-item-template>
+              <md-not-found>
+                No categories matching "{{searchform.categories.searched}}" were found.
+              </md-not-found>
+            </md-autocomplete>
           </div>
           <div class="form-group">
             <label class="control-label hidden">Location</label>
-            <input ng-model="location" type="text" class="form-control form-full" placeholder="Location"/>
+            <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
+            <md-autocomplete
+              md-selected-item="searchform.locations.selected"
+              md-search-text="searchform.locations.searched"
+              md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
+              md-item-text="location.name"
+              md-min-length="0"
+              placeholder="Location">
+              <md-item-template>
+                <span md-highlight-text="searchform.locations.searched" md-highlight-flags="^i">{{location.name}}</span>
+              </md-item-template>
+              <md-not-found>
+                No locations matching "{{searchform.locations.searched}}" were found.
+              </md-not-found>
+            </md-autocomplete>
           </div>
           <div class="search-submit">
             <button type="submit" class="btn btn-primary btn-block">
