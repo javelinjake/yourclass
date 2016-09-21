@@ -203,6 +203,9 @@
 .navbar .navbar-nav > .open > a {
   background-color: transparent;
 }
+.nav-wrapper {
+  padding: 0 220px;
+}
 .search-form {
   @include box-shadow(0 0 0 2px rgba(0,0,0,0.2));
   .search-submit {

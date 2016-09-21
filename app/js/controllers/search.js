@@ -1,4 +1,4 @@
-function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
+function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $stateParams, $filter, categories, locations) {
   'ngInject';
 
   // ViewModel
@@ -29,20 +29,62 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     return slicedList;
   };
 
+  var requestedURL = $rootScope.apiUrl + 'classes/list';
+  var requestedCat = $stateParams.searchCategory,
+      requestedLoc = $stateParams.location;
+
+  var requestedCatID = undefined,
+      requestedLocID = undefined;
+
+      //console.dir($stateParams);
+
+
+  if (requestedCat) {
+    //var getId = categories.getCategoryID(requestedCat);
+    //console.log();
+    //requestedCatID = getId.id || getId.then(function(response){ console.log(response);  return response; });
+    requestedCatID = categories.getCategoryID(requestedCat);
+    $log.warn(requestedCatID);
+  }
+  if (requestedLoc) {
+    requestedLocID = locations.getLocationID(requestedLoc);
+    $log.warn(requestedLocID);
+  }
+
+  if (typeof requestedCatID !== 'object' && requestedCatID !== undefined) {
+    // $log.warn('value: ' + requestedCatID);
+    requestedURL += '?_categoryId=' + requestedCatID;
+    // $log.warn(requestedURL);
+  }
+  else {
+    // requestedCatID.then(function(response) {
+    //   // $log.warn('object: ' + response);
+    //   requestedURL += '?_categoryId=' + response;
+    //   // $log.warn(requestedURL);
+    // });
+  }
+
+
+  /* Temporary decision */
+  if (typeof requestedLocID !== 'object' && requestedLocID !== undefined) {
+    /* requestedURL += '?_locationId=' + requestedLocID; */
+  }
+  else { /* ... */ }
+
   // Get classes list: not filtered yet
-  $http.get($rootScope.apiUrl + 'classes/list')
+  $http.get(requestedURL)
     .then(function successCallback(response) {
       var data = response.data.data;
       var classesArray = [];
 
-      // vm.classesList = new CollectionList(data).toJSON();
+      // vm.classesList = new CollectionList(data).toJSON()
 
       data.forEach(function(element, i, arr) {
         var item = new SearchItem(element);
         classesArray.push(item);
       });
 
-      vm.classesList = classesArray;
+      vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
       vm.responseData = data;
 
@@ -60,6 +102,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
       // Console error message:
       // $log.error('error' + response);
     });
+
 
   /* Filter: */
   // Filter: Price Slider variables
@@ -150,7 +193,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     current: 1,
     last: 1,
     total: 0,
-    limit: 8, // 20
+    limit: 20, // 20
     size: 4
   };
   // Results: List
