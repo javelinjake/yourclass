@@ -16,7 +16,8 @@
   touch-action: manipulation;
   cursor: pointer;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-  border: 0px solid transparent;
+  border-width: 1px;
+  border-style: solid;
   white-space: nowrap;
   @include opacity(1);
   @include button-size($padding-base-vertical + 4, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);

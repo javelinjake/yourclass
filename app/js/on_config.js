@@ -1,4 +1,4 @@
-function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadcrumbProvider) {
+function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadcrumbProvider, $httpProvider) {
   'ngInject';
 
   $locationProvider.html5Mode(true);
@@ -118,6 +118,12 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
   $breadcrumbProvider.setOptions({
     prefixStateName: 'Home'
   });
+
+  // TODO - Need to change for production, should just be able to remove
+  // $httpProvider.defaults.headers.common = {};
+  // $httpProvider.defaults.headers.post = {};
+  // $httpProvider.defaults.headers.put = {};
+  // $httpProvider.defaults.headers.patch = {};
 
 }
 
