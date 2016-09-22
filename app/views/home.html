@@ -15,7 +15,7 @@
       </div>
 
       <form class="search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform">
-        <fieldset>
+        <fieldset class="search-form-fieldset">
 
           <div class="form-group">
             <label class="control-label hidden">Keyword</label>
@@ -55,7 +55,7 @@
               </md-not-found>
             </md-autocomplete>
           </div>
-          <div class="search-submit">
+          <div class="search-form-submit">
             <button type="submit" class="btn btn-primary btn-block">
               <span class="text">Search</span>
             </button>

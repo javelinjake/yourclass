@@ -23,6 +23,13 @@ function categories($rootScope, $http, $log) {
     });
     return category[0].id;
   };
+  // It doesn't work for now, because response data doesn't have this value:
+  /* var getImage = function(title) {
+    var category = categoriesList.filter(function(element) {
+      return angular.lowercase(element.title) == title;
+    });
+    return category[0].image;
+  }; */
 
 
   /* Service methods: */
@@ -35,7 +42,6 @@ function categories($rootScope, $http, $log) {
       return categoriesList;
     });
   };
-
   this.getCategoryID = function returnCategoryID(title) {
 
     if (categoriesList !== undefined) return getID(title);
@@ -45,6 +51,16 @@ function categories($rootScope, $http, $log) {
       return getID(title);
     });
   };
+  // It doesn't work for now, because response data doesn't have this value:
+  /* this.getCategoryImage = function returnList() {
+
+    if (categoriesList !== undefined) return getImage(title);
+
+    return uploadList().then(function(response) {
+      categoriesList = createList(response);
+      return getImage(title);
+    });
+  }; */
 }
 
 export default {

@@ -1,10 +1,15 @@
-<section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
+<section class="hero" style="{{search.heading.image}}">
   <div class="container clear">
 
     <div class="content">
 
       <div class="text-center text">
-        <h1>In</h1>
+        <h1>
+          {{search.heading.category}} {{search.heading.location.length > 0 ? 'in' : ''}} {{search.heading.location}}
+        </h1>
+        <div class="text-center lead">
+          {{search.classesList.length}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
+        </div>
       </div>
 
     </div>

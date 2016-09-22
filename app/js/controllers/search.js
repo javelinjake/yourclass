@@ -8,10 +8,9 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
   var SearchItem = function(element) {
     this.price = element.price || 'free';
     this.title = element.title || 'No set title yet';
-    this.location = element.venue || 'No set location yet';
+    this.venue = element.venue || 'No set location yet';
     this.rating = parseFloat(element.rating) * 2;
-    this.teacher = element.teacher.profile.firstName + element.teacher.profile.lastName;
-
+    this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
     this.spotsBooked = element.bookings.length || 0;
     // this.spotsLeft = (time && parseInt(time.spots)) || 0;
 
@@ -31,45 +30,23 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
 
   var requestedURL = $rootScope.apiUrl + 'classes/list';
   var requestedCat = $stateParams.searchCategory,
-      requestedLoc = $stateParams.location;
+      requestedLoc = $location.search().location;
 
   var requestedCatID = undefined,
       requestedLocID = undefined;
-
-      //console.dir($stateParams);
+  var requestedCatImage = undefined;
 
 
   if (requestedCat) {
-    //var getId = categories.getCategoryID(requestedCat);
-    //console.log();
-    //requestedCatID = getId.id || getId.then(function(response){ console.log(response);  return response; });
     requestedCatID = categories.getCategoryID(requestedCat);
-    $log.warn(requestedCatID);
+
+    // requestedCatImage = categories.getCategoryImage(requestedCat);
+    requestedCatImage = '/images/outside-yoga.jpg';
   }
   if (requestedLoc) {
     requestedLocID = locations.getLocationID(requestedLoc);
-    $log.warn(requestedLocID);
   }
 
-  if (typeof requestedCatID !== 'object' && requestedCatID !== undefined) {
-    // $log.warn('value: ' + requestedCatID);
-    requestedURL += '?_categoryId=' + requestedCatID;
-    // $log.warn(requestedURL);
-  }
-  else {
-    // requestedCatID.then(function(response) {
-    //   // $log.warn('object: ' + response);
-    //   requestedURL += '?_categoryId=' + response;
-    //   // $log.warn(requestedURL);
-    // });
-  }
-
-
-  /* Temporary decision */
-  if (typeof requestedLocID !== 'object' && requestedLocID !== undefined) {
-    /* requestedURL += '?_locationId=' + requestedLocID; */
-  }
-  else { /* ... */ }
 
   // Get classes list: not filtered yet
   $http.get(requestedURL)
@@ -102,6 +79,14 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
       // Console error message:
       // $log.error('error' + response);
     });
+
+
+  /* Heading */
+  vm.heading = {
+    category: requestedCat ? $filter('capitalize')(requestedCat) : null,
+    location: requestedLoc ? $filter('capitalize')(requestedLoc) : null,
+    image:    requestedCatImage ? 'background-image: url(' + requestedCatImage + ')' : null
+  };
 
 
   /* Filter model */
