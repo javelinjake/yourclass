@@ -74,7 +74,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
   // Get classes list: not filtered yet
   $http.get(requestedURL)
     .then(function successCallback(response) {
-      var data = response.data.data;
+      var data = angular.fromJson(response.data).data;
       var classesArray = [];
 
       // vm.classesList = new CollectionList(data).toJSON()
@@ -104,7 +104,8 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
     });
 
 
-  /* Filter: */
+  /* Filter model */
+
   // Filter: Price Slider variables
   var sliderMin = 5,
       sliderMax = 45,
@@ -187,7 +188,8 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
   };
 
 
-  /* Results */
+  /* Results model */
+
   // Results: Pagination
   vm.pagination = {
     current: 1,
@@ -209,6 +211,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
 
 
   /* Watch events */
+
   // Pagination:
   // Slice results according to the current page
   $scope.$watch('search.pagination.current', function() {
