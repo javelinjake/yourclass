@@ -1,8 +1,7 @@
 <ul class="pagination">
   <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first"><a href ng-click="selectPage(1, $event)">{{::getText('first')}}</a></li>
   <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev"><a href ng-click="selectPage(page - 1, $event)">{{::getText('previous')}}</a></li>
-  <li ng-repeat="page in pages track by $index" ng-class="{active: page.active||(page.number > $parent.$parent.search.pagination.current && page.number <= $parent.$parent.search.pagination.last),disabled: ngDisabled&&!page.active}" class="pagination-page"><a href ng-click="$parent.$parent.paginationCheckPage(page.number)&&selectPage(page.number, $event)">{{page.text}}</a>
-</li>
+  <li ng-repeat="page in pages track by $index" ng-class="{active: page.active||(page.number > $parent.$parent.search.pagination.current && page.number <= $parent.$parent.search.pagination.last),disabled: ngDisabled&&!page.active}" class="pagination-page"><a href ng-click="$parent.$parent.paginationCheckPage(page.number)&&selectPage(page.number, $event)">{{page.text}}</a></li>
   <li ng-if="::directionLinks" ng-class="{disabled: noNext()||totalPages == $parent.$parent.search.pagination.last||ngDisabled}" class="pagination-next"><a href ng-click="selectPage(page + 1 > $parent.$parent.search.pagination.last ? page + 1 : $parent.$parent.search.pagination.last + 1, $event)">{{::getText('next')}}</a></li>
   <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||totalPages == $parent.$parent.search.pagination.last||ngDisabled}" class="pagination-last"><a href ng-click="($parent.$parent.search.pagination.last != totalPages)&&selectPage(totalPages, $event)">{{::getText('last')}}</a></li>
 </ul>
