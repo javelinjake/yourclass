@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs">
+  <li ng-class="{ 'active': $state.current.class === 'user-dashboard' }">
+    <a href="/user/dashboard">Dashboard</a>
+  </li>
+  <li ng-class="{ 'active': $state.current.class === 'user-edit-class' }">
+    <a href="/user/edit-class">Edit Class</a>
+  </li>
+  <li ng-class="{ 'active': $state.current.class === 'user-classes' }">
+    <a href="/user/classes">Your Classes</a>
+  </li>
+  <li ng-class="{ 'active': $state.current.class === 'user-add-class' }">
+    <a href="/user/add-class">Add Class</a>
+  </li>
+  <li ng-class="{ 'active': $state.current.class === 'user-account-details' }">
+    <a href="/user/account-details">Account Details</a>
+  </li>
+</ul>

@@ -3,9 +3,10 @@
   position: relative;
   max-width: $search-form-width;
   padding-right: $search-button-width;
-  @include box-shadow(0 0 0 2px rgba(0,0,0,0.2));
+  //@include box-shadow(0 0 0 2px rgba(0,0,0,0.2));
+  border: 2px solid rgba(0,0,0,0.2);
   margin: 0 auto;
-  top: 8px;
+  //top: 8px;
 
   .form-group {
     width: 50%;
@@ -21,7 +22,7 @@
     top: -2px;
     right: -2px;
     .btn {
-      padding: 14px 16px;
+      padding: 13px 16px;
     }
   }
   .form-control {
