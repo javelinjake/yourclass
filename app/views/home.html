@@ -29,7 +29,7 @@
               md-min-length="0"
               placeholder="Category">
               <md-item-template>
-                <span md-highlight-text="searchform.categories.searched" md-highlight-flags="^i">{{category.title}}</span>
+                <span md-highlight-text="searchform.categories.searched" md-highlight-flags="i">{{category.title}}</span>
               </md-item-template>
               <md-not-found>
                 No categories matching "{{searchform.categories.searched}}" were found.
@@ -48,7 +48,7 @@
               md-min-length="0"
               placeholder="Location">
               <md-item-template>
-                <span md-highlight-text="searchform.locations.searched" md-highlight-flags="^i">{{location.title}}</span>
+                <span md-highlight-text="searchform.locations.searched" md-highlight-flags="i">{{location.title}}</span>
               </md-item-template>
               <md-not-found>
                 No locations matching "{{searchform.locations.searched}}" were found.

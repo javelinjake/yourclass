@@ -4,7 +4,12 @@ function SearchFormCtrl($rootScope, $state, $location, $log, categories, locatio
   // ViewModel
   const vm = this;
 
-  vm.categoriesList = categories.getList();
+  // Get list of Categories:
+  categories.getList().then(function(response) { // As promise
+    vm.categoriesList = response;
+  });
+
+  // Get list of Locations:
   vm.locationsList = locations.getList();
 
   /* Functions */
@@ -17,7 +22,7 @@ function SearchFormCtrl($rootScope, $state, $location, $log, categories, locatio
     var lowercaseQuery = angular.lowercase(query);
     return function(item) {
       var itemTitle = angular.lowercase(item.title);
-      return (itemTitle.indexOf(lowercaseQuery) === 0);
+      return (itemTitle.indexOf(lowercaseQuery) !== -1);
     }
   }
 

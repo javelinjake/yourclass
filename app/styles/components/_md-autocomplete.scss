@@ -14,6 +14,7 @@ md-autocomplete {
     height: 50px;
     padding: 0 20px;
     line-height: 50px;
+    color: #000;
   }
 
   button {
@@ -30,6 +31,12 @@ md-autocomplete {
       padding: 0 20px;
       border-bottom: 1px solid #f5f5f5;
       line-height: 40px;
+      color: #000;
+
+      .highlight {
+        font-weight: 700;
+        color: inherit;
+      }
     }
   }
 }

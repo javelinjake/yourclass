@@ -6,7 +6,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
 
   /* Helper functions */
   var SearchItem = function(element) {
-    this.price = element.price || 'free';
+    this.price = parseFloat(element.price) ? parseFloat(element.price).toFixed(2) : 'free';
     this.title = element.title || 'No set title yet';
     this.venue = element.venue || 'No set location yet';
     this.rating = parseFloat(element.rating) * 2;

@@ -1,4 +1,4 @@
-function categories($rootScope, $http, $log) {
+function categories($rootScope, $http, $log, $q) {
   'ngInject';
 
   var categoriesList = undefined;
@@ -7,8 +7,15 @@ function categories($rootScope, $http, $log) {
   /* Inner functions */
   var uploadList = function() {
     // Get list of categories for autocomplete
-    $log.info('Uploading categories...');
-    return $http.get($rootScope.apiUrl + 'classes/categories');
+    var deferred = $q.defer();
+
+    $http
+      .get($rootScope.apiUrl + 'classes/categories')
+      .then(function(response) {
+        deferred.resolve(response);
+      });
+
+    return deferred.promise;
   };
   var createList = function(response) {
     var categoriesData = angular.fromJson(response.data).data;
@@ -35,7 +42,11 @@ function categories($rootScope, $http, $log) {
   /* Service methods: */
   this.getList = function returnList() {
 
-    if (categoriesList !== undefined) return categoriesList;
+    if (categoriesList !== undefined) {
+      var defer = $q.defer();
+      defer.resolve(categoriesList);
+      return defer.promise;
+    }
 
     return uploadList().then(function(response) {
       categoriesList = createList(response);
@@ -44,7 +55,11 @@ function categories($rootScope, $http, $log) {
   };
   this.getCategoryID = function returnCategoryID(title) {
 
-    if (categoriesList !== undefined) return getID(title);
+    if (categoriesList !== undefined) {
+      var defer = $q.defer();
+      defer.resolve(getID(title));
+      return defer.promise;
+    }
 
     return uploadList().then(function(response) {
       categoriesList = createList(response);
@@ -54,7 +69,11 @@ function categories($rootScope, $http, $log) {
   // It doesn't work for now, because response data doesn't have this value:
   /* this.getCategoryImage = function returnList() {
 
-    if (categoriesList !== undefined) return getImage(title);
+    if (categoriesList !== undefined) {
+      var defer = $q.defer();
+      defer.resolve(getImage(title));
+      return defer.promise;
+    }
 
     return uploadList().then(function(response) {
       categoriesList = createList(response);
