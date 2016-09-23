@@ -1,66 +1,103 @@
 <nav class="navbar">
-    <div class="container-fluid">
-        <div class="nav-wrapper">
+  <div class="container-fluid">
+    <div class="nav-wrapper">
 
-            <div class="navbar-logo">
-                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button> -->
-                <a class="navbar-brand logo" href="/">
-                    <img src="images/logo.png">
-                </a>
-            </div>
+      <div class="navbar-logo">
+        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button> -->
+        <a class="navbar-brand logo" href="/">
+          <img src="images/logo.png">
+        </a>
+      </div>
 
-            <form class="search-form clearfix" name="form" ng-submit="search()" ng-controller="SearchFormCtrl as searchform">
-                <fieldset>
+      <form class="search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform">
+        <fieldset class="search-form-fieldset">
 
-                    <div class="form-group">
-                        <label class="control-label hidden">Keyword</label>
-                        <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
-                        <md-autocomplete
-                            md-selected-item="searchform.categories.selected"
-                            md-search-text="searchform.categories.searched"
-                            md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
-                            md-item-text="category.name"
-                            md-min-length="0"
-                            placeholder="Category">
-                            <md-item-template>
-                                <span md-highlight-text="searchform.categories.searched" md-highlight-flags="^i">{{category.name}}</span>
-                            </md-item-template>
-                            <md-not-found>
-                                No categories matching "{{searchform.categories.searched}}" were found.
-                            </md-not-found>
-                        </md-autocomplete>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label hidden">Location</label>
-                        <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
-                        <md-autocomplete
-                            md-selected-item="searchform.locations.selected"
-                            md-search-text="searchform.locations.searched"
-                            md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
-                            md-item-text="location.name"
-                            md-min-length="0"
-                            placeholder="Location">
-                            <md-item-template>
-                                <span md-highlight-text="searchform.locations.searched" md-highlight-flags="^i">{{location.name}}</span>
-                            </md-item-template>
-                            <md-not-found>
-                                No locations matching "{{searchform.locations.searched}}" were found.
-                            </md-not-found>
-                        </md-autocomplete>
-                    </div>
-                    <div class="search-submit">
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <span class="text">Search</span>
-                        </button>
-                    </div>
+          <div class="form-group">
+            <label class="control-label hidden">Keyword</label>
+            <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
+            <md-autocomplete
+                md-selected-item="searchform.categories.selected"
+                md-search-text="searchform.categories.searched"
+                md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
+                md-item-text="category.title"
+                md-selected-item-change="searchform.categories.change(category)"
+                md-min-length="0"
+                placeholder="Category">
+                <md-item-template>
+                  <span md-highlight-text="searchform.categories.searched" md-highlight-flags="^i">{{category.title}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No categories matching "{{searchform.categories.searched}}" were found.
+                </md-not-found>
+            </md-autocomplete>
+          </div>
+          <div class="form-group">
+            <label class="control-label hidden">Location</label>
+            <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
+            <md-autocomplete
+                md-selected-item="searchform.locations.selected"
+                md-search-text="searchform.locations.searched"
+                md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
+                md-item-text="location.title"
+                md-selected-item-change="searchform.locations.change(location)"
+                md-min-length="0"
+                placeholder="Location">
+                <md-item-template>
+                  <span md-highlight-text="searchform.locations.searched" md-highlight-flags="^i">{{location.title}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No locations matching "{{searchform.locations.searched}}" were found.
+                </md-not-found>
+            </md-autocomplete>
+          </div>
+          <div class="search-form-submit">
+            <button type="submit" class="btn btn-primary btn-block">
+              <span class="text">Search</span>
+            </button>
+          </div>
 
-                </fieldset>
-            </form>
+        </fieldset>
+      </form>
+
+      <div class="navbar-links">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" ng-click="SignUpModal('sm')" ng-if="!userLoggedIn">Sign Up</a>
+          </li>
+          <li>
+            <a href="#" ng-click="LogInModal('sm')" ng-if="!userLoggedIn">Log In</a>
+          </li>
+          <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
+            <a href="/user/dashboard" role="button" uib-dropdown-toggle>
+              {{ userProfile.firstName }}
+              {{ userProfile.lastName }}
+              <div ng-repeat="image in userImage" ng-if="image.isMain == 1" class="nav-image">
+                <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
+              </div>
+            </a>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+              <li role="menuitem">
+                <a href="/user/dashboard">Dashboard</a>
+              </li>
+              <li role="menuitem">
+                <a href="/user/edit">Edit profile</a>
+              </li>
+              <li role="menuitem">
+                <a href="/user/class">Add class</a>
+              </li>
+              <li class="divider"></li>
+              <li role="menuitem">
+                <a href="#" ng-click="logOut()">Log out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
             <div class="navbar-links">
                 <ul class="nav navbar-nav navbar-right">

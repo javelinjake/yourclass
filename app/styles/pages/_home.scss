@@ -1,4 +1,12 @@
-// Only page specific CSS and only if needed
+/* HOME PAGE: */
+
+
+
+
+
+/* OTHER: */
+
+/* Top Navigation */
 .home {
 
   .navbar {
@@ -13,10 +21,16 @@
   }
   .navbar .navbar-nav > .open > a {background-color: transparent;}
 
-  .hero {margin-top: -($navbar-height)}
+    &-links {
+      //z-index: 20;
+    }
 
-  .navbar-links {
-    z-index: 20;
   }
 
+
+/* Hero */
+.home {
+  .hero {
+    margin-top: -($navbar-height);
+  }
 }

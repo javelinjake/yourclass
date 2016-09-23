@@ -1,10 +1,15 @@
-<section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
+<section class="hero" style="{{search.heading.image}}">
   <div class="container clear">
 
     <div class="content">
 
       <div class="text-center text">
-        <h1>In</h1>
+        <h1>
+          {{search.heading.category}} {{search.heading.location.length > 0 ? 'in' : ''}} {{search.heading.location}}
+        </h1>
+        <div class="text-center lead">
+          {{search.classesList.length}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
+        </div>
       </div>
 
     </div>
@@ -54,9 +59,7 @@
         <li class="search-filter-item">
           <div class="search-filter-title">Price</div>
           <div class="search-filter-widget">
-
             <rzslider rz-slider-model="search.slider.min" rz-slider-high="search.slider.max" rz-slider-options="search.slider.options"></rzslider>
-
           </div>
         </li>
         <li class="search-filter-item">
@@ -101,7 +104,7 @@ size: {{search.filters.size}}
   <div id="searchList">
 
     <!-- Pagination -->
-    <div class="search-pagination clearfix" aria-label="Search results pages">
+    <div class="search-pagination clearfix" aria-label="Search results pages" ng-if="search.classesList.length > search.pagination.limit">
       <ul uib-pagination
         class="pagination-sm pull-right"
 
@@ -127,7 +130,7 @@ size: {{search.filters.size}}
     <!-- Search results -->
     <div class="search-list">
 
-      <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : 'rating' : true">
+      <div class="search-item" ng-repeat="class in search.classesListSliced">
         <div class="search-item-price">{{class.price}}</div>
         <div class="search-item-date">{{class.dateStart | date : "dd MMMM" }}</div>
 
@@ -149,10 +152,10 @@ size: {{search.filters.size}}
     <!-- End of Search results -->
 
     <!-- Show more button -->
-    <div class="search-more" ng-click="showMoreResults()" ng-show="search.results.more">Show More</div>
+    <div class="search-more" ng-click="showMoreResults()" ng-show="search.results.more" ng-if="search.classesList.length > search.pagination.limit">Show More</div>
 
     <!-- Pagination -->
-    <div class="search-pagination clearfix" aria-label="Search results pages">
+    <div class="search-pagination clearfix" aria-label="Search results pages" ng-if="search.classesList.length > search.pagination.limit">
       <ul uib-pagination
         class="pagination-sm pull-right"
 
@@ -175,18 +178,18 @@ size: {{search.filters.size}}
       </ul>
     </div>
 
-<pre style="color: #ff4000;">
+<!--<pre style="color: #ff4000;">
 current: {{search.pagination.current}}
 last: {{search.pagination.last}}
 total: {{search.pagination.total}}
 size: {{search.pagination.size}}
 limit: {{search.pagination.limit}}
-</pre>
+</pre>-->
 
   </div>
 
 </div>
 
 <pre>
-	{{ search.responseData | json }}
+	<!--{{ search.responseData | json }}-->
 </pre>

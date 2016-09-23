@@ -16,8 +16,8 @@
         Inspiring everyone to learn, share and teach what you love
       </div>
 
-      <form class="search-form clearfix" name="form" ng-submit="search()" ng-controller="SearchFormCtrl as searchform">
-        <fieldset>
+      <form class="search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform">
+        <fieldset class="search-form-fieldset">
 
           <div class="form-group">
             <label class="control-label hidden">Keyword</label>
@@ -26,11 +26,12 @@
               md-selected-item="searchform.categories.selected"
               md-search-text="searchform.categories.searched"
               md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
-              md-item-text="category.name"
+              md-item-text="category.title"
+              md-selected-item-change="searchform.categories.change(category)"
               md-min-length="0"
               placeholder="Category">
               <md-item-template>
-                <span md-highlight-text="searchform.categories.searched" md-highlight-flags="^i">{{category.name}}</span>
+                <span md-highlight-text="searchform.categories.searched" md-highlight-flags="^i">{{category.title}}</span>
               </md-item-template>
               <md-not-found>
                 No categories matching "{{searchform.categories.searched}}" were found.
@@ -44,18 +45,19 @@
               md-selected-item="searchform.locations.selected"
               md-search-text="searchform.locations.searched"
               md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
-              md-item-text="location.name"
+              md-item-text="location.title"
+              md-selected-item-change="searchform.locations.change(location)"
               md-min-length="0"
               placeholder="Location">
               <md-item-template>
-                <span md-highlight-text="searchform.locations.searched" md-highlight-flags="^i">{{location.name}}</span>
+                <span md-highlight-text="searchform.locations.searched" md-highlight-flags="^i">{{location.title}}</span>
               </md-item-template>
               <md-not-found>
                 No locations matching "{{searchform.locations.searched}}" were found.
               </md-not-found>
             </md-autocomplete>
           </div>
-          <div class="search-submit">
+          <div class="search-form-submit">
             <button type="submit" class="btn btn-primary btn-block">
               <span class="text">Search</span>
             </button>

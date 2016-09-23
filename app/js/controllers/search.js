@@ -1,4 +1,4 @@
-function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
+function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $stateParams, $filter, categories, locations) {
   'ngInject';
 
   // ViewModel
@@ -8,10 +8,9 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
   var SearchItem = function(element) {
     this.price = element.price || 'free';
     this.title = element.title || 'No set title yet';
-    this.location = element.venue || 'No set location yet';
+    this.venue = element.venue || 'No set location yet';
     this.rating = parseFloat(element.rating) * 2;
-    this.teacher = element.teacher.profile.firstName + element.teacher.profile.lastName;
-
+    this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
     this.spotsBooked = element.bookings.length || 0;
     // this.spotsLeft = (time && parseInt(time.spots)) || 0;
 
@@ -29,20 +28,40 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
     return slicedList;
   };
 
+  var requestedURL = $rootScope.apiUrl + 'classes/list';
+  var requestedCat = $stateParams.searchCategory,
+      requestedLoc = $location.search().location;
+
+  var requestedCatID = undefined,
+      requestedLocID = undefined;
+  var requestedCatImage = undefined;
+
+
+  if (requestedCat) {
+    requestedCatID = categories.getCategoryID(requestedCat);
+
+    // requestedCatImage = categories.getCategoryImage(requestedCat);
+    requestedCatImage = '/images/outside-yoga.jpg';
+  }
+  if (requestedLoc) {
+    requestedLocID = locations.getLocationID(requestedLoc);
+  }
+
+
   // Get classes list: not filtered yet
-  $http.get($rootScope.apiUrl + 'classes/list')
+  $http.get(requestedURL)
     .then(function successCallback(response) {
-      var data = response.data.data;
+      var data = angular.fromJson(response.data).data;
       var classesArray = [];
 
-      // vm.classesList = new CollectionList(data).toJSON();
+      // vm.classesList = new CollectionList(data).toJSON()
 
       data.forEach(function(element, i, arr) {
         var item = new SearchItem(element);
         classesArray.push(item);
       });
 
-      vm.classesList = classesArray;
+      vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
       vm.responseData = data;
 
@@ -61,7 +80,17 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
       // $log.error('error' + response);
     });
 
-  /* Filter: */
+
+  /* Heading */
+  vm.heading = {
+    category: requestedCat ? $filter('capitalize')(requestedCat) : null,
+    location: requestedLoc ? $filter('capitalize')(requestedLoc) : null,
+    image:    requestedCatImage ? 'background-image: url(' + requestedCatImage + ')' : null
+  };
+
+
+  /* Filter model */
+
   // Filter: Price Slider variables
   var sliderMin = 5,
       sliderMax = 45,
@@ -144,13 +173,14 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
   };
 
 
-  /* Results */
+  /* Results model */
+
   // Results: Pagination
   vm.pagination = {
     current: 1,
     last: 1,
     total: 0,
-    limit: 8, // 20
+    limit: 20, // 20
     size: 4
   };
   // Results: List
@@ -166,6 +196,7 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout) {
 
 
   /* Watch events */
+
   // Pagination:
   // Slice results according to the current page
   $scope.$watch('search.pagination.current', function() {
