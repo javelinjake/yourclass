@@ -22,7 +22,6 @@ function HomeCtrl($http, $rootScope, $log, $uibModal) {
     }, function errorCallback(response) {
       $log.error('error' + response);
     });
-
 }
 
 export default {

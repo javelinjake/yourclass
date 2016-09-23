@@ -8,6 +8,9 @@
 /* Top Navigation */
 .home {
   .navbar {
+    background-color: transparent;
+    z-index: 10;
+    border-bottom: none;
 
     &-inverse {
       background-color: transparent;
@@ -16,6 +19,10 @@
       .navbar-nav > .open > a {
         background-color: transparent;
       }
+    }
+
+    .nav-wrapper {
+      padding: 0 220px;
     }
 
     &-links {

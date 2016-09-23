@@ -1,4 +1,4 @@
-function SearchFormCtrl($location, $log, categories, locations) {
+function SearchFormCtrl($rootScope, $state, $location, $log, categories, locations) {
   'ngInject';
 
   // ViewModel
