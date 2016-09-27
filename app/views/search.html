@@ -7,6 +7,7 @@
         <h1>
           {{search.heading.category}} {{search.heading.location.length > 0 ? 'in' : ''}} {{search.heading.location}}
         </h1>
+        <div>{{search.heading.image}}</div>
         <div class="text-center lead">
           {{search.classesList.length}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
         </div>
@@ -144,7 +145,7 @@ size: {{search.filters.size}}
           <em>&ndash;</em>
           {{class.spotsLeft}} {{class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
           <br>
-          {{class.dateStart | date : "hh:mm a" }} - {{class.dateEnd | date : "hh:mm a" }}</div>
+          {{class.dateStart | date : "hh:mm a" }} - {{class.dateEnd | date : "hh:mm a"}}</div>
         <div class="search-item-author">Taught by <strong>{{class.teacher}}</strong></div>
       </div>
 

@@ -20,7 +20,7 @@ function categories($rootScope, $http, $log, $q) {
   var createList = function(response) {
     var categoriesData = angular.fromJson(response.data).data;
     var categoriesArray = categoriesData.map(function(category) {
-      return { id: category.id, title: category.title };
+      return { id: category.id, title: category.title, image: category.image };
     });
     return categoriesArray;
   };
@@ -30,13 +30,12 @@ function categories($rootScope, $http, $log, $q) {
     });
     return category[0].id;
   };
-  // It doesn't work for now, because response data doesn't have this value:
-  /* var getImage = function(title) {
+  var getImage = function(title) {
     var category = categoriesList.filter(function(element) {
       return angular.lowercase(element.title) == title;
     });
     return category[0].image;
-  }; */
+  };
 
 
   /* Service methods: */
@@ -66,8 +65,7 @@ function categories($rootScope, $http, $log, $q) {
       return getID(title);
     });
   };
-  // It doesn't work for now, because response data doesn't have this value:
-  /* this.getCategoryImage = function returnList() {
+  this.getCategoryImage = function returnCategoryImage(title) {
 
     if (categoriesList !== undefined) {
       var defer = $q.defer();
@@ -79,7 +77,7 @@ function categories($rootScope, $http, $log, $q) {
       categoriesList = createList(response);
       return getImage(title);
     });
-  }; */
+  };
 }
 
 export default {

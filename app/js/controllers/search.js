@@ -34,14 +34,39 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
 
   var requestedCatID = undefined,
       requestedLocID = undefined;
-  var requestedCatImage = undefined;
+
+  var defaultCatImage = 'background-image: url(/images/outside-yoga.jpg)';
+  var requestedCatImage = undefined; // Default value
+
+
+  /* Heading */
+  vm.heading = {
+    category: requestedCat ? $filter('capitalize')(requestedCat) : null,
+    location: requestedLoc ? $filter('capitalize')(requestedLoc) : null,
+    image:    defaultCatImage
+  };
 
 
   if (requestedCat) {
-    requestedCatID = categories.getCategoryID(requestedCat);
+    categories.getCategoryID(requestedCat).then(function(response) {
+      requestedCatID = response;
+      console.log(requestedCatID);
+    });
 
-    // requestedCatImage = categories.getCategoryImage(requestedCat);
-    requestedCatImage = '/images/outside-yoga.jpg';
+    /* Heading Category image */
+    categories.getCategoryImage(requestedCat).then(function(response) {
+      // Update background to a new value:
+      if (response.length > 0) {
+        requestedCatImage = $rootScope.imageUrl + response;
+        vm.heading.image = 'background-image: url(' + requestedCatImage + ')';
+      }
+    }, function() {
+      // Update background to a default value:
+      if (response.length > 0) {
+        requestedCatImage = undefined;
+        vm.heading.image = defaultCatImage;
+      }
+    });
   }
   if (requestedLoc) {
     requestedLocID = locations.getLocationID(requestedLoc);
@@ -79,14 +104,6 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
       // Console error message:
       // $log.error('error' + response);
     });
-
-
-  /* Heading */
-  vm.heading = {
-    category: requestedCat ? $filter('capitalize')(requestedCat) : null,
-    location: requestedLoc ? $filter('capitalize')(requestedLoc) : null,
-    image:    requestedCatImage ? 'background-image: url(' + requestedCatImage + ')' : null
-  };
 
 
   /* Filter model */
