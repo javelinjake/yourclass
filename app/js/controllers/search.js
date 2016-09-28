@@ -153,6 +153,10 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
   vm.datepicker = {
     state: false,
     format: "dd/MM",
+    options: {
+      showWeeks: false,
+      showButtonBar: false
+    },
     show: function() {
       this.state = true;
     },
@@ -161,22 +165,32 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
     }
   };
   // Filter: Distance select
-  vm.distances = [
-    { id: '0',  title: 'Any'  },
-    { id: '2',  title: '2km'  },
-    { id: '5',  title: '5km'  },
-    { id: '10', title: '10km' },
-    { id: '20', title: '20km' },
-    { id: '30', title: '30km' }
-  ];
+  vm.distances = {
+    options: [
+      { value: '0',  text: 'Any'  },
+      { value: '2',  text: '2km'  },
+      { value: '5',  text: '5km'  },
+      { value: '10', text: '10km' },
+      { value: '20', text: '20km' },
+      { value: '30', text: '30km' }
+    ],
+    change: function() {
+      $log.info('Distance is changed...');
+    }
+  };
   // Filter: Size select
-  vm.sizes = [
-    { id: '0',  title: 'Any'  },
-    { id: '1',  title: '1'    },
-    { id: '2',  title: '2+'   },
-    { id: '5',  title: '5+'   },
-    { id: '10', title: '10+'  }
-  ];
+  vm.sizes = {
+    options: [
+      { value: '0',  text: 'Any'  },
+      { value: '1',  text: '1'    },
+      { value: '2',  text: '2+'   },
+      { value: '5',  text: '5+'   },
+      { value: '10', text: '10+'  }
+    ],
+    change: function() {
+      $log.info('Size is changed...');
+    }
+  };
   // Filter: Container
   vm.filters = {
     price: {
@@ -185,8 +199,8 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
     },
     rating: 0,
     date: false,
-    distance: vm.distances[2].id,
-    size: vm.sizes[2].id
+    distance: null, // gets an { value: '', text: '' }
+    size: null // gets an { value: '', text: '' }
   };
 
 
