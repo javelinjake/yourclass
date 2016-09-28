@@ -78,7 +78,8 @@
     "uglifyify": "~3.0.1",
     "vinyl-buffer": "~1.0.0",
     "vinyl-source-stream": "~1.1.0",
-    "watchify": "~3.7.0"
+    "watchify": "~3.7.0",
+    "ngsticky": "~1.7.12"
   },
   "dependencies": {
     "angular-animate": "~1.5.5",
