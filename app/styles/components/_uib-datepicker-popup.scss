@@ -1,0 +1,62 @@
+/* UI Bootstrap Datepicker Popup */
+
+.uib-datepicker-popup {
+
+  &.dropdown-menu {
+    margin-top: 5px;
+    padding: 0;
+    border: none;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+  }
+}
+
+.uib-datepicker {
+
+  table {
+    border: 1px solid #e1e1e1;
+  }
+
+  thead th {
+    border: none;
+
+    .btn {
+      padding: 12px 10px;
+      font-size: 14px;
+    }
+  }
+
+  tbody td {
+    border: 1px solid #eee;
+
+    .btn {
+      padding: 8px 10px;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: inset 0 0 1px rgba(#eee,0.2);
+    }
+  }
+
+  .text-info {
+    color: #bbb;
+  }
+
+  .text-muted {
+    font-weight: 400;
+  }
+
+  .btn {
+    text-transform: none;
+
+    &-info:active,
+    &-info.active {
+      background-color: #f78333;
+      font-weight: 400;
+      color: #fff;
+
+      .text-info {
+        color: #fff;
+      }
+    }
+  }
+}

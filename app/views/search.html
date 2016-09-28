@@ -7,7 +7,6 @@
         <h1>
           {{search.heading.category}} {{search.heading.location.length > 0 ? 'in' : ''}} {{search.heading.location}}
         </h1>
-        <div>{{search.heading.image}}</div>
         <div class="text-center lead">
           {{search.classesList.length}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
         </div>
@@ -72,33 +71,41 @@
         <li class="search-filter-item">
           <div class="search-filter-title">Date</div>
           <div class="search-filter-widget">
-            <input type="text" class="form-control" uib-datepicker-popup="{{search.datepicker.format}}" ng-model="search.filters.date" is-open="search.datepicker.state" close-on-date-selection="false" ng-click="search.datepicker.show()" />
+            <input type="text" class="form-control" uib-datepicker-popup="{{search.datepicker.format}}" ng-model="search.filters.date" datepicker-options="search.datepicker.options" show-button-bar="false" is-open="search.datepicker.state" close-on-date-selection="true" ng-click="search.datepicker.show()" />
           </div>
         </li>
         <li class="search-filter-item">
           <div class="search-filter-title">Distance</div>
           <div class="search-filter-widget">
-            <select class="form-control" ng-model="search.filters.distance" ng-options="item.id as item.title for item in search.distances track by item.id"></select>
+            <div dropdown-select="search.distances.options"
+                 dropdown-model="search.filters.distance"
+                 dropdown-item-label="text"
+                 dropdown-onchange="search.distances.change()" >
+            </div>
           </div>
         </li>
         <li class="search-filter-item">
           <div class="search-filter-title">Size</div>
           <div class="search-filter-widget">
-            <select class="form-control" ng-model="search.filters.size" ng-options="item.id as item.title for item in search.sizes track by item.id"></select>
+            <div dropdown-select="search.sizes.options"
+                 dropdown-model="search.filters.size"
+                 dropdown-item-label="text"
+                 dropdown-onchange="search.sizes.change()" >
+            </div>
           </div>
         </li>
       </ul>
     </div>
     <br>
 
-<!--<pre style="color: #ff4000;">
+<pre style="color: #ff4000;">
 price start: {{search.filters.price.start}}
 price end: {{search.filters.price.end}}
 rating: {{search.filters.rating}}
 date: {{search.filters.date}}
 distance: {{search.filters.distance}}
 size: {{search.filters.size}}
-</pre>-->
+</pre>
 
   </div>
 
@@ -132,21 +139,21 @@ size: {{search.filters.size}}
     <div class="search-list">
 
       <div class="search-item" ng-repeat="class in search.classesListSliced">
-        <div class="search-item-price">{{class.price}}</div>
-        <div class="search-item-date">{{class.dateStart | date : "dd MMMM" }}</div>
+        <div class="search-item-price">{{::class.price}}</div>
+        <div class="search-item-date">{{::class.dateStart | date : "dd MMMM" }}</div>
 
-        <div class="search-item-title">{{class.title}}</div>
-        <div class="search-item-location">{{class.venue}}</div>
+        <div class="search-item-title">{{::class.title}}</div>
+        <div class="search-item-location">{{::class.venue}}</div>
         <div class="search-item-rating">
-          <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{search.rating.titles}}"></span>
+          <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{::search.rating.titles}}"></span>
         </div>
         <div class="search-item-description">
-          {{class.spotsBooked}} {{class.spotsBooked === 1 ? 'student' : students}} going
+          {{::class.spotsBooked}} {{::class.spotsBooked === 1 ? 'student' : students}} going
           <em>&ndash;</em>
-          {{class.spotsLeft}} {{class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
+          {{::class.spotsLeft}} {{::class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
           <br>
-          {{class.dateStart | date : "hh:mm a" }} - {{class.dateEnd | date : "hh:mm a"}}</div>
-        <div class="search-item-author">Taught by <strong>{{class.teacher}}</strong></div>
+          {{::class.dateStart | date : "hh:mm a" }} - {{::class.dateEnd | date : "hh:mm a"}}</div>
+        <div class="search-item-author">Taught by <strong>{{::class.teacher}}</strong></div>
       </div>
 
     </div>

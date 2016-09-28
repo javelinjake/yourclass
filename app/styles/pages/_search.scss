@@ -57,9 +57,15 @@
     }
     &-widget {}
 
-    .form-control {
+    /* Textfield & Dropdown */
+    .form-control,
+    .wrap-dd-select {
       width: 90px;
       height: 25px;
+      padding: 2px 12px;
+      text-align: center;
+    }
+    .wrap-dd-select .dropdown li a {
       padding: 2px 12px;
     }
 
