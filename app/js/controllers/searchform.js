@@ -1,4 +1,4 @@
-function SearchFormCtrl($rootScope, $state, $location, $log, categories, locations) {
+function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
   'ngInject';
 
   // ViewModel
@@ -26,34 +26,54 @@ function SearchFormCtrl($rootScope, $state, $location, $log, categories, locatio
     }
   }
 
+
   /* Data containers */
+  /* Selected values are saved in the Searching service */
   vm.categories = {
-    current: undefined,
+    selected: searching.search.category,
     query: vm.searchQuery,
-    change: function(item) {
-      this.current = item;
-    }
+    // change: function(item) {}
   };
   vm.locations = {
-    current: undefined,
+    selected: searching.search.location,
     query: vm.searchQuery,
-    change: function(item) {
-      this.current = item;
-    }
+    // change: function(item) {}
   };
+
+
+  /* Check the URL and update the Search Form and Searching service values */
+  var urlCategory = $stateParams.searchCategory;
+  categories.getCategoryElement(urlCategory).then(function(response) { // As promise
+    if (!response) return false;
+      vm.categories.selected = response;
+      searching.setCategory(response);
+  });
+  var urlLocation = $location.search().location;
+  var urlLocationElement = locations.getLocationElement(urlLocation);
+      vm.locations.selected = urlLocationElement;
+      searching.setLocation(urlLocationElement);
+
 
   /* Form submit event */
   vm.search = function() {
     // $log.info('Searching...');
-
     var newURL = '/search/';
-    // if (!vm.categories.current) return false;
 
-    if (vm.categories.current) {
-      newURL += angular.lowercase(vm.categories.current.title);
+    // Continue searching only if category is selected
+    if (!vm.categories.selected) return false;
+
+    if (vm.categories.selected) {
+      newURL += angular.lowercase(vm.categories.selected.title);
     }
 
-    var urlParamLoc = vm.locations.current ? angular.lowercase(vm.locations.current.title) : null;
+    var urlParamLoc = vm.locations.selected ? angular.lowercase(vm.locations.selected.title) : null;
+    // $log.info(newURL); $log.info(urlParamLoc);
+
+    // Set new search parameters
+    searching.setCategory(vm.categories.selected);
+    searching.setLocation(vm.locations.selected);
+    // $log.info(searching.getCategory());
+    // $log.info(searching.getLocation());
 
     $location.search('location', urlParamLoc);
     $location.replace().path(newURL);

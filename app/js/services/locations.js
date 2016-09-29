@@ -12,7 +12,14 @@ function locations($rootScope, $http, $log) {
   this.getList = function returnList() {
     return locationsList;
   };
+  this.getLocationElement = function returnLocationElement(title) {
 
+    var location = locationsList.filter(function(element) {
+      return angular.lowercase(element.title) == title;
+    });
+
+    return location[0];
+  };
   this.getLocationID = function returnLocationID(title) {
     var location = locationsList.filter(function(element) {
       return angular.lowercase(element.title) == title;

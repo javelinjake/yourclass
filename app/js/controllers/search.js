@@ -203,6 +203,8 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
     size: null // gets an { value: '', text: '' }
   };
 
+  // $watch vm.filters
+
 
   /* Results model */
 
