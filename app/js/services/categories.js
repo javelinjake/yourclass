@@ -13,6 +13,7 @@ function categories($rootScope, $http, $log, $q) {
       .get($rootScope.apiUrl + 'classes/categories')
       .then(function(response) {
         deferred.resolve(response);
+        $log.info('dfsdf');
       });
 
     return deferred.promise;
@@ -29,6 +30,12 @@ function categories($rootScope, $http, $log, $q) {
       return angular.lowercase(element.title) == title;
     });
     return category[0].id;
+  };
+  var getElement = function(title) {
+    var category = categoriesList.filter(function(element) {
+      return angular.lowercase(element.title) == title;
+    });
+    return category[0];
   };
   var getImage = function(title) {
     var category = categoriesList.filter(function(element) {
@@ -63,6 +70,19 @@ function categories($rootScope, $http, $log, $q) {
     return uploadList().then(function(response) {
       categoriesList = createList(response);
       return getID(title);
+    });
+  };
+  this.getCategoryElement = function returnCategoryElement(title) {
+
+    if (categoriesList !== undefined) {
+      var defer = $q.defer();
+      defer.resolve(getElement(title));
+      return defer.promise;
+    }
+
+    return uploadList().then(function(response) {
+      categoriesList = createList(response);
+      return getElement(title);
     });
   };
   this.getCategoryImage = function returnCategoryImage(title) {

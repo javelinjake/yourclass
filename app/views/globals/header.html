@@ -20,12 +20,12 @@
           <div class="form-group">
             <label class="control-label hidden">Keyword</label>
             <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
+            <!-- md-search-text="searchform.categories.searched" -->
+            <!-- md-selected-item-change="searchform.categories.change(location)" -->
             <md-autocomplete
                 md-selected-item="searchform.categories.selected"
-                md-search-text="searchform.categories.searched"
                 md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
                 md-item-text="category.title"
-                md-selected-item-change="searchform.categories.change(category)"
                 md-min-length="0"
                 placeholder="Category">
                 <md-item-template>
@@ -39,12 +39,12 @@
           <div class="form-group">
             <label class="control-label hidden">Location</label>
             <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
+            <!-- md-search-text="searchform.locations.searched" -->
+            <!-- md-selected-item-change="searchform.locations.change(location)" -->
             <md-autocomplete
                 md-selected-item="searchform.locations.selected"
-                md-search-text="searchform.locations.searched"
                 md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
                 md-item-text="location.title"
-                md-selected-item-change="searchform.locations.change(location)"
                 md-min-length="0"
                 placeholder="Location">
                 <md-item-template>
