@@ -1,8 +1,15 @@
-function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searching) {
+function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searching, categories) {
   'ngInject';
 
   // ViewModel
   const vm = this;
+
+  /* Heading */
+  vm.heading = {
+    category: null,
+    location: null,
+    image: 'background-image: url(/images/outside-yoga.jpg)'
+  };
 
 
   /* Helper Functions */
@@ -13,34 +20,52 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     return slicedList;
   };
 
+  var loadSearchResults = function() {
+    /* Get Search results: simple request */
+    searching.getResults().then(function(response) {
+      $log.info('Loaded search results.');
 
-  /* Get Search results: simple request */
-  searching.getResults().then(function(response) {
-    $log.info('Got array of classes from searching');
+      var classesArray = response;
 
-    var classesArray = response;
+      vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
+      vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
 
-    vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
-    vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
+      // Refresh filter slider:
+      vm.slider.refresh();
 
-    // Refresh filter slider:
-    vm.slider.refresh();
-
-    // Update length of pagination amount:
-    vm.pagination.total = classesArray.length;
-  });
-
-
-
-
-
-
-  /* Heading */
-  vm.heading = {
-    category: null,
-    location: null,
-    image: 'background-image: url(/images/outside-yoga.jpg)'
+      // Update pagination settings:
+      vm.pagination.current = 1;
+      vm.pagination.last = 1;
+      vm.pagination.total = classesArray.length;
+    });
   };
+
+  var updateSearchHeading = function() {
+    var category = searching.getCategory();
+    var location = searching.getLocation();
+
+      vm.heading.category = category ? category.title : null;
+      vm.heading.location = location ? location.title : null;
+
+    var categoryImage = 'background-image: url(' +  $rootScope.imageUrl + category.image + ')';
+    var defaultImage  = 'background-image: url(/images/outside-yoga.jpg)';
+
+      vm.heading.image = (category && category.image.length > 0) ? categoryImage : defaultImage;
+  };
+
+
+  /* Load results on controller is load */
+  // Checks the status flag. False means first app upload.
+  if (searching.isFirstUpload) {
+    updateSearchHeading();
+    loadSearchResults();
+  }
+  /* Load results after categories list and searching parameters is updated */
+  $scope.$on('updatedSearching', function(event, response) {
+    updateSearchHeading();
+    loadSearchResults();
+    searching.isFirstUpload = true;
+  });
 
 
   /* Filter model */
@@ -171,11 +196,11 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter updates in searching service
   $scope.$watch('search.filters', function(current, original) {
     // Send new request
-    $log.info(current);
+    // $log.warn(searching.filter);
   }, true);
 
 
-  /* Functions */
+  /* Scope Functions */
 
   // Show more button:
   // Adds more results equal to "limit" step to the shown list

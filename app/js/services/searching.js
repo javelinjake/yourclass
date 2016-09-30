@@ -1,6 +1,16 @@
 function searching($rootScope, $http, $log, $q, $filter) {
   'ngInject';
 
+  // Flag to detect the first upload (for search controller)
+  this.isFirstUpload = false;
+
+
+  /* Category */
+  var searchParams = {
+    category: null,
+    location: null
+  };
+
 
   /* Helper functions */
   var SearchItem = function(element) {
@@ -11,11 +21,9 @@ function searching($rootScope, $http, $log, $q, $filter) {
     this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
     this.spotsBooked = element.bookings.length || 0;
     // this.spotsLeft = (time && parseInt(time.spots)) || 0;
-
     // var dateString = (element.dates[0] && element.dates[0].classDate) || false;
     // var timeStart  = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].startTime) || '00:00:00';
     // var timeEnd    = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].endTime) || '00:00:00';
-
     // this.dateStart = dateString ? new Date(dateString + ' ' + timeStart) : undefined;
     // this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
   };
@@ -56,7 +64,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
   //   requestedLocID = locations.getLocationID(requestedLoc);
   // }
 
-  var requestURL = $rootScope.apiUrl + 'classes/list';
+  var requestURLBase = $rootScope.apiUrl + 'classes/list';
 
   // Get classes list: not filtered yet
   var requestData = function(url) {
@@ -76,11 +84,40 @@ function searching($rootScope, $http, $log, $q, $filter) {
     return deferred.promise;
   };
 
+  var requestURLForm = function() {
+    var resultURL = requestURLBase;
+    var resultParams = [];
+
+    if (searchParams.category) {
+      var parameter = '_categoryId=' + searchParams.category.id;
+      resultParams.push(parameter);
+    }
+    if (searchParams.location) {
+      // var parameter = '_locationId=' + searchParams.location.id;
+      // resultParams.push(parameter);
+    }
+
+    if (searchParams.location) {}
+
+
+
+    if (resultParams.length > 0) {
+      resultURL += '?' + resultParams.join('&');;
+    }
+
+    return resultURL;
+  };
+
 
   this.getResults = function() {
+    var requestURL = requestURLForm();
+    // $log.info('getResults');
+    // $log.info(requestURL);
+    // $log.info(searchParams);
+
     return requestData(requestURL).then(function(data) {
       var dataArray = [];
-      
+
       data.forEach(function(element, i, arr) {
         var item = new SearchItem(element);
         dataArray.push(item);
@@ -93,24 +130,18 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
 
 
-  // Category & Location
-  this.search = {
-    category: null,
-    location: null
-  };
-
   this.setCategory = function(category) {
-    this.search.category = category ? category : null;
+    searchParams.category = category ? category : null;
   };
   this.setLocation = function(location) {
-    this.search.location = location ? location : null;
+    searchParams.location = location ? location : null;
   };
 
   this.getCategory = function() {
-    return this.search.category;
+    return searchParams.category;
   };
   this.getLocation = function() {
-    return this.search.location;
+    return searchParams.location;
   };
 
 

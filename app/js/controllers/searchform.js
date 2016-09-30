@@ -1,4 +1,4 @@
-function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
+function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
   'ngInject';
 
   // ViewModel
@@ -7,6 +7,8 @@ function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, cat
   // Get list of Categories:
   categories.getList().then(function(response) { // As promise
     vm.categoriesList = response;
+
+    $rootScope.$broadcast('loadedCategories', response);
   });
 
   // Get list of Locations:
@@ -30,23 +32,34 @@ function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, cat
   /* Data containers */
   /* Selected values are saved in the Searching service */
   vm.categories = {
-    selected: searching.search.category,
+    selected: searching.getCategory(),
     query: vm.searchQuery,
-    // change: function(item) {}
+    change: function(item) {
+      searching.setCategory(item);
+    }
   };
   vm.locations = {
-    selected: searching.search.location,
+    selected: searching.getLocation(),
     query: vm.searchQuery,
-    // change: function(item) {}
+    change: function(item) {
+      searching.setLocation(item);
+    }
   };
 
 
   /* Check the URL and update the Search Form and Searching service values */
-  var urlCategory = $stateParams.searchCategory;
-  categories.getCategoryElement(urlCategory).then(function(response) { // As promise
-    if (!response) return false;
+  $scope.$on('loadedCategories', function(event, response) {
+    // $log.info('loadedCategories');
+
+    var urlCategory = $stateParams.searchCategory;
+    categories.getCategoryElement(urlCategory).then(function(response) { // As promise
+      if (!response) return false;
+
       vm.categories.selected = response;
       searching.setCategory(response);
+
+      $rootScope.$broadcast('updatedSearching', response);
+    });
   });
   var urlLocation = $location.search().location;
   var urlLocationElement = locations.getLocationElement(urlLocation);

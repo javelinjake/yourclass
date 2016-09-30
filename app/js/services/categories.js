@@ -46,7 +46,6 @@ function categories($rootScope, $http, $log, $q) {
 
   /* Service methods: */
   this.getList = function returnList() {
-
     if (categoriesList !== undefined) {
       var defer = $q.defer();
       defer.resolve(categoriesList);
@@ -59,7 +58,6 @@ function categories($rootScope, $http, $log, $q) {
     });
   };
   this.getCategoryID = function returnCategoryID(title) {
-
     if (categoriesList !== undefined) {
       var defer = $q.defer();
       defer.resolve(getID(title));
@@ -72,8 +70,6 @@ function categories($rootScope, $http, $log, $q) {
     });
   };
   this.getCategoryElement = function returnCategoryElement(title) {
-        $log.info('dftttg');
-
     if (categoriesList !== undefined) {
       var defer = $q.defer();
       defer.resolve(getElement(title));
@@ -86,7 +82,6 @@ function categories($rootScope, $http, $log, $q) {
     });
   };
   this.getCategoryImage = function returnCategoryImage(title) {
-
     if (categoriesList !== undefined) {
       var defer = $q.defer();
       defer.resolve(getImage(title));
