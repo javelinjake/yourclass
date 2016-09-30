@@ -73,16 +73,20 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
 
   /* Filter model */
-
+  // Filter: Price variables
+  var priceMin   = 0,
+      priceMax   = 850,
+      priceFloor = 0,
+      priceCeil  = 1000;
   // Filter: Price Slider
   vm.slider = {
-    min: searching.filter.price.start,
-    max: searching.filter.price.end,
+    min: priceMin,
+    max: priceMax,
     options: {
-      floor: searching.filter.price.floor,
+      floor: priceFloor,
       floorLabel: 'free',
-      ceil: searching.filter.price.ceil,
-      ceilLabel: '$' + searching.filter.price.ceil,
+      ceil: priceCeil,
+      ceilLabel: '$' + priceCeil,
       step: 1,
       hidePointerLabels: true,
       translate: function(value, sliderId, label) {
@@ -108,6 +112,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
   // Filter: Rating
   vm.rating = {
+    value: 8,
     titles: ['0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']
   };
   // Filter: Datepicker Popup
@@ -155,13 +160,13 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter: Container
   vm.filters = {
     price: {
-      start: searching.filter.price.start,
-      end: searching.filter.price.end
+      start: priceMin,
+      end: priceMax
     },
-    rating: searching.filter.rating,
-    date: searching.filter.date,
-    distance: searching.filter.distance, // gets an { value: '', text: '' }
-    size: searching.filter.size // gets an { value: '', text: '' }
+    rating: vm.rating.value,
+    date: null,
+    distance: vm.distances.options[4], // gets an { value: '', text: '' }
+    size: vm.sizes.options[0] // gets an { value: '', text: '' }
   };
 
 

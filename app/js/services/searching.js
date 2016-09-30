@@ -73,7 +73,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
     return resultURL;
   };
 
-
   this.getResults = function() {
     var requestURL = requestURLForm();
     // $log.info('getResults');
@@ -113,21 +112,15 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
 
   // Filters
-  // Filter: Price variables
-  var priceMin   = 0,
-      priceMax   = 850,
-      priceFloor = 0,
-      priceCeil  = 1000;
-
-  this.filter = {
+  this.filterParams = {
     price: {
-      floor: priceFloor,
-      start: priceMin,
-      end:   priceMax,
-      ceil:  priceCeil
+      floor: 0,
+      start: 0,
+      end:   0,
+      ceil:  0
     },
-    rating: 3,
-    date: false,
+    rating: 0,
+    date: null,
     distance: null, // gets an { value: '', text: '' }
     size: null // gets an { value: '', text: '' }
   };
