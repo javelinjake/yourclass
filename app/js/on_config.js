@@ -76,11 +76,16 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       }
     })
     .state('User-Edit-Class', {
-      url: '/user/edit-class',
+      url: '/user/edit-class/:classEditName',
       controller: 'UserEditClassCtrl as userEditClass',
       templateUrl: 'user/edit-class.html',
       title: 'User Edit Class',
       class: 'user-edit-class',
+      resolve: {
+        getEditClassAlias: function($stateParams) {
+          return $stateParams.classEditName;
+        }
+      },
       ncyBreadcrumb: {
         label: 'Edit Class'
       }

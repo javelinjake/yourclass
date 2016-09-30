@@ -1,11 +1,26 @@
-function UserEditClassCtrl($rootScope, $http, $log) {
+function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias) {
   'ngInject';
 
   // ViewModel
   const vm = this;
 
+  // Get Classes
+	$http.get($rootScope.apiUrl + 'classes/one', {params: {_alias: getEditClassAlias}}).success((data) => {
+		vm.class = data.data;
+    $log.info(vm.class);
+	}).error((err, status) => {});
+
   // Lets wrap everything in here and wait for the users data to be loaded
   $rootScope.waitForData.promise.then(function() {
+
+  // TODO - Add class id into url
+  if ($rootScope.addClassName) {
+    var classEditId = $rootScope.addClassName;
+
+    $log.info('Yes you have a class to edit: ', classEditId);
+  } else {
+    $log.info('Sorry no class to edit');
+  }
 
     // Get categories
     $http.get($rootScope.apiUrl + 'classes/categories')
