@@ -1,26 +1,11 @@
-function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $stateParams, $filter, categories, locations) {
+function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searching) {
   'ngInject';
 
   // ViewModel
   const vm = this;
 
-  /* Helper functions */
-  var SearchItem = function(element) {
-    this.price = parseFloat(element.price) ? parseFloat(element.price).toFixed(2) : 'free';
-    this.title = element.title || 'No set title yet';
-    this.venue = element.venue || 'No set location yet';
-    this.rating = parseFloat(element.rating) * 2;
-    this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
-    this.spotsBooked = element.bookings.length || 0;
-    // this.spotsLeft = (time && parseInt(time.spots)) || 0;
 
-    // var dateString = (element.dates[0] && element.dates[0].classDate) || false;
-    // var timeStart  = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].startTime) || '00:00:00';
-    // var timeEnd    = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].endTime) || '00:00:00';
-
-    // this.dateStart = dateString ? new Date(dateString + ' ' + timeStart) : undefined;
-    // this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
-  };
+  /* Helper Functions */
   var sliceSearchResults = function(classesList, startIndex, endIndex) {
     if (!classesList || classesList.length == 0) return [];
 
@@ -28,100 +13,47 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
     return slicedList;
   };
 
-  var requestedURL = $rootScope.apiUrl + 'classes/list';
-  var requestedCat = $stateParams.searchCategory,
-      requestedLoc = $location.search().location;
 
-  var requestedCatID = undefined,
-      requestedLocID = undefined;
+  /* Get Search results: simple request */
+  searching.getResults().then(function(response) {
+    $log.info('Got array of classes from searching');
 
-  var defaultCatImage = 'background-image: url(/images/outside-yoga.jpg)';
-  var requestedCatImage = undefined; // Default value
+    var classesArray = response;
+
+    vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
+    vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
+
+    // Refresh filter slider:
+    vm.slider.refresh();
+
+    // Update length of pagination amount:
+    vm.pagination.total = classesArray.length;
+  });
+
+
+
+
 
 
   /* Heading */
   vm.heading = {
-    category: requestedCat ? $filter('capitalize')(requestedCat) : null,
-    location: requestedLoc ? $filter('capitalize')(requestedLoc) : null,
-    image:    defaultCatImage
+    category: null,
+    location: null,
+    image: 'background-image: url(/images/outside-yoga.jpg)'
   };
-
-
-  if (requestedCat) {
-    categories.getCategoryID(requestedCat).then(function(response) {
-      requestedCatID = response;
-      console.log(requestedCatID);
-    });
-
-    /* Heading Category image */
-    categories.getCategoryImage(requestedCat).then(function(response) {
-      // Update background to a new value:
-      if (response.length > 0) {
-        requestedCatImage = $rootScope.imageUrl + response;
-        vm.heading.image = 'background-image: url(' + requestedCatImage + ')';
-      }
-    }, function() {
-      // Update background to a default value:
-      if (response.length > 0) {
-        requestedCatImage = undefined;
-        vm.heading.image = defaultCatImage;
-      }
-    });
-  }
-  if (requestedLoc) {
-    requestedLocID = locations.getLocationID(requestedLoc);
-  }
-
-
-  // Get classes list: not filtered yet
-  $http.get(requestedURL)
-    .then(function successCallback(response) {
-      var data = angular.fromJson(response.data).data;
-      var classesArray = [];
-
-      // vm.classesList = new CollectionList(data).toJSON()
-
-      data.forEach(function(element, i, arr) {
-        var item = new SearchItem(element);
-        classesArray.push(item);
-      });
-
-      vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
-      vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
-      vm.responseData = data;
-
-      // AJAX responce data in JSON format
-
-      // Refresh filter slider:
-      vm.slider.refresh();
-
-      // Update length of pagination amount:
-      vm.pagination.total = classesArray.length;
-
-      // Console success message:
-      // $log.info('success' + response);
-    }, function errorCallback(response) {
-      // Console error message:
-      // $log.error('error' + response);
-    });
 
 
   /* Filter model */
 
-  // Filter: Price Slider variables
-  var sliderMin = 5,
-      sliderMax = 45,
-      sliderFloor = 0,
-      sliderCeil = 60;
   // Filter: Price Slider
   vm.slider = {
-    min: sliderMin,
-    max: sliderMax,
+    min: searching.filter.price.start,
+    max: searching.filter.price.end,
     options: {
-      floor: sliderFloor,
+      floor: searching.filter.price.floor,
       floorLabel: 'free',
-      ceil: sliderCeil,
-      ceilLabel: '$' + sliderCeil,
+      ceil: searching.filter.price.ceil,
+      ceilLabel: '$' + searching.filter.price.ceil,
       step: 1,
       hidePointerLabels: true,
       translate: function(value, sliderId, label) {
@@ -194,16 +126,14 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
   // Filter: Container
   vm.filters = {
     price: {
-      start: sliderMin,
-      end: sliderMax
+      start: searching.filter.price.start,
+      end: searching.filter.price.end
     },
-    rating: 0,
-    date: false,
-    distance: null, // gets an { value: '', text: '' }
-    size: null // gets an { value: '', text: '' }
+    rating: searching.filter.rating,
+    date: searching.filter.date,
+    distance: searching.filter.distance, // gets an { value: '', text: '' }
+    size: searching.filter.size // gets an { value: '', text: '' }
   };
-
-  // $watch vm.filters
 
 
   /* Results model */
@@ -238,6 +168,11 @@ function SearchCtrl($http, $rootScope, $scope, $log, $timeout, $location, $state
 
     vm.classesListSliced = sliceSearchResults(vm.classesList, start, end);
   });
+  // Filter updates in searching service
+  $scope.$watch('search.filters', function(current, original) {
+    // Send new request
+    $log.info(current);
+  }, true);
 
 
   /* Functions */

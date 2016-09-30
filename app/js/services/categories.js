@@ -13,7 +13,6 @@ function categories($rootScope, $http, $log, $q) {
       .get($rootScope.apiUrl + 'classes/categories')
       .then(function(response) {
         deferred.resolve(response);
-        $log.info('dfsdf');
       });
 
     return deferred.promise;
@@ -73,6 +72,7 @@ function categories($rootScope, $http, $log, $q) {
     });
   };
   this.getCategoryElement = function returnCategoryElement(title) {
+        $log.info('dftttg');
 
     if (categoriesList !== undefined) {
       var defer = $q.defer();

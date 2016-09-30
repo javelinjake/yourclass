@@ -67,13 +67,10 @@ function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, cat
     }
 
     var urlParamLoc = vm.locations.selected ? angular.lowercase(vm.locations.selected.title) : null;
-    // $log.info(newURL); $log.info(urlParamLoc);
 
     // Set new search parameters
     searching.setCategory(vm.categories.selected);
     searching.setLocation(vm.locations.selected);
-    // $log.info(searching.getCategory());
-    // $log.info(searching.getLocation());
 
     $location.search('location', urlParamLoc);
     $location.replace().path(newURL);
