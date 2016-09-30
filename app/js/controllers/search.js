@@ -11,6 +11,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     image: 'background-image: url(/images/outside-yoga.jpg)'
   };
 
+  vm.isLoading = false;
+
 
   /* Helper Functions */
   var sliceSearchResults = function(classesList, startIndex, endIndex) {
@@ -22,6 +24,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
   var loadSearchResults = function() {
     /* Get Search results: simple request */
+    vm.isLoading = true;
     searching.getResults().then(function(response) {
       $log.info('Loaded search results.');
 
@@ -29,6 +32,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
       vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
+      vm.isLoading = false;
 
       // Refresh filter slider:
       vm.slider.refresh();
@@ -56,7 +60,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
   /* Load results on controller is load */
   // Checks the status flag. False means first app upload.
-  if (searching.isFirstUpload) {
+  if (!searching.isFirstLoad) {
     updateSearchHeading();
     loadSearchResults();
   }
@@ -64,7 +68,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   $scope.$on('updatedSearching', function(event, response) {
     updateSearchHeading();
     loadSearchResults();
-    searching.isFirstUpload = true;
+    searching.isFirstLoad = false;
   });
 
 
@@ -196,7 +200,11 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter updates in searching service
   $scope.$watch('search.filters', function(current, original) {
     // Send new request
-    // $log.warn(searching.filter);
+    $log.warn(searching.filter);
+    $log.warn(searching.isFirstLoad);
+    if (searching.isFirstLoad) {
+
+    }
   }, true);
 
 

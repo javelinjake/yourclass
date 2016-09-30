@@ -15,6 +15,10 @@
     text-align: left;
     overflow: hidden;
 
+    &:focus {
+      outline: none !important;
+    }
+
     &:nth-of-type(2n) {
       transform: rotateY(180deg);
     }

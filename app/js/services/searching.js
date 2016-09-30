@@ -2,7 +2,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
   'ngInject';
 
   // Flag to detect the first upload (for search controller)
-  this.isFirstUpload = false;
+  this.isFirstLoad = true;
 
 
   /* Category */
@@ -28,41 +28,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
     // this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
   };
 
-
-  // var requestedCat = $stateParams.searchCategory,
-  //     requestedLoc = $location.search().location;
-
-  // var requestedCatID = undefined,
-  //     requestedLocID = undefined;
-
-  // var defaultCatImage = 'background-image: url(/images/outside-yoga.jpg)';
-  // var requestedCatImage = undefined; // Default value
-
-
-  //   if (requestedCat) {
-  //   categories.getCategoryID(requestedCat).then(function(response) {
-  //     requestedCatID = response;
-  //     console.log(requestedCatID);
-  //   });
-
-  //   /* Heading Category image */
-  //   categories.getCategoryImage(requestedCat).then(function(response) {
-  //     // Update background to a new value:
-  //     if (response.length > 0) {
-  //       requestedCatImage = $rootScope.imageUrl + response;
-  //       vm.heading.image = 'background-image: url(' + requestedCatImage + ')';
-  //     }
-  //   }, function() {
-  //     // Update background to a default value:
-  //     if (response.length > 0) {
-  //       requestedCatImage = undefined;
-  //       vm.heading.image = defaultCatImage;
-  //     }
-  //   });
-  // }
-  // if (requestedLoc) {
-  //   requestedLocID = locations.getLocationID(requestedLoc);
-  // }
 
   var requestURLBase = $rootScope.apiUrl + 'classes/list';
 

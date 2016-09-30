@@ -1,4 +1,10 @@
 /* SEARCH PAGE: */
+.search {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+}
+
 
 /* Search filter */
 .search {
@@ -121,9 +127,20 @@
 
 /* Search results */
 .search {
-  font-size: 12px;
-  color: #555;
-  line-height: 1.5;
+
+  &-results {}
+
+  &-loader {
+    margin: 0 0 30px;
+
+    md-progress-circular {
+      margin: 0 auto;
+
+      path {
+        stroke: $brand-orange;
+      }
+    }
+  }
 
   &-list {
     display: flex;
@@ -182,6 +199,10 @@
     &-description {
       margin: 0 0 1.2em;
     }
+  }
+
+  &-empty {
+    text-align: center;
   }
 
   &-more {
