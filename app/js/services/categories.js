@@ -24,23 +24,17 @@ function categories($rootScope, $http, $log, $q) {
     });
     return categoriesArray;
   };
-  var getID = function(title) {
+  var getById = function(id) {
     var category = categoriesList.filter(function(element) {
-      return angular.lowercase(element.title) == title;
+      return angular.lowercase(element.id) == id;
     });
-    return category[0].id;
+    return category[0];
   };
-  var getElement = function(title) {
+  var getByTitle = function(title) {
     var category = categoriesList.filter(function(element) {
       return angular.lowercase(element.title) == title;
     });
     return category[0];
-  };
-  var getImage = function(title) {
-    var category = categoriesList.filter(function(element) {
-      return angular.lowercase(element.title) == title;
-    });
-    return category[0].image;
   };
 
 
@@ -57,40 +51,28 @@ function categories($rootScope, $http, $log, $q) {
       return categoriesList;
     });
   };
-  this.getCategoryID = function returnCategoryID(title) {
+  this.getElementById = function returnElementById(title) {
     if (categoriesList !== undefined) {
       var defer = $q.defer();
-      defer.resolve(getID(title));
+      defer.resolve(getById(id));
       return defer.promise;
     }
 
     return uploadList().then(function(response) {
       categoriesList = createList(response);
-      return getID(title);
+      return getById(id);
     });
   };
-  this.getCategoryElement = function returnCategoryElement(title) {
+  this.getElementByTitle = function returnElementByTitle(title) {
     if (categoriesList !== undefined) {
       var defer = $q.defer();
-      defer.resolve(getElement(title));
+      defer.resolve(getByTitle(title));
       return defer.promise;
     }
 
     return uploadList().then(function(response) {
       categoriesList = createList(response);
-      return getElement(title);
-    });
-  };
-  this.getCategoryImage = function returnCategoryImage(title) {
-    if (categoriesList !== undefined) {
-      var defer = $q.defer();
-      defer.resolve(getImage(title));
-      return defer.promise;
-    }
-
-    return uploadList().then(function(response) {
-      categoriesList = createList(response);
-      return getImage(title);
+      return getByTitle(title);
     });
   };
 }

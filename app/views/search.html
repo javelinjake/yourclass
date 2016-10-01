@@ -121,7 +121,7 @@ sort by: {{search.sorting.selected}}
 
       <div class="search-list" ng-show="!search.isLoading && search.classesList.length > 0">
 
-        <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : search.sorting.sortby">
+        <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : search.sorting.sortby" style="{{::class.image}}">
           <div class="search-item-price">{{::class.price ? (class.price | number : 2) : 'free'}}</div>
           <div class="search-item-date">{{::class.dateStart | date : "dd MMMM" }}</div>
 
@@ -131,9 +131,9 @@ sort by: {{search.sorting.selected}}
             <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{::search.rating.titles}}"></span>
           </div>
           <div class="search-item-description">
-            {{::class.spotsBooked}} {{::class.spotsBooked === 1 ? 'student' : students}} going
+            {{::class.booked}} {{::class.booked === 1 ? 'student' : students}} going
             <em>&ndash;</em>
-            {{::class.spotsLeft}} {{::class.spotsLeft === 1 ? 'spot' : 'spots'}} left!
+            {{::class.vacant}} {{::class.vacant === 1 ? 'spot' : 'spots'}} left!
             <br>
             {{::class.dateStart | date : "hh:mm a" }} - {{::class.dateEnd | date : "hh:mm a"}}</div>
           <div class="search-item-author">Taught by <strong>{{::class.teacher}}</strong></div>

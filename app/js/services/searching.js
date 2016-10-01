@@ -37,7 +37,13 @@ function searching($rootScope, $http, $log, $q, $filter) {
     this.venue = element.venue || 'No set location yet';
     this.rating = parseFloat(element.rating) * 2;
     this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
-    this.spotsBooked = element.bookings.length || 0;
+    this.size   = element.size || 0;
+    this.booked = element.bookings.length || 0;
+    this.vacant = element.size - this.booked;
+    this.category = element.category;
+
+    this.image = (element.category && element.category.image && element.category.image.length > 0) ? 'background-image: url(' +  $rootScope.imageUrl + element.category.image + ')' : 'background-image: url(/images/outside-yoga.jpg)';
+
     // this.spotsLeft = (time && parseInt(time.spots)) || 0;
     // var dateString = (element.dates[0] && element.dates[0].classDate) || false;
     // var timeStart  = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].startTime) || '00:00:00';
