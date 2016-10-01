@@ -8,7 +8,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   vm.heading = {
     category: null,
     location: null,
-    image: 'background-image: url(/images/outside-yoga.jpg)'
+    image: 'background-image: url(/images/outside-yoga.jpg)',
+    imageDefault: 'background-image: url(/images/outside-yoga.jpg)'
   };
 
   vm.isLoading = false;
@@ -30,7 +31,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
       var classesArray = response;
 
-      vm.classesList = $filter('orderBy')(classesArray, ['-rating', 'title']);
+      vm.classesList = $filter('orderBy')(classesArray, 'title');
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
       vm.isLoading = false;
 
@@ -48,51 +49,44 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     var category = searching.getCategory();
     var location = searching.getLocation();
 
-      vm.heading.category = category ? category.title : null;
-      vm.heading.location = location ? location.title : null;
-
-    var categoryImage = 'background-image: url(' +  $rootScope.imageUrl + category.image + ')';
-    var defaultImage  = 'background-image: url(/images/outside-yoga.jpg)';
-
-      vm.heading.image = (category && category.image.length > 0) ? categoryImage : defaultImage;
+    vm.heading.category = category ? category.title : null;
+    vm.heading.location = location ? location.title : null;
+    vm.heading.image = (category && category.image.length > 0) ? 'background-image: url(' +  $rootScope.imageUrl + category.image + ')' : vm.heading.imageDefault;
   };
 
 
   /* Load results on controller is load */
   // Checks the status flag. False means first app upload.
   if (!searching.isFirstLoad) {
-    $log.warn('not first load');
+    $log.info('not first load');
     $log.warn(searching.getCategory());
     $log.warn(searching.getLocation());
     updateSearchHeading();
     loadSearchResults();
+    $log.info('page is updated');
   }
   /* Load results after categories list and searching parameters is updated */
   $scope.$on('updatedSearching', function(event, response) {
-    $log.warn('first load');
+    $log.info('first load');
     $log.warn(searching.getCategory());
     $log.warn(searching.getLocation());
     updateSearchHeading();
     loadSearchResults();
     searching.isFirstLoad = false;
+    $log.info('page is updated');
   });
 
 
   /* Filter model */
-  // Filter: Price variables
-  var priceMin   = 0,
-      priceMax   = 1000,
-      priceFloor = 0,
-      priceCeil  = 1000;
   // Filter: Price Slider
   vm.slider = {
-    min: priceMin,
-    max: priceMax,
+    min: 0,
+    max: 1000,
     options: {
-      floor: priceFloor,
+      floor: 0,
       floorLabel: 'free',
-      ceil: priceCeil,
-      ceilLabel: '$' + priceCeil,
+      ceil: 1000,
+      ceilLabel: '$' + 1000,
       step: 1,
       hidePointerLabels: true,
       translate: function(value, sliderId, label) {
@@ -106,8 +100,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
         }
       },
       onEnd: function(sliderId, modelValue, highValue, pointerType) {
-        vm.filters.price.start = modelValue;
-        vm.filters.price.end = highValue;
+        vm.filters.price.min = modelValue;
+        vm.filters.price.max = highValue;
       }
     },
     refresh: function() {
@@ -174,14 +168,58 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter: Container
   vm.filters = {
     price: {
-      start: priceMin,
-      end: priceMax
+      min: vm.slider.min,
+      max: vm.slider.max
     },
     rating: vm.rating.value,
     date: new Date(),
     distance: vm.distances.options[4], // gets an { value: '', text: '' }
     size: vm.sizes.options[0] // gets an { value: '', text: '' }
   };
+  /* Sorting */
+  vm.sorting = {
+    options: [
+      { value: 'pricehigh',  text: 'Price (high)' },
+      { value: 'pricelow',  text: 'Price (low)' },
+      { value: 'rating',  text: 'Rating' },
+      { value: 'date',  text: 'Date' },
+      { value: 'distance', text: 'Distance' },
+      { value: 'size', text: 'Size' }
+    ],
+    sortby: '-rating',
+    selected: { value: 'rating',  text: 'Rating' },
+    change: function() {
+      $log.info('Sort settings are changed...');
+      var type = this.selected.value;
+      switch(type) {
+        case 'pricehigh':
+          this.sortby = '-price';
+          break;
+        case 'pricelow':
+          this.sortby = 'price';
+          break;
+        case 'rating':
+          this.sortby = '-rating';
+          break;
+        case 'date':
+        case 'distance':
+        case 'size':
+          break;
+        default:
+          this.sortby = '-rating';
+          break;
+      }
+    },
+    click: function() {
+      // log.info('Sorting is clicked...');
+      vm.datepicker.hide();
+    }
+  };
+  $scope.$watch('search.sorting.selected', function() {
+    vm.sorting.change();
+  });
+  /* Dropdowns have "dropdown-onchange" attribute, but it fires on changing and not when the selected value is already changed. This is why I used $watch event. */
+
 
 
   /* Results model */

@@ -2,6 +2,7 @@
 
 .rating-half-star {
   font-size: 0;
+  white-space: nowrap;
 
   /* Read states */
   &[read-only="true"] { cursor: default; }

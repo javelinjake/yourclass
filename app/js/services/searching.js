@@ -5,16 +5,34 @@ function searching($rootScope, $http, $log, $q, $filter) {
   this.isFirstLoad = true;
 
 
-  /* Category */
+  /* SearchForm Data and Methods */
   var searchParams = {
     category: null,
     location: null
   };
 
+  this.setCategory = function(category) {
+    searchParams.category = category ? category : null;
+  };
+  this.setLocation = function(location) {
+    searchParams.location = location ? location : null;
+  };
+
+  this.getCategory = function() {
+    return searchParams.category;
+  };
+  this.getLocation = function() {
+    return searchParams.location;
+  };
+
+
+
+  $log.warn('Searching is loaded');
+
 
   /* Helper functions */
   var SearchItem = function(element) {
-    this.price = parseFloat(element.price) ? parseFloat(element.price).toFixed(2) : 'free';
+    this.price = parseFloat(element.price);
     this.title = element.title || 'No set title yet';
     this.venue = element.venue || 'No set location yet';
     this.rating = parseFloat(element.rating) * 2;
@@ -92,31 +110,12 @@ function searching($rootScope, $http, $log, $q, $filter) {
   };
 
 
-
-
-  this.setCategory = function(category) {
-    searchParams.category = category ? category : null;
-  };
-  this.setLocation = function(location) {
-    searchParams.location = location ? location : null;
-  };
-
-  this.getCategory = function() {
-    return searchParams.category;
-  };
-  this.getLocation = function() {
-    return searchParams.location;
-  };
-
-
-
-
-  // Filters
+  // Filters: not used
   this.filterParams = {
     price: {
       floor: 0,
-      start: 0,
-      end:   0,
+      min:   0,
+      max:   0,
       ceil:  0
     },
     rating: 0,

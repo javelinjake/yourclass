@@ -14,6 +14,8 @@
     margin: -20px 0 30px;
     text-align: center;
 
+    $block: &;
+
     &.fixed {
       padding-top: 20px;
     }
@@ -21,7 +23,7 @@
     &-panel {
       display: inline-block;
       background: $white;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 2px -1px rgba(0,0,0,0.2);
       color: #555;
     }
 
@@ -32,27 +34,61 @@
       align-items: stretch;
       margin: 0;
       padding: 0;
+      border: 1px solid #e8e8e8;
+      border-top: none;
       list-style: none;
+
+      @media (max-width: 1000px) {
+        flex-wrap: wrap;
+      }
     }
     &-item {
       position: relative;
       padding: 8px 20px;
+      border-top: 1px solid #e8e8e8;
 
-      &:after {
+      @media (max-width: 1000px) {
+        flex-basis: 33.3333%;
+        padding: 16px 20px;
+      }
+      @media (max-width: 640px) {
+        flex-basis: 50%;
+      }
+
+      &:before {
         content: '';
         position: absolute;
         top: 12px;
-        right: 0;
+        left: -1px;
         bottom: 12px;
         display: block;
         border-left: 1px solid #e8e8e8;
       }
 
-      &:last-child {
+      &:first-child {
 
-        &:after {
+        &:before {
           display: none;
         }
+      }
+
+      #{$block}-divider + & {
+
+        &:before {
+          display: none;
+
+          @media (max-width: 1000px) {
+            display: block;
+          }
+        }
+      }
+    }
+    &-divider {
+      position: relative;
+      border-left: 4px solid #f3f3f3;
+
+      @media (max-width: 1000px) {
+        display: none;
       }
     }
 
@@ -65,13 +101,22 @@
     /* Textfield & Dropdown */
     .form-control,
     .wrap-dd-select {
+      display: inline-block;
       width: 90px;
       height: 25px;
       padding: 2px 12px;
       text-align: center;
+      white-space: nowrap;
+
+      @media (max-width: 1000px) {
+        width: 80%;
+      }
     }
     .wrap-dd-select .dropdown li a {
       padding: 2px 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     /* Price slider */

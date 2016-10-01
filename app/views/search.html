@@ -8,7 +8,7 @@
           {{search.heading.category}} {{search.heading.location ? 'in' : ''}} {{search.heading.location}}
         </h1>
         <div class="text-center lead">
-          {{search.classesList.length}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
+          {{search.classesList.length || 0}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
         </div>
       </div>
 
@@ -19,8 +19,8 @@
 
 <div class="container">
 
-  <div class="search-filter" sticky sticky-class="fixed" stick-limit="true">
-    <div class="search-filter-panel">
+  <div class="search-filter">
+    <div class="search-filter-panel" sticky sticky-class="fixed" media-query="min-width: 1001px">
       <ul class="search-filter-list">
         <li class="search-filter-item">
           <div class="search-filter-title">Price</div>
@@ -46,7 +46,6 @@
             <div dropdown-select="search.distances.options"
                  dropdown-model="search.filters.distance"
                  dropdown-item-label="text"
-                 dropdown-onchange="search.distances.change()"
                  ng-click="search.distances.click()" >
             </div>
           </div>
@@ -57,8 +56,18 @@
             <div dropdown-select="search.sizes.options"
                  dropdown-model="search.filters.size"
                  dropdown-item-label="text"
-                 dropdown-onchange="search.sizes.change()"
                  ng-click="search.sizes.click()" >
+            </div>
+          </div>
+        </li>
+        <li class="search-filter-divider"></li>
+        <li class="search-filter-item">
+          <div class="search-filter-title">Sort by</div>
+          <div class="search-filter-widget">
+            <div dropdown-select="search.sorting.options"
+                 dropdown-model="search.sorting.selected"
+                 dropdown-item-label="text"
+                 ng-click="search.sorting.click()" >
             </div>
           </div>
         </li>
@@ -67,12 +76,13 @@
     <br>
 
 <pre style="color: #ff4000;">
-price start: {{search.filters.price.start}}
-price end: {{search.filters.price.end}}
+price start: {{search.filters.price.min}}
+price end: {{search.filters.price.max}}
 rating: {{search.filters.rating}}
 date: {{search.filters.date}}
 distance: {{search.filters.distance}}
 size: {{search.filters.size}}
+sort by: {{search.sorting.selected}}
 </pre>
 
   </div>
@@ -109,10 +119,10 @@ size: {{search.filters.size}}
         <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
       </div>
 
-      <div class="search-list" ng-hide="search.isLoading && search.classesList.length > 0">
+      <div class="search-list" ng-show="!search.isLoading && search.classesList.length > 0">
 
-        <div class="search-item" ng-repeat="class in search.classesListSliced">
-          <div class="search-item-price">{{::class.price}}</div>
+        <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : search.sorting.sortby">
+          <div class="search-item-price">{{::class.price ? (class.price | number : 2) : 'free'}}</div>
           <div class="search-item-date">{{::class.dateStart | date : "dd MMMM" }}</div>
 
           <div class="search-item-title">{{::class.title}}</div>
