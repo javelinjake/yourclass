@@ -5,7 +5,7 @@
 
       <div class="text-center text">
         <h1>
-          {{search.heading.category}} {{search.heading.location.length > 0 ? 'in' : ''}} {{search.heading.location}}
+          {{search.heading.category}} {{search.heading.location ? 'in' : ''}} {{search.heading.location}}
         </h1>
         <div class="text-center lead">
           {{search.classesList.length}} {{class.classesList.length === 1 ? 'result' : 'results'}} found
@@ -46,7 +46,8 @@
             <div dropdown-select="search.distances.options"
                  dropdown-model="search.filters.distance"
                  dropdown-item-label="text"
-                 dropdown-onchange="search.distances.change()" >
+                 dropdown-onchange="search.distances.change()"
+                 ng-click="search.distances.click()" >
             </div>
           </div>
         </li>
@@ -56,7 +57,8 @@
             <div dropdown-select="search.sizes.options"
                  dropdown-model="search.filters.size"
                  dropdown-item-label="text"
-                 dropdown-onchange="search.sizes.change()" >
+                 dropdown-onchange="search.sizes.change()"
+                 ng-click="search.sizes.click()" >
             </div>
           </div>
         </li>

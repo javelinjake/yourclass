@@ -31,15 +31,17 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
 
   /* Data containers */
   /* Selected values are saved in the Searching service */
+  var selectedCategory = searching.getCategory() ? searching.getCategory().title : null;
   vm.categories = {
-    selected: searching.getCategory(),
+    selected: selectedCategory,
     query: vm.searchQuery,
     change: function(item) {
       searching.setCategory(item);
     }
   };
+  var selectedLocation = searching.getLocation() ? searching.getLocation().title : null;
   vm.locations = {
-    selected: searching.getLocation(),
+    selected: selectedLocation,
     query: vm.searchQuery,
     change: function(item) {
       searching.setLocation(item);
@@ -49,13 +51,13 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
 
   /* Check the URL and update the Search Form and Searching service values */
   $scope.$on('loadedCategories', function(event, response) {
-    // $log.info('loadedCategories');
+    $log.info('loadedCategories');
 
     var urlCategory = $stateParams.searchCategory;
     categories.getCategoryElement(urlCategory).then(function(response) { // As promise
       if (!response) return false;
 
-      vm.categories.selected = response;
+      vm.categories.selected = response.title;
       searching.setCategory(response);
 
       $rootScope.$broadcast('updatedSearching', response);
@@ -63,7 +65,9 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
   });
   var urlLocation = $location.search().location;
   var urlLocationElement = locations.getLocationElement(urlLocation);
-      vm.locations.selected = urlLocationElement;
+      if (urlLocationElement) {
+        vm.locations.selected = urlLocationElement.title;
+      }
       searching.setLocation(urlLocationElement);
 
 

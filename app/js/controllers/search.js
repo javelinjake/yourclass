@@ -61,11 +61,17 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   /* Load results on controller is load */
   // Checks the status flag. False means first app upload.
   if (!searching.isFirstLoad) {
+    $log.warn('not first load');
+    $log.warn(searching.getCategory());
+    $log.warn(searching.getLocation());
     updateSearchHeading();
     loadSearchResults();
   }
   /* Load results after categories list and searching parameters is updated */
   $scope.$on('updatedSearching', function(event, response) {
+    $log.warn('first load');
+    $log.warn(searching.getCategory());
+    $log.warn(searching.getLocation());
     updateSearchHeading();
     loadSearchResults();
     searching.isFirstLoad = false;
@@ -75,7 +81,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   /* Filter model */
   // Filter: Price variables
   var priceMin   = 0,
-      priceMax   = 850,
+      priceMax   = 1000,
       priceFloor = 0,
       priceCeil  = 1000;
   // Filter: Price Slider
@@ -142,6 +148,10 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     ],
     change: function() {
       $log.info('Distance is changed...');
+    },
+    click: function() {
+      // $log.info('Distance is clicked...');
+      vm.datepicker.hide();
     }
   };
   // Filter: Size select
@@ -155,6 +165,10 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     ],
     change: function() {
       $log.info('Size is changed...');
+    },
+    click: function() {
+      // log.info('Size is clicked...');
+      vm.datepicker.hide();
     }
   };
   // Filter: Container
@@ -164,7 +178,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       end: priceMax
     },
     rating: vm.rating.value,
-    date: null,
+    date: new Date(),
     distance: vm.distances.options[4], // gets an { value: '', text: '' }
     size: vm.sizes.options[0] // gets an { value: '', text: '' }
   };
@@ -205,8 +219,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter updates in searching service
   $scope.$watch('search.filters', function(current, original) {
     // Send new request
-    $log.warn(searching.filter);
-    $log.warn(searching.isFirstLoad);
+    // $log.warn(searching.filterParams);
     if (searching.isFirstLoad) {
 
     }
