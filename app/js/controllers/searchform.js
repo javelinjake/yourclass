@@ -55,7 +55,7 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
 
     var urlCategory = $stateParams.searchCategory;
     if (urlCategory) {
-      categories.getCategoryElement(urlCategory).then(function(response) {
+      categories.getElementByTitle(urlCategory).then(function(response) {
         if (!response) return false;
 
         vm.categories.selected = response;
