@@ -16,9 +16,7 @@
 
     $block: &;
 
-    &.fixed {
-      padding-top: 20px;
-    }
+    &.fixed {}
 
     &-panel {
       display: inline-block;
@@ -167,6 +165,10 @@
 
         &.rz-floor { transform: translate(-50%, 0); }
         &.rz-ceil { transform: translate(50%, 0); }
+
+        &:nth-child(7) { left: 0 !important; right: auto !important; visibility: visible !important; transform: translate(-50%, 0) }
+        &:nth-child(8) { right: 0 !important; left: auto !important; visibility: visible !important; transform: translate(50%, 0); }
+        &:nth-child(9) { display: none !important; }
       }
     }
   }

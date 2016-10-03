@@ -23,10 +23,10 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     return slicedList;
   };
 
-  var loadSearchResults = function() {
+  var loadSearchResults = function(parameters) {
     /* Get Search results: simple request */
     vm.isLoading = true;
-    searching.getResults().then(function(response) {
+    searching.getResults(parameters).then(function(response) {
       $log.info('Loaded search results.');
 
       var classesArray = response;
@@ -88,12 +88,13 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       ceil: 1000,
       ceilLabel: '$' + 1000,
       step: 1,
-      hidePointerLabels: true,
+      hidePointerLabels: false,
+      hideLimitLabels: true,
       translate: function(value, sliderId, label) {
         switch (label) {
-          case 'floor':
-            return 'Free';
-          case 'ceil':
+          case 'model':
+            return value > 0 ? '$' + value : 'Free';
+          case 'high':
             return '$' + value;
           default:
             return value;
@@ -186,10 +187,10 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       { value: 'distance', text: 'Distance' },
       { value: 'size', text: 'Size' }
     ],
-    sortby: searching.sortParams.sortby,
-    selected: searching.sortParams.selected,
+    sortby: searching.getSortType(),
+    selected: searching.getSortSelected(),
     change: function() {
-      $log.info('Sort settings are changed...');
+      // $log.info('Sort settings are changed...');
       var type = '';
       switch(this.selected.value) {
         case 'pricehigh':
@@ -215,15 +216,14 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
           break;
       }
       this.sortby = type;
-      searching.sortParams.sortby = type;
-      searching.sortParams.selected = this.selected;
+      searching.setSortType(type);
+      searching.setSortSelected(this.selected);
     },
     click: function() {
       // log.info('Sorting is clicked...');
       vm.datepicker.hide();
     }
   };
-  $log.info(searching.sortParams.sortby);
   $scope.$watch('search.sorting.selected', function() {
     vm.sorting.change();
   });
@@ -267,10 +267,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter updates in searching service
   $scope.$watch('search.filters', function(current, original) {
     // Send new request
-    // $log.warn(searching.filterParams);
-    if (searching.isFirstLoad) {
-
-    }
+    $log.info('Filter fires');
+    loadSearchResults(current);
   }, true);
 
 

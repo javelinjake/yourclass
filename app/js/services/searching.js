@@ -6,6 +6,8 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
 
   /* SearchForm Data and Methods */
+
+  // Category and Location: used
   var searchParams = {
     category: null,
     location: null
@@ -25,6 +27,40 @@ function searching($rootScope, $http, $log, $q, $filter) {
     return searchParams.location;
   };
 
+
+  // Filters: not used
+  var filterParams = {
+    price: {
+      floor: null,
+      min:   null,
+      max:   null,
+      ceil:  null
+    },
+    rating: null,
+    date: null,
+    distance: null, // gets an { value: '', text: '' }
+    size: null // gets an { value: '', text: '' }
+  };
+
+  // Sorting: used
+  var sortParams = {
+    sortby: '-price',
+    selected: { value: 'rating',  text: 'Rating' }
+  };
+
+  this.setSortType = function(type) {
+    sortParams.sortby = type ? type : null;
+  };
+  this.setSortSelected = function(selected) {
+    sortParams.selected = selected ? selected : null;
+  };
+
+  this.getSortType = function() {
+    return sortParams.sortby;
+  };
+  this.getSortSelected = function() {
+    return sortParams.selected;
+  };
 
 
   $log.warn('Searching is loaded');
@@ -61,7 +97,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
   var requestURLBase = $rootScope.apiUrl + 'classes/list';
 
-  // Get classes list: not filtered yet
+  // Get classes list: not filtered
   var requestData = function(url) {
     var deferred = $q.defer();
 
@@ -79,10 +115,11 @@ function searching($rootScope, $http, $log, $q, $filter) {
     return deferred.promise;
   };
 
-  var requestURLForm = function() {
+  var createRequestURL = function() {
     var resultURL = requestURLBase;
     var resultParams = [];
 
+    /* Check Category and Location */
     if (searchParams.category) {
       var parameter = '_categoryId=' + searchParams.category.id;
       resultParams.push(parameter);
@@ -92,10 +129,38 @@ function searching($rootScope, $http, $log, $q, $filter) {
       // resultParams.push(parameter);
     }
 
-    if (searchParams.location) {}
+    /* Check Filter Parameters */
+    if (typeof filterParams.price.min !== null) { // Equal or more
+      var parameter = '%7B%3E%3D%7Dprice=' + filterParams.price.min;
+      resultParams.push(parameter);
+    }
+    if (typeof filterParams.price.max !== null) { // Equal or less
+      var parameter = '%7B%3C%3D%7Dprice=' + filterParams.price.max;
+      resultParams.push(parameter);
+    }
+    if (typeof filterParams.rating !== null) { // Equal or more
+      // var parameter = 'rating=' + filterParams.rating;
+      // resultParams.push(parameter);
+    }
+    if (typeof filterParams.date !== null) { // Equal or more
+      // Format: 2016-03-25
+      // var date  = filterParams.date,
+      //     year  = date.getFullYear(),
+      //     month = date.getMonth(),
+      //     day   = date.getDate();
+      // var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
+      // resultParams.push(parameter);
+    }
+    if (typeof filterParams.distance !== null) { // Equal or more
+      // var parameter = ...;
+      // resultParams.push(parameter);
+    }
+    if (typeof filterParams.size !== null && filterParams.size.value != 0) { // Equal or more
+      var parameter = filterParams.size.value == 1 ? '_size=1' : '%7B%3E%3D%7Dsize=' + filterParams.size.value;
+      resultParams.push(parameter);
+    }
 
-
-
+    /* Create URL */
     if (resultParams.length > 0) {
       resultURL += '?' + resultParams.join('&');;
     }
@@ -103,11 +168,22 @@ function searching($rootScope, $http, $log, $q, $filter) {
     return resultURL;
   };
 
-  this.getResults = function() {
-    var requestURL = requestURLForm();
-    // $log.info('getResults');
-    // $log.info(requestURL);
-    // $log.info(searchParams);
+  var updateFilterParams = function(parameters) {
+    filterParams['price']['min'] = parameters['price']['min'];
+    filterParams['price']['max'] = parameters['price']['max'];
+    filterParams['rating']       = parameters['rating'];
+    filterParams['date']         = parameters['date'];
+    filterParams['distance']     = parameters['distance'];
+    filterParams['size']         = parameters['size'];
+  };
+
+
+  this.getResults = function(parameters) {
+    if (parameters) {
+      updateFilterParams(parameters);
+    }
+    $log.warn(requestURL);
+    var requestURL = createRequestURL();
 
     return requestData(requestURL).then(function(data) {
       var dataArray = [];
@@ -120,27 +196,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
       return dataArray;
     });
   };
-
-
-  // Filters: not used
-  this.filterParams = {
-    price: {
-      floor: 0,
-      min:   0,
-      max:   0,
-      ceil:  0
-    },
-    rating: 0,
-    date: null,
-    distance: null, // gets an { value: '', text: '' }
-    size: null // gets an { value: '', text: '' }
-  };
-
-  this.sortParams = {
-    sortby: '-price',
-    selected: { value: 'rating',  text: 'Rating' }
-  };
-
 }
 
 export default {
