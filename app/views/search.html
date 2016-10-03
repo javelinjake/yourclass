@@ -90,7 +90,7 @@ sort by: {{search.sorting.selected}}
   <div id="searchList">
 
     <!-- Pagination -->
-    <div class="search-pagination clearfix" aria-label="Search results pages" ng-if="search.classesList.length > search.pagination.limit" ng-disabled="false">
+    <div class="search-pagination clearfix" aria-label="Search results pages" ng-if="search.classesList.length > search.pagination.limit && search.pagination.display">
       <ul uib-pagination
         class="pagination-sm pull-right"
 
@@ -121,22 +121,27 @@ sort by: {{search.sorting.selected}}
 
       <div class="search-list" ng-show="!search.isLoading && search.classesList.length > 0">
 
-        <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : search.sorting.sortby" style="{{::class.image}}">
-          <div class="search-item-price">{{::class.price ? (class.price | number : 2) : 'free'}}</div>
-          <div class="search-item-date">{{::class.dateStart | date : "dd MMMM" }}</div>
+        <div class="search-item" ng-repeat="class in search.classesListSliced | orderBy : search.sorting.sortby" style="{{::class.image}}" data-size="{{::class.size}}" data-distance="{{::class.distance}}">
+          <a class="search-item-content" ui-sref="Class({ classAlias:class.alias })">
+            <div class="search-item-price">{{::class.price ? (class.price | currency : '$' : 2) : 'free'}}</div>
+            <div class="search-item-date">{{::class.dateStart | date : "dd MMMM" }}</div>
 
-          <div class="search-item-title">{{::class.title}}</div>
-          <div class="search-item-location">{{::class.venue}}</div>
-          <div class="search-item-rating">
-            <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{::search.rating.titles}}"></span>
-          </div>
-          <div class="search-item-description">
-            {{::class.booked}} {{::class.booked === 1 ? 'student' : students}} going
-            <em>&ndash;</em>
-            {{::class.vacant}} {{::class.vacant === 1 ? 'spot' : 'spots'}} left!
-            <br>
-            {{::class.dateStart | date : "hh:mm a" }} - {{::class.dateEnd | date : "hh:mm a"}}</div>
-          <div class="search-item-author">Taught by <strong>{{::class.teacher}}</strong></div>
+            <div class="search-item-title">{{::class.title}}</div>
+            <div class="search-item-location">{{::class.venue}}</div>
+            <div class="search-item-rating">
+              <span uib-rating class="rating-half-star" ng-model="class.rating" max="10" read-only="true" titles="{{::search.rating.titles}}"></span>
+              <span class="search-item-rating-text">{{::class.reviews > 0 ? (class.reviews + (class.reviews == 1 ? ' review' : ' reviews')) : 'No reviews yet'}}</span>
+            </div>
+            <div class="search-item-description">
+              <span ng-if="class.booked > 0">{{::class.booked}} {{::class.booked === 1 ? 'student' : students}} going</span>
+              <em ng-if="class.booked > 0 && class.vacant > 0">&ndash;</em>
+              <span>{{::class.vacant}} {{::class.vacant === 1 ? 'spot' : 'spots'}} left!</span>
+              <br>
+              <span ng-if="class.dateStart && class.dateEnd">{{::class.dateStart | date : "hh:mm a" }} - {{::class.dateEnd | date : "hh:mm a"}}</span>
+              <span class="search-item-link" ng-if="class.dates.length > 0">more available</span>
+            </div>
+            <div class="search-item-author">Taught by <strong>{{::class.teacher}}</strong></div>
+          </a>
         </div>
 
       </div>
@@ -152,7 +157,7 @@ sort by: {{search.sorting.selected}}
     <div class="search-more" ng-click="showMoreResults()" ng-show="search.results.more" ng-if="search.classesList.length > search.pagination.limit">Show More</div>
 
     <!-- Pagination -->
-    <div class="search-pagination clearfix" aria-label="Search results pages" ng-if="search.classesList.length > search.pagination.limit">
+    <div class="search-pagination clearfix" aria-label="Search results pages" ng-if="search.classesList.length > search.pagination.limit && search.pagination.display">
       <ul uib-pagination
         class="pagination-sm pull-right"
 

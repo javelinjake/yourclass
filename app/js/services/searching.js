@@ -32,24 +32,30 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
   /* Helper functions */
   var SearchItem = function(element) {
+    this.alias = element.alias;
     this.price = parseFloat(element.price);
+
     this.title = element.title || 'No set title yet';
     this.venue = element.venue || 'No set location yet';
+    this.distance = Math.floor(Math.random() * 10);
+
     this.rating = parseFloat(element.rating) * 2;
-    this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
-    this.size   = element.size || 0;
+    this.reviews = element.reviews.length;
+
+    this.size   = +element.size || 0;
     this.booked = element.bookings.length || 0;
     this.vacant = element.size - this.booked;
-    this.category = element.category;
 
+    this.category = element.category;
     this.image = (element.category && element.category.image && element.category.image.length > 0) ? 'background-image: url(' +  $rootScope.imageUrl + element.category.image + ')' : 'background-image: url(/images/outside-yoga.jpg)';
 
-    // this.spotsLeft = (time && parseInt(time.spots)) || 0;
-    // var dateString = (element.dates[0] && element.dates[0].classDate) || false;
-    // var timeStart  = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].startTime) || '00:00:00';
-    // var timeEnd    = (element.dates[0] && element.dates[0].times[0] && element.dates[0].times[0].endTime) || '00:00:00';
-    // this.dateStart = dateString ? new Date(dateString + ' ' + timeStart) : undefined;
-    // this.dateEnd = dateString ? new Date(dateString + ' ' + timeEnd) : undefined;
+    this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
+
+    // Need to add date and time: temporary solution is below
+    this.dateStart = new Date();
+    this.dateEnd = new Date();
+    // When more time slots are available text next to time appears 'more available'
+    this.times = new Array(Math.floor(Math.random() * 4));
   };
 
 
@@ -128,6 +134,11 @@ function searching($rootScope, $http, $log, $q, $filter) {
     date: null,
     distance: null, // gets an { value: '', text: '' }
     size: null // gets an { value: '', text: '' }
+  };
+
+  this.sortParams = {
+    sortby: '-price',
+    selected: { value: 'rating',  text: 'Rating' }
   };
 
 }

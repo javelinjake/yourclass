@@ -31,7 +31,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
       var classesArray = response;
 
-      vm.classesList = $filter('orderBy')(classesArray, 'title');
+      vm.classesList = $filter('orderBy')(classesArray, [vm.sorting.sortby, 'title']);
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
       vm.isLoading = false;
 
@@ -58,18 +58,18 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   /* Load results on controller is load */
   // Checks the status flag. False means first app upload.
   if (!searching.isFirstLoad) {
-    $log.info('not first load');
-    $log.warn(searching.getCategory());
-    $log.warn(searching.getLocation());
+    // $log.info('not first load');
+    // $log.warn(searching.getCategory());
+    // $log.warn(searching.getLocation());
     updateSearchHeading();
     loadSearchResults();
     $log.info('page is updated');
   }
   /* Load results after categories list and searching parameters is updated */
   $scope.$on('updatedSearching', function(event, response) {
-    $log.info('first load');
-    $log.warn(searching.getCategory());
-    $log.warn(searching.getLocation());
+    // $log.info('first load');
+    // $log.warn(searching.getCategory());
+    // $log.warn(searching.getLocation());
     updateSearchHeading();
     loadSearchResults();
     searching.isFirstLoad = false;
@@ -186,35 +186,44 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       { value: 'distance', text: 'Distance' },
       { value: 'size', text: 'Size' }
     ],
-    sortby: '-rating',
-    selected: { value: 'rating',  text: 'Rating' },
+    sortby: searching.sortParams.sortby,
+    selected: searching.sortParams.selected,
     change: function() {
       $log.info('Sort settings are changed...');
-      var type = this.selected.value;
-      switch(type) {
+      var type = '';
+      switch(this.selected.value) {
         case 'pricehigh':
-          this.sortby = '-price';
+          type = '-price';
           break;
         case 'pricelow':
-          this.sortby = 'price';
+          type = 'price';
           break;
         case 'rating':
-          this.sortby = '-rating';
+          type = '-rating';
           break;
         case 'date':
+          type = 'date';
+          break;
         case 'distance':
+          type = 'distance';
+          break;
         case 'size':
+          type = 'size';
           break;
         default:
-          this.sortby = '-rating';
+          type = '-rating';
           break;
       }
+      this.sortby = type;
+      searching.sortParams.sortby = type;
+      searching.sortParams.selected = this.selected;
     },
     click: function() {
       // log.info('Sorting is clicked...');
       vm.datepicker.hide();
     }
   };
+  $log.info(searching.sortParams.sortby);
   $scope.$watch('search.sorting.selected', function() {
     vm.sorting.change();
   });
@@ -230,7 +239,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     last: 1,
     total: 0,
     limit: 20, // 20
-    size: 4
+    size: 4,
+    display: false
   };
   // Results: List
   vm.results = {

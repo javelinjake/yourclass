@@ -1,11 +1,12 @@
 /* Half star rating */
 
 .rating-half-star {
+  display: block;
   font-size: 0;
   white-space: nowrap;
 
   /* Read states */
-  &[read-only="true"] { cursor: default; 
+  &[read-only="true"] { cursor: default;
     [role="button"] { cursor: default; }
   }
   &[read-only="false"] { cursor: pointer; }
