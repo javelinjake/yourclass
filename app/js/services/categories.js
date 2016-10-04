@@ -11,8 +11,12 @@ function categories($rootScope, $http, $log, $q) {
 
     $http
       .get($rootScope.apiUrl + 'classes/categories')
-      .then(function(response) {
+      .then(function successCallback(response) {
         deferred.resolve(response);
+
+        // $log.info('success' + response);
+      }, function errorCallback(response) {
+        // $log.error('error' + response);
       });
 
     return deferred.promise;

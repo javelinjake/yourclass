@@ -1,4 +1,4 @@
-function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
+function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categories, locations, searching) {
   'ngInject';
 
   // ViewModel
@@ -10,6 +10,7 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
   categories.getList().then(function(response) { // As promise
     vm.categoriesList = response;
 
+    // $log.error('Loading categories...');
     $rootScope.$broadcast('loadedCategories', response);
   });
 
@@ -33,6 +34,8 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
 
   /* Data containers */
   /* Selected values are saved in the Searching service */
+  $log.warn(searching.getCategory());
+  $log.warn(searching.getLocation());
   vm.categories = {
     selected: searching.getCategory() || null,
     query: vm.searchQuery,
@@ -51,7 +54,7 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
 
   /* Check the URL and update the Search Form and Searching service values */
   $scope.$on('loadedCategories', function(event, response) {
-    $log.info('on loadedCategories');
+    $log.info('on loadedCategories: update selected category local and in searching\nCall updatedSearching');
 
     var urlCategory = $stateParams.searchCategory;
     if (urlCategory) {
@@ -64,8 +67,10 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
         $rootScope.$broadcast('updatedSearching', response);
       });
     } else {
-      vm.categories.selected = null;
-      searching.setCategory(null);
+      vm.categories.selected = searching.getCategory();
+      // OR clean both:
+      // vm.categories.selected = null;
+      // searching.setCategory(null);
     }
   });
   var urlLocation = $location.search().location;
@@ -76,13 +81,14 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
     searching.setLocation(urlLocationElement);
 
   } else {
-    vm.locations.selected = null;
-    searching.setLocation(null);
+    vm.locations.selected = searching.getLocation();
+    // OR clean both:
+    // vm.locations.selected = null;
+    // searching.setLocation(null);
   }
 
   /* Form submit event */
   vm.search = function() {
-    // $log.info('Searching...');
     var newURL = '/search/';
 
     // Continue searching only if category is selected

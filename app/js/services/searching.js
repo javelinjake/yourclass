@@ -7,7 +7,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
   /* SearchForm Data and Methods */
 
-  // Category and Location: used
+  // Category and Location:
   var searchParams = {
     category: null,
     location: null
@@ -28,7 +28,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
   };
 
 
-  // Filters: not used
+  // Filters:
   var filterParams = {
     price: {
       floor: null,
@@ -42,10 +42,36 @@ function searching($rootScope, $http, $log, $q, $filter) {
     size: null // gets an { value: '', text: '' }
   };
 
-  // Sorting: used
+  this.getFilterPriceFloor = function() {
+    return filterParams.price.floor;
+  };
+  this.getFilterPriceMin = function() {
+    return filterParams.price.min;
+  };
+  this.getFilterPriceMax = function() {
+    return filterParams.price.max;
+  };
+  this.getFilterPriceCeil = function() {
+    return filterParams.price.ceil;
+  };
+  this.getFilterRating = function() {
+    return filterParams.rating;
+  };
+  this.getFilterDate = function() {
+    return filterParams.date;
+  };
+  this.getFilterDistance = function() {
+    return filterParams.distance;
+  };
+  this.getFilterSize = function() {
+    return filterParams.size;
+  };
+
+
+  // Sorting:
   var sortParams = {
-    sortby: '-price',
-    selected: { value: 'rating',  text: 'Rating' }
+    sortby: null,
+    selected: null
   };
 
   this.setSortType = function(type) {
@@ -61,9 +87,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
   this.getSortSelected = function() {
     return sortParams.selected;
   };
-
-
-  $log.warn('Searching is loaded');
 
 
   /* Helper functions */
@@ -94,27 +117,25 @@ function searching($rootScope, $http, $log, $q, $filter) {
     this.times = new Array(Math.floor(Math.random() * 4));
   };
 
-
   var requestURLBase = $rootScope.apiUrl + 'classes/list';
 
   // Get classes list: not filtered
   var requestData = function(url) {
     var deferred = $q.defer();
 
-    $http.get(url).then(function successCallback(response) {
+    $http
+      .get(url)
+      .then(function successCallback(response) {
         var data = angular.fromJson(response.data).data;
             deferred.resolve(data);
 
-        // Console success message:
         // $log.info('success' + response);
       }, function errorCallback(response) {
-        // Console error message:
         // $log.error('error' + response);
       });
 
     return deferred.promise;
   };
-
   var createRequestURL = function() {
     var resultURL = requestURLBase;
     var resultParams = [];
@@ -167,7 +188,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
     return resultURL;
   };
-
   var updateFilterParams = function(parameters) {
     filterParams['price']['min'] = parameters['price']['min'];
     filterParams['price']['max'] = parameters['price']['max'];
@@ -177,12 +197,11 @@ function searching($rootScope, $http, $log, $q, $filter) {
     filterParams['size']         = parameters['size'];
   };
 
-
   this.getResults = function(parameters) {
     if (parameters) {
       updateFilterParams(parameters);
     }
-    $log.warn(requestURL);
+
     var requestURL = createRequestURL();
 
     return requestData(requestURL).then(function(data) {
