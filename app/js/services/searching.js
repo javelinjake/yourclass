@@ -110,11 +110,32 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
     this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
 
-    // Need to add date and time: temporary solution is below
-    this.dateStart = new Date();
-    this.dateEnd = new Date();
-    // When more time slots are available text next to time appears 'more available'
-    this.times = new Array(Math.floor(Math.random() * 4));
+    /* Date and Time */
+    if (element.dates[0]) {
+      var nearestDate = element.dates[0].classDate || null;
+      this.alldates = element.dates.length || 0;
+
+      if (element.dates[0].times[0]) {
+        var nearestTime = element.dates[0].times[0] || null;
+
+        this.dateStart = new Date(nearestDate + ' ' + nearestTime.startTime); console.log(this.dateStart);
+        this.dateEnd   = new Date(nearestDate + ' ' + nearestTime.endTime);
+
+        this.alltimes = element.dates.reduce(function(all, element, index, array) {
+          all += element.times.length;
+          return all;
+        }, 0);
+      } else {
+        this.dateStart = new Date(nearestDate);
+        this.dateEnd   = new Date(nearestDate);
+        this.alltimes  = null;
+      }
+    } else {
+      this.dateStart = null;
+      this.dateEnd   = null;
+      this.alldates  = null;
+      this.alltimes  = null;
+    }
   };
 
   var requestURLBase = $rootScope.apiUrl + 'classes/list';
@@ -160,8 +181,8 @@ function searching($rootScope, $http, $log, $q, $filter) {
       resultParams.push(parameter);
     }
     if (typeof filterParams.rating !== null) { // Equal or more
-      // var parameter = 'rating=' + filterParams.rating;
-      // resultParams.push(parameter);
+      var parameter = filterParams.rating == 1 ? '%7B%3E%3D%7Drating=0' : '%7B%3E%3D%7Drating=' + filterParams.rating/2;
+      resultParams.push(parameter);
     }
     if (typeof filterParams.date !== null) { // Equal or more
       // Format: 2016-03-25
@@ -186,6 +207,8 @@ function searching($rootScope, $http, $log, $q, $filter) {
       resultURL += '?' + resultParams.join('&');;
     }
 
+    $log.info(resultURL);
+
     return resultURL;
   };
   var updateFilterParams = function(parameters) {
@@ -206,6 +229,8 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
     return requestData(requestURL).then(function(data) {
       var dataArray = [];
+
+      $log.info(data);
 
       data.forEach(function(element, i, arr) {
         var item = new SearchItem(element);

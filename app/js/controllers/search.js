@@ -115,7 +115,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
   // Filter: Rating
   vm.rating = {
-    value: searching.getFilterRating() || 7,
+    value: searching.getFilterRating() || 0,
     titles: ['0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']
   };
   // Filter: Datepicker Popup

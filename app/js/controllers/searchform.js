@@ -54,8 +54,6 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categ
 
   /* Check the URL and update the Search Form and Searching service values */
   $scope.$on('loadedCategories', function(event, response) {
-    $log.info('on loadedCategories: update selected category local and in searching\nCall updatedSearching');
-
     var urlCategory = $stateParams.searchCategory;
     if (urlCategory) {
       categories.getElementByTitle(urlCategory).then(function(response) {
@@ -65,9 +63,11 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categ
         searching.setCategory(response);
 
         $rootScope.$broadcast('updatedSearching', response);
+        $log.warn('Broadcast event updatedSearching');
       });
     } else {
       vm.categories.selected = searching.getCategory();
+      $log.warn('Broadcast event with no updatedSearching');
       // OR clean both:
       // vm.categories.selected = null;
       // searching.setCategory(null);

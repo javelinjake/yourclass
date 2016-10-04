@@ -210,7 +210,6 @@
     color: #fff;
     text-align: center;
 
-
     em {
       color: $brand-orange;
     }
@@ -277,12 +276,13 @@
 
       &-text {
         display: block;
-        margin: 4px 0 0;
+        margin: 5px 0 0;
       }
     }
 
     &-description {
       margin: 0 0 1.2em;
+      min-height: 3em;
     }
 
     &-link {

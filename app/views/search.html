@@ -138,7 +138,7 @@ sort by: {{search.sorting.selected}}
               <span>{{::class.vacant}} {{::class.vacant === 1 ? 'spot' : 'spots'}} left!</span>
               <br>
               <span ng-if="class.dateStart && class.dateEnd">{{::class.dateStart | date : "hh:mm a" }} - {{::class.dateEnd | date : "hh:mm a"}}</span>
-              <span class="search-item-link" ng-if="class.dates.length > 0">more available</span>
+              <span class="search-item-link" ng-if="class.alltimes > 1">more available</span>
             </div>
             <div class="search-item-author">Taught by <strong>{{::class.teacher}}</strong></div>
           </a>
