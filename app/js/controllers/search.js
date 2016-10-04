@@ -187,8 +187,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       { value: 'distance', text: 'Distance' },
       { value: 'size', text: 'Size' }
     ],
-    sortby: searching.getSortType(),
-    selected: searching.getSortSelected(),
+    sortby: searching.getSortType() || '-price',
+    selected: searching.getSortSelected() || { value: 'rating',  text: 'Rating' },
     change: function() {
       // $log.info('Sort settings are changed...');
       var type = '';

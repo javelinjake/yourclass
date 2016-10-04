@@ -44,8 +44,8 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
   // Sorting: used
   var sortParams = {
-    sortby: '-price',
-    selected: { value: 'rating',  text: 'Rating' }
+    sortby: null,
+    selected: null
   };
 
   this.setSortType = function(type) {
