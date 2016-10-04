@@ -5,9 +5,9 @@
 
 // Base class
 .tooltip-wrapper {
-  float: left;
+  display: inline-block;
   margin-top: 8px;
-  margin-left: -5px;
+  margin-left: 5px;
   cursor: default;
   &:hover {
     .tooltip {

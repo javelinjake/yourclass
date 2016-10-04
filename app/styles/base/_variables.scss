@@ -166,7 +166,7 @@ $btn-font-weight:                300 !default;
 
 $btn-default-color:              #444 !default;
 $btn-default-bg:                 #fff !default;
-$btn-default-border:             transparent !default;
+$btn-default-border:             #cccccc !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-orange !default;
@@ -212,7 +212,7 @@ $input-bg-disabled:              transparent !default;
 //** Text color for `<input>`s
 $input-color:                    $gray !default;
 //** `<input>` border color
-$input-border:                   #efefef !default;
+$input-border:                   #cccccc !default;
 
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -381,7 +381,7 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    64px !default;
+$navbar-height:                    92px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;

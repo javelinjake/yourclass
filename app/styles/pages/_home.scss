@@ -3,35 +3,34 @@
 
 
 
+
 /* OTHER: */
 
 /* Top Navigation */
 .home {
+
   .navbar {
     background-color: transparent;
+    border: none;
     z-index: 10;
-    border-bottom: none;
 
-    &-inverse {
-      background-color: transparent;
-      z-index: 10;
-
-      .navbar-nav > .open > a {
-        background-color: transparent;
-      }
+    .search-form,
+    .navbar-logo {
+      display: none; // For now
     }
+  }
+  .navbar .navbar-nav > .open > a {background-color: transparent;}
 
     .nav-wrapper {
       padding: 0 220px;
     }
 
     &-links {
-      z-index: 20;
+      //z-index: 20;
     }
 
   }
-  .logo {display: none}
-}
+
 
 /* Hero */
 .home {
