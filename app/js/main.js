@@ -9,6 +9,8 @@ import 'angular-ui-bootstrap';
 import 'angular-animate';
 import 'angular-material';
 import 'angularjs-slider';
+import 'ngsticky';
+import 'angular-dropdowns';
 import 'angular-cookies';
 import 'ng-file-upload';
 import 'angular-breadcrumb';
@@ -25,6 +27,8 @@ const requires = [
   'ngAnimate',
   'ngMaterial',
   'rzModule',
+  'sticky',
+  'ngDropdowns',
   'ui.bootstrap',
   'ngCookies',
   'ngFileUpload',

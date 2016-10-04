@@ -1,9 +1,14 @@
 /* Half star rating */
+
 .rating-half-star {
+  display: block;
   font-size: 0;
+  white-space: nowrap;
 
   /* Read states */
-  &[read-only="true"] { cursor: default; }
+  &[read-only="true"] { cursor: default;
+    [role="button"] { cursor: default; }
+  }
   &[read-only="false"] { cursor: pointer; }
 
   /* Stars */
@@ -13,6 +18,10 @@
     font-size: 24px;
     text-align: left;
     overflow: hidden;
+
+    &:focus {
+      outline: none !important;
+    }
 
     &:nth-of-type(2n) {
       transform: rotateY(180deg);

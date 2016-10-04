@@ -15,7 +15,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       }
     })
     .state('Search', {
-      url: '/search',
+      url: '/search/:searchCategory?location=',
       controller: 'SearchCtrl as search',
       templateUrl: 'search.html',
       title: 'Search',

@@ -1,54 +1,105 @@
-function SearchFormCtrl($http, $rootScope, $scope, $log) {
+function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
   'ngInject';
-
 
   // ViewModel
   const vm = this;
 
-  // Get list of catogories for autocomplete
-  $http.get($rootScope.apiUrl + 'classes/categories')
-    .then(function successCallback(response) {
-      var categoriesData = response.data.data;
+  $log.info('Searchform is loaded');
 
-      // Real categories:
-      vm.categoriesList = categoriesData.map(function(category) {
-        return {
-          id: category.id,
-          name: category.title
-        };
-      });
+  // Get list of Categories:
+  categories.getList().then(function(response) { // As promise
+    vm.categoriesList = response;
 
-      // Test!!! locations:
-      var locationsData = [{"id":"alabama","name":"Alabama"},{"id":"alaska","name":"Alaska"},{"id":"arizona","name":"Arizona"},{"id":"arkansas","name":"Arkansas"},{"id":"california","name":"California"},{"id":"colorado","name":"Colorado"},{"id":"connecticut","name":"Connecticut"},{"id":"delaware","name":"Delaware"},{"id":"florida","name":"Florida"},{"id":"georgia","name":"Georgia"},{"id":"hawaii","name":"Hawaii"},{"id":"idaho","name":"Idaho"},{"id":"illinois","name":"Illinois"},{"id":"indiana","name":"Indiana"},{"id":"iowa","name":"Iowa"},{"id":"kansas","name":"Kansas"},{"id":"kentucky","name":"Kentucky"},{"id":"louisiana","name":"Louisiana"},{"id":"maine","name":"Maine"},{"id":"maryland","name":"Maryland"},{"id":"massachusetts","name":"Massachusetts"},{"id":"michigan","name":"Michigan"},{"id":"minnesota","name":"Minnesota"},{"id":"mississippi","name":"Mississippi"},{"id":"missouri","name":"Missouri"},{"id":"montana","name":"Montana"},{"id":"nebraska","name":"Nebraska"},{"id":"nevada","name":"Nevada"},{"id":"new hampshire","name":"New Hampshire"},{"id":"new jersey","name":"New Jersey"},{"id":"new mexico","name":"New Mexico"},{"id":"new york","name":"New York"},{"id":"north carolina","name":"North Carolina"},{"id":"north dakota","name":"North Dakota"},{"id":"ohio","name":"Ohio"},{"id":"oklahoma","name":"Oklahoma"},{"id":"oregon","name":"Oregon"},{"id":"pennsylvania","name":"Pennsylvania"},{"id":"rhode island","name":"Rhode Island"},{"id":"south carolina","name":"South Carolina"},{"id":"south dakota","name":"South Dakota"},{"id":"tennessee","name":"Tennessee"},{"id":"texas","name":"Texas"},{"id":"utah","name":"Utah"},{"id":"vermont","name":"Vermont"},{"id":"virginia","name":"Virginia"},{"id":"washington","name":"Washington"},{"id":"west virginia","name":"West Virginia"},{"id":"wisconsin","name":"Wisconsin"},{"id":"wyoming","name":"Wyoming"}];
-      vm.locationsList = locationsData;
+    $rootScope.$broadcast('loadedCategories', response);
+  });
 
-      // Console success message:
-      $log.info('Success loading categories: ' + response);
-    }, function errorCallback(response) {
-      // Console error message:
-      $log.error('ESrror loading categories' + response);
-    });
+  // Get list of Locations:
+  vm.locationsList = locations.getList();
 
   /* Functions */
   vm.searchQuery = function(query, type) {
     var list = type == 'cat' ? vm.categoriesList : vm.locationsList;
-    var results = query ? list.filter(vm.createQueryFilter(query)) :list;
+    var results = query ? list.filter(vm.createQueryFilter(query)) : list;
     return results;
   };
-
   vm.createQueryFilter = function(query) {
     var lowercaseQuery = angular.lowercase(query);
     return function(item) {
-      var itemTitle = angular.lowercase(item.name);
-      return (itemTitle.indexOf(lowercaseQuery) === 0);
+      var itemTitle = angular.lowercase(item.title);
+      return (itemTitle.indexOf(lowercaseQuery) !== -1);
     }
   }
 
+
+  /* Data containers */
+  /* Selected values are saved in the Searching service */
   vm.categories = {
-    query: vm.searchQuery
+    selected: searching.getCategory() || null,
+    query: vm.searchQuery,
+    change: function(item) {
+      searching.setCategory(item);
+    }
   };
   vm.locations = {
-    query: vm.searchQuery
+    selected: searching.getLocation() || null,
+    query: vm.searchQuery,
+    change: function(item) {
+      searching.setLocation(item);
+    }
+  };
+
+
+  /* Check the URL and update the Search Form and Searching service values */
+  $scope.$on('loadedCategories', function(event, response) {
+    $log.info('on loadedCategories');
+
+    var urlCategory = $stateParams.searchCategory;
+    if (urlCategory) {
+      categories.getElementByTitle(urlCategory).then(function(response) {
+        if (!response) return false;
+
+        vm.categories.selected = response;
+        searching.setCategory(response);
+
+        $rootScope.$broadcast('updatedSearching', response);
+      });
+    } else {
+      vm.categories.selected = null;
+      searching.setCategory(null);
+    }
+  });
+  var urlLocation = $location.search().location;
+  if (urlLocation) {
+    var urlLocationElement = locations.getLocationElement(urlLocation);
+
+    vm.locations.selected = urlLocationElement;
+    searching.setLocation(urlLocationElement);
+
+  } else {
+    vm.locations.selected = null;
+    searching.setLocation(null);
+  }
+
+  /* Form submit event */
+  vm.search = function() {
+    // $log.info('Searching...');
+    var newURL = '/search/';
+
+    // Continue searching only if category is selected
+    // if (!vm.categories.selected) return false;
+
+    if (vm.categories.selected) {
+      newURL += angular.lowercase(vm.categories.selected.title);
+    }
+
+    var urlParamLoc = vm.locations.selected ? angular.lowercase(vm.locations.selected.title) : null;
+
+    // Set new search parameters
+    searching.setCategory(vm.categories.selected);
+    searching.setLocation(vm.locations.selected);
+
+    $location.search('location', urlParamLoc);
+    $location.replace().path(newURL);
   };
 }
 
