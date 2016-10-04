@@ -1,4 +1,4 @@
-function UserAddClassCtrl($rootScope, $http, $log, $state) {
+function UserEditClassCtrl($rootScope, $http, $log) {
   'ngInject';
 
   // ViewModel
@@ -37,8 +37,6 @@ function UserAddClassCtrl($rootScope, $http, $log, $state) {
         vm.size = vm.sizeRadio;
       }
 
-      // Validate radio buttons TODO
-
       var classData = {
         'title': vm.title,
         'teacherId': $rootScope.userData.id,
@@ -49,28 +47,14 @@ function UserAddClassCtrl($rootScope, $http, $log, $state) {
         'venueType': 'private' // Default for now
       };
 
-      $http.post($rootScope.apiUrl + 'classes/create', classData)
-        .then(function successCallback(response) {
-          // Redirect to edit class
-          $state.go('User-Edit-Class');
+      $http.post($rootScope.apiUrl + 'classes/create', classData).success((data) => {
+        // Redirect to edit class
 
-          // Setting coming from add class to true
-          $rootScope.fromAddClass = true;
-          // Also need class id
-          $rootScope.addClassName = vm.title;
-        });
+        // Setting coming from add class to true
+        $rootScope.fromAddClass = true;
+      }).error((err, status) => {
 
-      // $http.post($rootScope.apiUrl + 'classes/create', classData).success((data) => {
-      //   // Redirect to edit class
-      //   $state.go('User-Edit-Class');
-      //
-      //   // Setting coming from add class to true
-      //   $rootScope.fromAddClass = true;
-      //   // Also need class id
-      //   $rootScope.addClassId = response.data.data.id;
-      // }).error((err, status) => {
-      //
-      // });
+      });
     }
 
   });
@@ -78,6 +62,6 @@ function UserAddClassCtrl($rootScope, $http, $log, $state) {
 }
 
 export default {
-  name: 'UserAddClassCtrl',
-  fn: UserAddClassCtrl
+  name: 'UserEditClassCtrl',
+  fn: UserEditClassCtrl
 };

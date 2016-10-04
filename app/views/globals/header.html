@@ -100,6 +100,40 @@
         </ul>
       </div>
 
+            <div class="navbar-links">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="!userLoggedIn">
+                        <a href="#" ng-click="SignUpModal('sm')">Sign Up</a>
+                    </li>
+                    <li ng-if="!userLoggedIn">
+                        <a href="#" ng-click="LogInModal('sm')">Log In</a>
+                    </li>
+                    <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
+                        <a href="/user/dashboard" role="button" uib-dropdown-toggle>
+                            {{ userData.profile.firstName }}
+                            {{ userData.profile.lastName }}
+                            <div ng-repeat="image in userData.photos" ng-if="image.isMain == 1" class="nav-image">
+                              <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+                            <li role="menuitem">
+                                <a href="/user/dashboard">Dashboard</a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="/user/edit">Edit profile</a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="/user/class">Add class</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem">
+                                <a href="#" ng-click="logOut()">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>

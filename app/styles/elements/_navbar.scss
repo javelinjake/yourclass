@@ -13,6 +13,11 @@
   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
   //margin-bottom: $navbar-margin-bottom;
   border-bottom: 1px solid #efefef;
+  background-color: #fff;
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+
+  padding: 14px 0;
+  height: 92px;
 
   // Prevent floats from breaking the navbar
   @include clearfix;
@@ -37,8 +42,8 @@ $nav-item-padding: 20px;
 .nav-wrapper {
   position: relative;
   width: 100%;
-  padding-left: $logo-width + $nav-item-padding; // Width of logo
-  padding-right: $links-width + $nav-item-padding; // Width of links
+  //padding-left: $logo-width + $nav-item-padding; // Width of logo
+  padding: 0 $links-width + $nav-item-padding; // Width of links
 }
 .navbar-logo {
   position: absolute;
@@ -55,7 +60,7 @@ $nav-item-padding: 20px;
 
 .logged-in {
   .nav-wrapper {
-    padding-right: $links-width-logged-in + $nav-item-padding; // Width of links
+    padding: 0 $links-width-logged-in + $nav-item-padding; // Width of links
   }
   .navbar-links {
     width: $links-width-logged-in;
@@ -216,7 +221,7 @@ $nav-item-padding: 20px;
   padding: $navbar-padding-horizontal;
   font-size: $font-size-large;
   line-height: $line-height-computed;
-  height: $navbar-height;
+  height: 72px;
 
   &:hover,
   &:focus {

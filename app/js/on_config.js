@@ -1,4 +1,4 @@
-function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadcrumbProvider) {
+function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadcrumbProvider, $httpProvider) {
   'ngInject';
 
   $locationProvider.html5Mode(true);
@@ -75,8 +75,9 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
         label: 'Add class'
       }
     })
-    .state('user.edit-class', {
+    .state('User-Edit-Class', {
       url: '/user/edit-class',
+      controller: 'UserEditClassCtrl as userEditClass',
       templateUrl: 'user/edit-class.html',
       title: 'User Edit Class',
       class: 'user-edit-class',
@@ -117,6 +118,12 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
   $breadcrumbProvider.setOptions({
     prefixStateName: 'Home'
   });
+
+  // TODO - Need to change for production, should just be able to remove
+  // $httpProvider.defaults.headers.common = {};
+  // $httpProvider.defaults.headers.post = {};
+  // $httpProvider.defaults.headers.put = {};
+  // $httpProvider.defaults.headers.patch = {};
 
 }
 
