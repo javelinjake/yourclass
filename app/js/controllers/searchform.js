@@ -1,12 +1,16 @@
-function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
+function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
   'ngInject';
 
   // ViewModel
   const vm = this;
 
+  $log.info('Searchform is loaded');
+
   // Get list of Categories:
   categories.getList().then(function(response) { // As promise
     vm.categoriesList = response;
+
+    $rootScope.$broadcast('loadedCategories', response);
   });
 
   // Get list of Locations:
@@ -30,29 +34,51 @@ function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, cat
   /* Data containers */
   /* Selected values are saved in the Searching service */
   vm.categories = {
-    selected: searching.search.category,
+    selected: searching.getCategory() || null,
     query: vm.searchQuery,
-    // change: function(item) {}
+    change: function(item) {
+      searching.setCategory(item);
+    }
   };
   vm.locations = {
-    selected: searching.search.location,
+    selected: searching.getLocation() || null,
     query: vm.searchQuery,
-    // change: function(item) {}
+    change: function(item) {
+      searching.setLocation(item);
+    }
   };
 
 
   /* Check the URL and update the Search Form and Searching service values */
-  var urlCategory = $stateParams.searchCategory;
-  categories.getCategoryElement(urlCategory).then(function(response) { // As promise
-    if (!response) return false;
-      vm.categories.selected = response;
-      searching.setCategory(response);
+  $scope.$on('loadedCategories', function(event, response) {
+    $log.info('on loadedCategories');
+
+    var urlCategory = $stateParams.searchCategory;
+    if (urlCategory) {
+      categories.getElementByTitle(urlCategory).then(function(response) {
+        if (!response) return false;
+
+        vm.categories.selected = response;
+        searching.setCategory(response);
+
+        $rootScope.$broadcast('updatedSearching', response);
+      });
+    } else {
+      vm.categories.selected = null;
+      searching.setCategory(null);
+    }
   });
   var urlLocation = $location.search().location;
-  var urlLocationElement = locations.getLocationElement(urlLocation);
-      vm.locations.selected = urlLocationElement;
-      searching.setLocation(urlLocationElement);
+  if (urlLocation) {
+    var urlLocationElement = locations.getLocationElement(urlLocation);
 
+    vm.locations.selected = urlLocationElement;
+    searching.setLocation(urlLocationElement);
+
+  } else {
+    vm.locations.selected = null;
+    searching.setLocation(null);
+  }
 
   /* Form submit event */
   vm.search = function() {
@@ -60,20 +86,17 @@ function SearchFormCtrl($rootScope, $stateParams, $location, $timeout, $log, cat
     var newURL = '/search/';
 
     // Continue searching only if category is selected
-    if (!vm.categories.selected) return false;
+    // if (!vm.categories.selected) return false;
 
     if (vm.categories.selected) {
       newURL += angular.lowercase(vm.categories.selected.title);
     }
 
     var urlParamLoc = vm.locations.selected ? angular.lowercase(vm.locations.selected.title) : null;
-    // $log.info(newURL); $log.info(urlParamLoc);
 
     // Set new search parameters
     searching.setCategory(vm.categories.selected);
     searching.setLocation(vm.locations.selected);
-    // $log.info(searching.getCategory());
-    // $log.info(searching.getLocation());
 
     $location.search('location', urlParamLoc);
     $location.replace().path(newURL);

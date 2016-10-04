@@ -1,5 +1,12 @@
 /* UI Bootstrap Datepicker Popup */
 
+// Input:
+[uib-datepicker-popup] {
+  display: block;
+  cursor: pointer;
+}
+
+// Dropdown:
 .uib-datepicker-popup {
 
   &.dropdown-menu {
@@ -8,6 +15,16 @@
     border: none;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
     font-size: 12px;
+
+    &:focus {
+      outline: none;
+    }
+
+    * {
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }
 
