@@ -39,27 +39,27 @@
         </div>
 
         <div class="panel-body">
-          <form name="addClassForm" ng-submit="userAddClass.addClass()" class="form-horizontal">
+          <form name="addClassForm" ng-submit="userEditClass.addClass()" class="form-horizontal">
             <fieldset>
 
               <div class="form-group">
                 <label class="control-label">Name</label>
                 <div>
-                  <input ng-model="userAddClass.title" type="text" class="form-control form-full" placeholder="Class name" required/>
+                  <input ng-model="userEditClass.classData.title" type="text" class="form-control form-full" placeholder="Class name" required/>
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="control-label">Category</label>
                 <div>
-                  <select ng-model="userAddClass.categoryId" ng-change="userAddClass.classCategory(userAddClass.categoryId)" class="form-control form-full" ng-options="category.id as category.title for category in userAddClass.categories track by category.id" required></select>
+                  <select ng-model="userEditClass.classData.category" ng-change="userEditClass.classCategory(userEditClass.classData.category)" class="form-control form-full" ng-options="category.id as category.title for category in userEditClass.categories track by category.id" required></select>
                 </div>
               </div>
 
-              <div ng-repeat="category in userAddClass.categories" ng-if="category.id == userAddClass.subCategory && category.subcats[0]" class="form-group">
+              <div ng-repeat="category in userEditClass.categories" ng-if="category.id == userEditClass.subCategory && category.subcats[0]" class="form-group">
                   <label class="control-label">Sub category</label>
                   <div>
-                    <select ng-model="userAddClass.subcategoryId" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
+                    <select ng-model="userEditClass.classData.subcategory" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
                   </div>
               </div>
 
@@ -78,22 +78,22 @@
 
                 <div class="custom-radio-wrapper">
                   <div class="col-md-3">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="0" ng-click="userAddClass.customPrice = false">Free</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="0" ng-click="userEditClass.customPrice = false">Free</label>
                   </div>
                   <div class="col-md-2">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="10" ng-click="userAddClass.customPrice = false">$10</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="10" ng-click="userEditClass.customPrice = false">$10</label>
                   </div>
                   <div class="col-md-2">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="20" ng-click="userAddClass.customPrice = false">$20</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="20" ng-click="userEditClass.customPrice = false">$20</label>
                   </div>
                   <div class="col-md-2">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="30" ng-click="userAddClass.customPrice = false">$30</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="30" ng-click="userEditClass.customPrice = false">$30</label>
                   </div>
                   <div class="col-md-3">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customPrice = true" ng-if="!userAddClass.customPrice">Custom</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'custom'" ng-click="userEditClass.customPrice = true" ng-if="!userEditClass.customPrice">Custom</label>
                   </div>
                   <div class="col-md-3">
-                    <input ng-model="userAddClass.priceInput" type="number" class="form-control form-full" ng-if="userAddClass.customPrice" />
+                    <input ng-model="userEditClass.priceInput" type="number" class="form-control form-full" ng-if="userEditClass.customPrice" />
                   </div>
                 </div>
 
@@ -115,25 +115,25 @@
 
                 <div class="custom-radio-wrapper">
                   <div class="col-md-1">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="1" ng-click="userAddClass.customSize = false">1</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="1" ng-click="userEditClass.customSize = false">1</label>
                   </div>
                   <div class="col-md-1">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="2" ng-click="userAddClass.customSize = false">2</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="2" ng-click="userEditClass.customSize = false">2</label>
                   </div>
                   <div class="col-md-1">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="5" ng-click="userAddClass.customSize = false">5</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="5" ng-click="userEditClass.customSize = false">5</label>
                   </div>
                   <div class="col-md-3">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="10" ng-click="userAddClass.customSize = false">10</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="10" ng-click="userEditClass.customSize = false">10</label>
                   </div>
                   <div class="col-md-3">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="20" ng-click="userAddClass.customSize = false">20</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="20" ng-click="userEditClass.customSize = false">20</label>
                   </div>
                   <div class="col-md-3">
-                    <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customSize = true" ng-if="!userAddClass.customSize">Custom</label>
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'custom'" ng-click="userEditClass.customSize = true" ng-if="!userEditClass.customSize">Custom</label>
                   </div>
                   <div class="col-md-3">
-                    <input ng-model="userAddClass.sizeInput" type="number" class="form-control form-full" ng-if="userAddClass.customSize" />
+                    <input ng-model="userEditClass.sizeInput" type="number" class="form-control form-full" ng-if="userEditClass.customSize" />
                   </div>
                 </div>
 
