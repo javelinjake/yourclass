@@ -17,7 +17,7 @@ function HomeCtrl($http, $rootScope, $log, $uibModal) {
       vm.classesList = response.data.data;
     }, function errorCallback(response) {
     });
-    
+
 }
 
 export default {

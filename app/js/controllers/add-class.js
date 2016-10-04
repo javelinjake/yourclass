@@ -51,26 +51,25 @@ function UserAddClassCtrl($rootScope, $http, $log, $state) {
 
       $http.post($rootScope.apiUrl + 'classes/create', classData)
         .then(function successCallback(response) {
-          // Redirect to edit class
-          $state.go('User-Edit-Class');
 
-          // Setting coming from add class to true
+          // convert title to alias TODO - Check with Slava and put in filters?
+          function slugify(text)
+            {
+              return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+            }
+
+          // Redirect to edit class
+          $state.go('User-Edit-Class', {classEditName: slugify(vm.title)});
+
+          // Set coming from add class to true
           $rootScope.fromAddClass = true;
-          // Also need class id
-          $rootScope.addClassName = vm.title;
         });
 
-      // $http.post($rootScope.apiUrl + 'classes/create', classData).success((data) => {
-      //   // Redirect to edit class
-      //   $state.go('User-Edit-Class');
-      //
-      //   // Setting coming from add class to true
-      //   $rootScope.fromAddClass = true;
-      //   // Also need class id
-      //   $rootScope.addClassId = response.data.data.id;
-      // }).error((err, status) => {
-      //
-      // });
     }
 
   });
