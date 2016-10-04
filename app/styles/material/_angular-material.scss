@@ -7350,3 +7350,7 @@ $virtual-repeat-scrollbar-width: 16px !default;
     display: none !important;
   }
 }
+
+._md-visually-hidden {
+  display: none;
+}
