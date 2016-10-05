@@ -208,7 +208,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
           type = '-rating';
           break;
         case 'date':
-          type = 'date';
+          type = 'dateStart';
           break;
         case 'distance':
           type = 'distance';

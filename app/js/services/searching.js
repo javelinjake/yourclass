@@ -118,7 +118,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
       if (element.dates[0].times[0]) {
         var nearestTime = element.dates[0].times[0] || null;
 
-        this.dateStart = new Date(nearestDate + ' ' + nearestTime.startTime); console.log(this.dateStart);
+        this.dateStart = new Date(nearestDate + ' ' + nearestTime.startTime);
         this.dateEnd   = new Date(nearestDate + ' ' + nearestTime.endTime);
 
         this.alltimes = element.dates.reduce(function(all, element, index, array) {

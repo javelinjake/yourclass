@@ -11,8 +11,13 @@
 
   &-filter {
     position: relative;
+    height: 90px;
     margin: -20px 0 30px;
     text-align: center;
+
+    @media (max-width: 1000px) {
+      height: auto;
+    }
 
     $block: &;
 
