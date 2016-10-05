@@ -13,6 +13,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
 
   vm.isLoading = false;
+  vm.isFirstLoad = true;
 
 
   /* Helper Functions */
@@ -47,7 +48,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       vm.pagination.last = 1;
       vm.pagination.total = classesArray.length;
 
-      $log.warn('Loaded search results.');
+      // $log.warn('Loaded search results.');
     });
   };
 
@@ -59,31 +60,27 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     vm.heading.location = location ? location.title : null;
     vm.heading.image = (category && category.image.length > 0) ? 'background-image: url(' +  $rootScope.imageUrl + category.image + ')' : vm.heading.imageDefault;
 
-    $log.warn('Updated search heading.');
+    // $log.warn('Updated search heading.');
   };
 
 
   /* Load results on controller is load */
-  // Checks the status flag. False means first app upload.
-  if (!searching.isFirstLoad) {
-    $log.info('not first load');
-    // $log.warn(searching.getCategory());
-    // $log.warn(searching.getLocation());
+  if (searching.isAvailable) {
+    $log.error('Category is requested...');
     updateSearchHeading();
     loadSearchResults();
-    $log.info('page is updated');
   }
-  /* Load results after categories list and searching parameters is updated */
+  /* Load results after categories list and searching parameters are updated */
   $scope.$on('updatedSearching', function(event, response) {
-    $log.info('first load');
-    // $log.warn(searching.getCategory());
-    // $log.warn(searching.getLocation());
+    // if (searching.getCategory() === null) {
+    //   return false;
+    // }
+    $log.error('Category is not requested...');
     updateSearchHeading();
-    loadSearchResults();
-    searching.isFirstLoad = false;
-    $log.info('page is updated');
+    loadSearchResults(vm.filters);
+
+    searching.isAvailable = true;
   });
-  $log.error(searching.isFirstLoad);
 
 
   /* Filter model */
@@ -273,11 +270,14 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
     vm.classesListSliced = sliceSearchResults(vm.classesList, start, end);
   });
-  // Filter updates in searching service
+  // Filter updates in searching service. Loading new results
   $scope.$watch('search.filters', function(current, original) {
-    // Send new request
-    // $log.info('Filter fires');
+    if (vm.isFirstLoad) return false;
+
+    updateSearchHeading();
     loadSearchResults(current);
+
+    $log.error('Filter fires...');
   }, true);
 
 

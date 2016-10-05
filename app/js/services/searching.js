@@ -1,8 +1,8 @@
 function searching($rootScope, $http, $log, $q, $filter) {
   'ngInject';
 
-  // Flag to detect the first upload (for search controller)
-  this.isFirstLoad = true;
+  // Flag to detect the first uploading (for search controller)
+  this.isAvailable = false;
 
 
   /* SearchForm Data and Methods */
@@ -150,11 +150,11 @@ function searching($rootScope, $http, $log, $q, $filter) {
         var data = angular.fromJson(response.data).data;
             deferred.resolve(data);
 
-        $log.info('success' + response);
+        // $log.info('success' + response);
       }, function errorCallback(response) {
             deferred.resolve(undefined);
 
-        $log.error('error' + response);
+        // $log.error('error' + response);
       });
 
     return deferred.promise;
@@ -188,12 +188,12 @@ function searching($rootScope, $http, $log, $q, $filter) {
     }
     if (typeof filterParams.date !== null) { // Equal or more
       // Format: 2016-03-25
-      /*var date  = filterParams.date,
-          year  = date.getFullYear(),
-          month = ('0' + (date.getMonth() + 1)).slice(-2),
-          day   = ('0' + date.getDate()).slice(-2);
-      var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
-      resultParams.push(parameter);*/
+      // var date  = filterParams.date,
+      //     year  = date.getFullYear(),
+      //     month = ('0' + (date.getMonth() + 1)).slice(-2),
+      //     day   = ('0' + date.getDate()).slice(-2);
+      // var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
+      // resultParams.push(parameter);
     }
     if (typeof filterParams.distance !== null) { // Equal or more
       // var parameter = ...;
@@ -208,8 +208,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
     if (resultParams.length > 0) {
       resultURL += '?' + resultParams.join('&');;
     }
-
-    $log.info(resultURL);
 
     return resultURL;
   };

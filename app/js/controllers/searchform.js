@@ -4,9 +4,9 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categ
   // ViewModel
   const vm = this;
 
-  $log.info('Searchform is loaded');
 
   // Get list of Categories:
+  searching.isAvailable = false;
   categories.getList().then(function(response) { // As promise
     vm.categoriesList = response;
 
@@ -34,20 +34,18 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categ
 
   /* Data containers */
   /* Selected values are saved in the Searching service */
-  $log.warn(searching.getCategory());
-  $log.warn(searching.getLocation());
   vm.categories = {
     selected: searching.getCategory() || null,
     query: vm.searchQuery,
     change: function(item) {
-      searching.setCategory(item);
+      // searching.setCategory(item);
     }
   };
   vm.locations = {
     selected: searching.getLocation() || null,
     query: vm.searchQuery,
     change: function(item) {
-      searching.setLocation(item);
+      // searching.setLocation(item);
     }
   };
 
@@ -63,11 +61,8 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categ
         searching.setCategory(response);
 
         $rootScope.$broadcast('updatedSearching', response);
-        $log.warn('Broadcast event updatedSearching');
       });
     } else {
-      vm.categories.selected = searching.getCategory();
-      $log.warn('Broadcast event with no updatedSearching');
       // OR clean both:
       // vm.categories.selected = null;
       // searching.setCategory(null);
@@ -81,7 +76,6 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categ
     searching.setLocation(urlLocationElement);
 
   } else {
-    vm.locations.selected = searching.getLocation();
     // OR clean both:
     // vm.locations.selected = null;
     // searching.setLocation(null);
