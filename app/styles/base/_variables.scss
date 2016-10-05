@@ -16,12 +16,6 @@ $gray-light:             #bbb !default;
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 $white:                  #fff;
 
-$brand-primary:         #00a7bb !default;
-$brand-success:         #26973c !default;
-$brand-info:            #9C27B0 !default;
-$brand-warning:         #f78333 !default;
-$brand-danger:          #e51c23 !default;
-
 $brand-blue: #00a7bb !default;
 $brand-dark-purple: #54004f !default;
 $brand-purple: #642891 !default;
@@ -32,6 +26,12 @@ $brand-yellow: #f6ee00 !default;
 $brand-salmon: #f45c69 !default;
 $brand-orange: #f78333 !default;
 $brand-pink: #ef0069 !default;
+
+$brand-primary:         $brand-orange !default;
+$brand-success:         #26973c !default;
+$brand-info:            #9C27B0 !default;
+$brand-warning:         #f78333 !default;
+$brand-danger:          #e51c23 !default;
 
 //== Scaffolding
 //
@@ -166,7 +166,7 @@ $btn-font-weight:                300 !default;
 
 $btn-default-color:              #444 !default;
 $btn-default-bg:                 #fff !default;
-$btn-default-border:             transparent !default;
+$btn-default-border:             #cccccc !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-orange !default;
@@ -212,7 +212,7 @@ $input-bg-disabled:              transparent !default;
 //** Text color for `<input>`s
 $input-color:                    $gray !default;
 //** `<input>` border color
-$input-border:                   #efefef !default;
+$input-border:                   #cccccc !default;
 
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -381,7 +381,7 @@ $container-lg:                 $container-large-desktop !default;
 //##
 
 // Basics of a navbar
-$navbar-height:                    64px !default;
+$navbar-height:                    98px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;

@@ -1,15 +1,16 @@
-function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $log, categories, locations, searching) {
+function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $log, categories, locations, searching) {
   'ngInject';
 
   // ViewModel
   const vm = this;
 
-  $log.info('Searchform is loaded');
 
   // Get list of Categories:
+  searching.isAvailable = false;
   categories.getList().then(function(response) { // As promise
     vm.categoriesList = response;
 
+    // $log.error('Loading categories...');
     $rootScope.$broadcast('loadedCategories', response);
   });
 
@@ -37,22 +38,20 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
     selected: searching.getCategory() || null,
     query: vm.searchQuery,
     change: function(item) {
-      searching.setCategory(item);
+      // searching.setCategory(item);
     }
   };
   vm.locations = {
     selected: searching.getLocation() || null,
     query: vm.searchQuery,
     change: function(item) {
-      searching.setLocation(item);
+      // searching.setLocation(item);
     }
   };
 
 
   /* Check the URL and update the Search Form and Searching service values */
   $scope.$on('loadedCategories', function(event, response) {
-    $log.info('on loadedCategories');
-
     var urlCategory = $stateParams.searchCategory;
     if (urlCategory) {
       categories.getElementByTitle(urlCategory).then(function(response) {
@@ -64,8 +63,10 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
         $rootScope.$broadcast('updatedSearching', response);
       });
     } else {
-      vm.categories.selected = null;
-      searching.setCategory(null);
+      // OR clean both:
+      // vm.categories.selected = null;
+      // searching.setCategory(null);
+      $rootScope.$broadcast('updatedSearching', response);
     }
   });
   var urlLocation = $location.search().location;
@@ -76,17 +77,17 @@ function SearchFormCtrl($rootScope, $scope, $stateParams, $location, $timeout, $
     searching.setLocation(urlLocationElement);
 
   } else {
-    vm.locations.selected = null;
-    searching.setLocation(null);
+    // OR clean both:
+    // vm.locations.selected = null;
+    // searching.setLocation(null);
   }
 
   /* Form submit event */
   vm.search = function() {
-    // $log.info('Searching...');
     var newURL = '/search/';
 
     // Continue searching only if category is selected
-    // if (!vm.categories.selected) return false;
+    if (!vm.categories.selected) return false;
 
     if (vm.categories.selected) {
       newURL += angular.lowercase(vm.categories.selected.title);

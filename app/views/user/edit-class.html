@@ -1,1 +1,293 @@
-Edit class
+<div class="container">
+
+  <div ng-include="'user/navs/user-nav.html'"></div>
+
+  <uib-tabset active="0" vertical="true" type="pills">
+
+
+
+
+
+    <uib-tab index="0">
+      <uib-tab-heading>
+        <div class="strong">The Basics</div>
+        <div>Name, category, price and size</div>
+      </uib-tab-heading>
+
+      <!-- The Basics -->
+      <div class="panel panel-form block">
+
+        <div class="panel-heading">
+
+          <h2 class="panel-title text-center">
+            <span ng-if="fromAddClass">
+              Great you have created <strong>{{ addClassName }}</strong> lets add some more details
+            </span>
+            <span ng-if="!fromAddClass">
+              Edit your class
+            </span>
+          </h2>
+          <p class="text-center">
+            <span ng-if="fromAddClass">
+              You can easily edit the basic details using the navigation on the left
+            </span>
+            <span ng-if="!fromAddClass">
+              Edit your class description
+            </span>
+          </p>
+
+        </div>
+
+        <div class="panel-body">
+          <form name="userEditClass.addClassForm" ng-submit="userEditClass.editClass()" class="form-horizontal">
+            <fieldset>
+
+              <div class="form-group">
+                <label class="control-label">Name</label>
+                <div>
+                  <input ng-model="userEditClass.classData.title" type="text" name="title" class="form-control form-full" placeholder="Class name" required/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Category</label>
+                <div>
+                  <select ng-model="userEditClass.classData.category.id" ng-change="userEditClass.classCategory(userEditClass.classData.category.id)" class="form-control form-full" ng-options="category.id as category.title for category in userEditClass.categories track by category.id" required></select>
+                </div>
+              </div>
+
+              <div ng-repeat="category in userEditClass.categories" ng-if="category.id == userEditClass.subCategory && category.subcats[0]" class="form-group">
+                  <label class="control-label">Sub category</label>
+                  <div>
+                    <select ng-model="userEditClass.classData.subcategory.id" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Price</label>
+                <div class="tooltip-wrapper">
+                  <div class="tooltip-button question-button">
+                    <span>?</span>
+                  </div>
+                  <span class="tooltip top question">
+                    <div class="tooltip-inner">
+                      Per person
+                    </div>
+                  </span>
+                </div>
+
+                <div class="custom-radio-wrapper">
+                  <div class="col-md-3">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'0.00'" ng-click="userEditClass.customPrice = false">Free</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'10.00'" ng-click="userEditClass.customPrice = false">$10</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'20.00'" ng-click="userEditClass.customPrice = false">$20</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'30.00'" ng-click="userEditClass.customPrice = false">$30</label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'custom'" ng-click="userEditClass.customPrice = true" ng-if="!userEditClass.customPrice">Custom</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input ng-model="userEditClass.priceInput" type="number" class="form-control form-full" ng-if="userEditClass.customPrice" />
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+
+                <label class="control-label">Size</label>
+                <div class="tooltip-wrapper">
+                  <div class="tooltip-button question-button">
+                    <span>?</span>
+                  </div>
+                  <span class="tooltip top question">
+                    <div class="tooltip-inner">
+                      Max size
+                    </div>
+                  </span>
+                </div>
+
+                <div class="custom-radio-wrapper">
+                  <div class="col-md-1">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'1'" ng-click="userEditClass.customSize = false">1</label>
+                  </div>
+                  <div class="col-md-1">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'2'" ng-click="userEditClass.customSize = false">2</label>
+                  </div>
+                  <div class="col-md-1">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'5'" ng-click="userEditClass.customSize = false">5</label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'10'" ng-click="userEditClass.customSize = false">10</label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'20'" ng-click="userEditClass.customSize = false">20</label>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="btn btn-default btn-block" ng-model="userEditClass.classData.size" uib-btn-radio="'custom'" ng-click="userEditClass.customSize = true" ng-if="!userEditClass.customSize">Custom</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input ng-model="userEditClass.sizeInput" type="number" class="form-control form-full" ng-if="userEditClass.customSize" />
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" ng-disabled="userEditClass.addClassForm.$invalid">Update</button>
+              </div>
+
+            </fieldset>
+          </form>
+
+        </div>
+      </div>
+
+    </uib-tab>
+
+
+
+
+
+    <uib-tab index="1" heading="Vertical 2">
+      <uib-tab-heading>
+        <div class="strong">The Details</div>
+        <div>Brief, description and photos</div>
+      </uib-tab-heading>
+
+      <!-- The Details -->
+      <div class="panel panel-form block">
+
+        <div class="panel-heading">
+
+          <h2 class="panel-title text-center">
+            <span>
+              Edit your class details
+            </span>
+          </h2>
+          <p class="text-center">
+            <span>
+              Now lets add in some more detail about your class. The more information you add the more successful your class will be, so get creative with your descriptions!
+            </span>
+          </p>
+
+        </div>
+
+        <div class="panel-body">
+          <form name="addClassOptionalForm" ng-submit="user.addClassOptional()" class="form-horizontal">
+            <fieldset>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Short description</label>
+                <div class="col-md-10">
+                  <textarea ng-model="user.brief" class="form-control form-full" rows="3" placeholder="Short description" required></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Main description</label>
+                <div class="col-md-10">
+                  <textarea ng-model="user.description" class="form-control form-full" rows="3" placeholder="Main description"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Cover photo</label>
+                <div class="col-md-10">
+                  Will be going here
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Other photos</label>
+                <div class="col-md-10">
+
+
+                  <button ngf-select="user.uploadClassPhotos($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
+                    Select Photos
+                  </button>
+                  <br><br>
+                  Files:
+                  <ul>
+                    <li ng-repeat="photo in user.photos">
+                      {{photo.name}}
+                      {{photo.$errorParam}}
+                      <span class="progress" ng-show="photo.progress >= 0">
+                        <div style="width:{{photo.progress}}%" ng-bind="photo.progress + '%'"></div>
+                      </span>
+                    </li>
+                    <li ng-repeat="f in user.errFiles">
+                      {{f.name}}
+                      {{f.$error}}
+                      {{f.$errorParam}}
+                    </li>
+                  </ul>
+                  {{user.errorMsg}}
+
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-12 col-md-offset-2">
+                  <button type="submit" class="btn btn-primary" ng-disabled="addClassOptionalForm.$invalid">Next</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 col-md-offset-4">
+                  <button type="button" ng-click="user.classOptionalSkip()" class="btn btn-secondary">Skip</button>
+                </div>
+              </div>
+
+            </fieldset>
+
+          </form>
+
+        </div>
+      </div>
+
+    </uib-tab>
+
+
+
+
+
+    <uib-tab index="2" heading="Vertical 3">
+      <uib-tab-heading>
+        <div class="strong">The Location</div>
+        <div>Venue and facilities</div>
+      </uib-tab-heading>
+
+      <!-- The Location -->
+
+
+    </uib-tab>
+
+
+
+
+
+    <uib-tab index="3" heading="Vertical 4">
+      <uib-tab-heading>
+        <div class="strong">The Dates</div>
+        <div>Calendar and times</div>
+      </uib-tab-heading>
+
+      <!-- The Dates -->
+
+
+    </uib-tab>
+
+
+
+
+
+  </uib-tabset>
+
+</div>

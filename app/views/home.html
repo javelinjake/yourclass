@@ -2,6 +2,8 @@
   <div class="container clear">
     <div class="content">
 
+      <button ng-click="home.simpleLogin()">Simple login</button>
+
       <div class="logo-wrapper">
         <img src="/images/logo.png" alt="Your Class - logo"/>
       </div>
@@ -56,8 +58,7 @@
             </md-autocomplete>
           </div>
           <div class="search-form-submit">
-            <!-- ng-disabled="!searchform.categories.selected" -->
-            <button type="submit" class="btn btn-primary btn-block">
+            <button type="submit" class="btn btn-primary btn-block" ng-disabled="!searchform.categories.selected">
               <span class="text">Search</span>
             </button>
           </div>

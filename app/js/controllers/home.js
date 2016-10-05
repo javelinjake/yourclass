@@ -15,13 +15,9 @@ function HomeCtrl($http, $rootScope, $log, $uibModal) {
   $http.get($rootScope.apiUrl + 'classes/list')
     .then(function successCallback(response) {
       vm.classesList = response.data.data;
-      $log.info('success' + response);
-
-      // Set page rendered to true after content loaded
-      $rootScope.pageRendered = true;
     }, function errorCallback(response) {
-      $log.error('error' + response);
     });
+
 }
 
 export default {

@@ -8,11 +8,28 @@
 // Provide a static navbar from which we expand to create full-width, fixed, and
 // other navbar variations.
 
+
+// Sticky header
+
+// header {
+//   position: fixed;
+//   width: 100%;
+//   z-index: 50;
+// }
+// .main-wrapper {
+//   margin-top: 91px;
+// }
+
 .navbar {
   position: relative;
-  min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+  //min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
   //margin-bottom: $navbar-margin-bottom;
   border-bottom: 1px solid #efefef;
+  background-color: rgba(255,255,255,0.9);
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+
+  padding: 20px 0;
+  //height: 92px;
 
   // Prevent floats from breaking the navbar
   @include clearfix;
@@ -29,22 +46,24 @@
 }
 
 // Main top navigation
-$logo-width: 72px;
-$links-width: 200px;
+$logo-height: 49px;
+$logo-width: 61px;
+$links-width: 140px;
 $links-width-logged-in: 150px;
 $nav-item-padding: 20px;
 
 .nav-wrapper {
   position: relative;
   width: 100%;
-  padding-left: $logo-width + $nav-item-padding; // Width of logo
-  padding-right: $links-width + $nav-item-padding; // Width of links
+  //padding-left: $logo-width + $nav-item-padding; // Width of logo
+  padding: 0 $links-width + $nav-item-padding; // Width of links
 }
 .navbar-logo {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 15px;
   width: $logo-width;
+  height: $logo-height;
 }
 .navbar-links {
   position: absolute;
@@ -55,7 +74,7 @@ $nav-item-padding: 20px;
 
 .logged-in {
   .nav-wrapper {
-    padding-right: $links-width-logged-in + $nav-item-padding; // Width of links
+    padding: 0 $links-width-logged-in + $nav-item-padding; // Width of links
   }
   .navbar-links {
     width: $links-width-logged-in;
@@ -212,11 +231,14 @@ $nav-item-padding: 20px;
 // Brand/project name
 
 .navbar-brand {
-  float: left;
-  padding: $navbar-padding-horizontal;
-  font-size: $font-size-large;
-  line-height: $line-height-computed;
-  height: $navbar-height;
+  display: block;
+  height: 100%;
+  width: 100%;
+  //float: left;
+  //padding: $navbar-padding-horizontal;
+  //font-size: $font-size-large;
+  //line-height: $line-height-computed;
+  //height: 72px;
 
   &:hover,
   &:focus {
@@ -286,9 +308,9 @@ $nav-item-padding: 20px;
   margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
 
   > li > a {
-    padding-top:    10px;
-    padding-bottom: 10px;
-    line-height: $line-height-computed;
+    height: 49px;
+    line-height: 49px;
+    padding: 0 15px;
   }
 
   @media (max-width: $grid-float-breakpoint-max) {
@@ -323,8 +345,11 @@ $nav-item-padding: 20px;
     > li {
       float: left;
       > a {
-        padding-top:    $navbar-padding-vertical;
-        padding-bottom: $navbar-padding-vertical;
+        // padding-top:    $navbar-padding-vertical;
+        // padding-bottom: $navbar-padding-vertical;
+        height: 49px;
+        line-height: 49px;
+        padding: 0 15px;
       }
     }
   }
@@ -434,7 +459,7 @@ $nav-item-padding: 20px;
   }
   .navbar-right {
     float: right !important;
-  margin-right: -$navbar-padding-horizontal;
+    margin-right: -$navbar-padding-horizontal;
 
     ~ .navbar-right {
       margin-right: 0;
@@ -452,11 +477,11 @@ $nav-item-padding: 20px;
   border-color: $navbar-default-border;
 
   .navbar-brand {
-    color: $navbar-default-brand-color;
+    //color: $navbar-default-brand-color;
     &:hover,
     &:focus {
-      color: $navbar-default-brand-hover-color;
-      background-color: $navbar-default-brand-hover-bg;
+      //color: $navbar-default-brand-hover-color;
+      //background-color: $navbar-default-brand-hover-bg;
     }
   }
 
@@ -586,11 +611,11 @@ $nav-item-padding: 20px;
   border-color: $navbar-inverse-border;
 
   .navbar-brand {
-    color: $navbar-inverse-brand-color;
+    //color: $navbar-inverse-brand-color;
     &:hover,
     &:focus {
-      color: $navbar-inverse-brand-hover-color;
-      background-color: $navbar-inverse-brand-hover-bg;
+      //color: $navbar-inverse-brand-hover-color;
+      //background-color: $navbar-inverse-brand-hover-bg;
     }
   }
 

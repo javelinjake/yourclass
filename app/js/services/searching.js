@@ -1,13 +1,13 @@
 function searching($rootScope, $http, $log, $q, $filter) {
   'ngInject';
 
-  // Flag to detect the first upload (for search controller)
-  this.isFirstLoad = true;
+  // Flag to detect the first uploading (for search controller)
+  this.isAvailable = false;
 
 
   /* SearchForm Data and Methods */
 
-  // Category and Location: used
+  // Category and Location:
   var searchParams = {
     category: null,
     location: null
@@ -28,7 +28,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
   };
 
 
-  // Filters: not used
+  // Filters:
   var filterParams = {
     price: {
       floor: null,
@@ -42,7 +42,33 @@ function searching($rootScope, $http, $log, $q, $filter) {
     size: null // gets an { value: '', text: '' }
   };
 
-  // Sorting: used
+  this.getFilterPriceFloor = function() {
+    return filterParams.price.floor;
+  };
+  this.getFilterPriceMin = function() {
+    return filterParams.price.min;
+  };
+  this.getFilterPriceMax = function() {
+    return filterParams.price.max;
+  };
+  this.getFilterPriceCeil = function() {
+    return filterParams.price.ceil;
+  };
+  this.getFilterRating = function() {
+    return filterParams.rating;
+  };
+  this.getFilterDate = function() {
+    return filterParams.date;
+  };
+  this.getFilterDistance = function() {
+    return filterParams.distance;
+  };
+  this.getFilterSize = function() {
+    return filterParams.size;
+  };
+
+
+  // Sorting:
   var sortParams = {
     sortby: null,
     selected: null
@@ -61,9 +87,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
   this.getSortSelected = function() {
     return sortParams.selected;
   };
-
-
-  $log.warn('Searching is loaded');
 
 
   /* Helper functions */
@@ -87,13 +110,33 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
     this.teacher = $filter('capitalize')(element.teacher.profile.firstName) + ' ' + $filter('capitalize')(element.teacher.profile.lastName);
 
-    // Need to add date and time: temporary solution is below
-    this.dateStart = new Date();
-    this.dateEnd = new Date();
-    // When more time slots are available text next to time appears 'more available'
-    this.times = new Array(Math.floor(Math.random() * 4));
-  };
+    /* Date and Time */
+    if (element.dates[0]) {
+      var nearestDate = element.dates[0].classDate || null;
+      this.alldates = element.dates.length || 0;
 
+      if (element.dates[0].times[0]) {
+        var nearestTime = element.dates[0].times[0] || null;
+
+        this.dateStart = new Date(nearestDate + ' ' + nearestTime.startTime);
+        this.dateEnd   = new Date(nearestDate + ' ' + nearestTime.endTime);
+
+        this.alltimes = element.dates.reduce(function(all, element, index, array) {
+          all += element.times.length;
+          return all;
+        }, 0);
+      } else {
+        this.dateStart = new Date(nearestDate);
+        this.dateEnd   = new Date(nearestDate);
+        this.alltimes  = null;
+      }
+    } else {
+      this.dateStart = null;
+      this.dateEnd   = null;
+      this.alldates  = null;
+      this.alltimes  = null;
+    }
+  };
 
   var requestURLBase = $rootScope.apiUrl + 'classes/list';
 
@@ -101,20 +144,21 @@ function searching($rootScope, $http, $log, $q, $filter) {
   var requestData = function(url) {
     var deferred = $q.defer();
 
-    $http.get(url).then(function successCallback(response) {
+    $http
+      .get(url)
+      .then(function successCallback(response) {
         var data = angular.fromJson(response.data).data;
             deferred.resolve(data);
 
-        // Console success message:
         // $log.info('success' + response);
       }, function errorCallback(response) {
-        // Console error message:
+            deferred.resolve(undefined);
+
         // $log.error('error' + response);
       });
 
     return deferred.promise;
   };
-
   var createRequestURL = function() {
     var resultURL = requestURLBase;
     var resultParams = [];
@@ -129,6 +173,7 @@ function searching($rootScope, $http, $log, $q, $filter) {
       // resultParams.push(parameter);
     }
 
+
     /* Check Filter Parameters */
     if (typeof filterParams.price.min !== null) { // Equal or more
       var parameter = '%7B%3E%3D%7Dprice=' + filterParams.price.min;
@@ -139,17 +184,17 @@ function searching($rootScope, $http, $log, $q, $filter) {
       resultParams.push(parameter);
     }
     if (typeof filterParams.rating !== null) { // Equal or more
-      // var parameter = 'rating=' + filterParams.rating;
-      // resultParams.push(parameter);
+      var parameter = filterParams.rating == 1 ? '%7B%3E%3D%7Drating=0' : '%7B%3E%3D%7Drating=' + filterParams.rating/2;
+      resultParams.push(parameter);
     }
     if (typeof filterParams.date !== null) { // Equal or more
       // Format: 2016-03-25
-      // var date  = filterParams.date,
-      //     year  = date.getFullYear(),
-      //     month = date.getMonth(),
-      //     day   = date.getDate();
-      // var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
-      // resultParams.push(parameter);
+      var date  = filterParams.date,
+          year  = date.getFullYear(),
+          month = ('0' + (date.getMonth() + 1)).slice(-2),
+          day   = ('0' + date.getDate()).slice(-2);
+      var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
+      resultParams.push(parameter);
     }
     if (typeof filterParams.distance !== null) { // Equal or more
       // var parameter = ...;
@@ -167,7 +212,6 @@ function searching($rootScope, $http, $log, $q, $filter) {
 
     return resultURL;
   };
-
   var updateFilterParams = function(parameters) {
     filterParams['price']['min'] = parameters['price']['min'];
     filterParams['price']['max'] = parameters['price']['max'];
@@ -177,15 +221,18 @@ function searching($rootScope, $http, $log, $q, $filter) {
     filterParams['size']         = parameters['size'];
   };
 
-
   this.getResults = function(parameters) {
     if (parameters) {
       updateFilterParams(parameters);
     }
-    $log.warn(requestURL);
+
     var requestURL = createRequestURL();
 
     return requestData(requestURL).then(function(data) {
+      if (data === undefined) {
+        return undefined;
+      }
+
       var dataArray = [];
 
       data.forEach(function(element, i, arr) {
