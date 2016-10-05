@@ -150,9 +150,11 @@ function searching($rootScope, $http, $log, $q, $filter) {
         var data = angular.fromJson(response.data).data;
             deferred.resolve(data);
 
-        // $log.info('success' + response);
+        $log.info('success' + response);
       }, function errorCallback(response) {
-        // $log.error('error' + response);
+            deferred.resolve(undefined);
+
+        $log.error('error' + response);
       });
 
     return deferred.promise;
@@ -186,12 +188,12 @@ function searching($rootScope, $http, $log, $q, $filter) {
     }
     if (typeof filterParams.date !== null) { // Equal or more
       // Format: 2016-03-25
-      // var date  = filterParams.date,
-      //     year  = date.getFullYear(),
-      //     month = date.getMonth(),
-      //     day   = date.getDate();
-      // var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
-      // resultParams.push(parameter);
+      /*var date  = filterParams.date,
+          year  = date.getFullYear(),
+          month = ('0' + (date.getMonth() + 1)).slice(-2),
+          day   = ('0' + date.getDate()).slice(-2);
+      var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
+      resultParams.push(parameter);*/
     }
     if (typeof filterParams.distance !== null) { // Equal or more
       // var parameter = ...;
@@ -228,9 +230,11 @@ function searching($rootScope, $http, $log, $q, $filter) {
     var requestURL = createRequestURL();
 
     return requestData(requestURL).then(function(data) {
-      var dataArray = [];
+      if (data === undefined) {
+        return undefined;
+      }
 
-      $log.info(data);
+      var dataArray = [];
 
       data.forEach(function(element, i, arr) {
         var item = new SearchItem(element);

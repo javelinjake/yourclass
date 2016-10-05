@@ -5,14 +5,15 @@
   line-height: 1.5;
 }
 
-
 /* Search filter */
+$filter-width: 846px;
 .search {
 
   &-filter {
     position: relative;
     height: 90px;
     margin: -20px 0 30px;
+    font-size: 0;
     text-align: center;
 
     @media (max-width: 1000px) {
@@ -39,6 +40,7 @@
       padding: 0;
       border: 1px solid #e8e8e8;
       border-top: none;
+      font-size: 12px;
       list-style: none;
 
       @media (max-width: 1000px) {

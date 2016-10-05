@@ -28,6 +28,11 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     vm.isLoading = true;
 
     searching.getResults(parameters).then(function(response) {
+      if (response === undefined) {
+        vm.isLoading = false;
+        return false;
+      }
+
       var classesArray = response;
 
       vm.classesList = $filter('orderBy')(classesArray, [vm.sorting.sortby, 'title']);
