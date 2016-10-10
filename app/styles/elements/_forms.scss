@@ -720,5 +720,10 @@ input[type="checkbox"] {
     line-height: 43px;
     color: #555;
     text-align: center;
+    &.ng-pristine {
+      color: #444;
+      background-color: #e6e6e6;
+      border-color: #adadad;
+    }
   }
 }

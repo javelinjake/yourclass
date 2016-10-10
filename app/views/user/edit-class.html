@@ -2,7 +2,7 @@
 
   <div ng-include="'user/navs/user-nav.html'"></div>
 
-  <uib-tabset active="0" vertical="true" type="pills">
+  <uib-tabset active="userEditClass.tabIndex" vertical="true" type="pills">
 
 
 
@@ -20,18 +20,12 @@
         <div class="panel-heading">
 
           <h2 class="panel-title text-center">
-            <span ng-if="fromAddClass">
-              Great you have created <strong>{{ addClassName }}</strong> lets add some more details
-            </span>
-            <span ng-if="!fromAddClass">
+            <span>
               Edit your class
             </span>
           </h2>
           <p class="text-center">
-            <span ng-if="fromAddClass">
-              You can easily edit the basic details using the navigation on the left
-            </span>
-            <span ng-if="!fromAddClass">
+            <span>
               Edit your class description
             </span>
           </p>
@@ -39,7 +33,7 @@
         </div>
 
         <div class="panel-body">
-          <form name="userEditClass.addClassForm" ng-submit="userEditClass.editClass()" class="form-horizontal">
+          <form name="userEditClass.addClassForm" ng-submit="userEditClass.editClassBasics()" class="form-horizontal">
             <fieldset>
 
               <div class="form-group">
@@ -140,7 +134,7 @@
               </div>
 
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" ng-disabled="userEditClass.addClassForm.$invalid">Update</button>
+                <button type="submit" class="btn btn-primary btn-block">Update</button>
               </div>
 
             </fieldset>
@@ -167,12 +161,18 @@
         <div class="panel-heading">
 
           <h2 class="panel-title text-center">
-            <span>
+            <span ng-if="fromAddClass">
+              Great you have created <strong>{{ userEditClass.classData.title }}</strong> lets add some more details
+            </span>
+            <span ng-if="!fromAddClass">
               Edit your class details
             </span>
           </h2>
           <p class="text-center">
-            <span>
+            <span ng-if="fromAddClass">
+              You can easily edit the basic details using the navigation on the left
+            </span>
+            <span ng-if="!fromAddClass">
               Now lets add in some more detail about your class. The more information you add the more successful your class will be, so get creative with your descriptions!
             </span>
           </p>
@@ -180,69 +180,63 @@
         </div>
 
         <div class="panel-body">
-          <form name="addClassOptionalForm" ng-submit="user.addClassOptional()" class="form-horizontal">
+          <form name="editClassDetailsForm" ng-submit="userEditClass.editClassDetails()" class="form-horizontal">
             <fieldset>
 
               <div class="form-group">
-                <label class="col-md-2 control-label">Short description</label>
-                <div class="col-md-10">
-                  <textarea ng-model="user.brief" class="form-control form-full" rows="3" placeholder="Short description" required></textarea>
+                <label class="control-label">Short description</label>
+                <div>
+                  <textarea ng-model="userEditClass.classData.brief" class="form-control form-full" rows="2" placeholder="Short description" required></textarea>
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-md-2 control-label">Main description</label>
-                <div class="col-md-10">
-                  <textarea ng-model="user.description" class="form-control form-full" rows="3" placeholder="Main description"></textarea>
+                <label class="control-label">Main description</label>
+                <div>
+                  <textarea ng-model="userEditClass.classData.description" class="form-control form-full" rows="4" placeholder="Main description"></textarea>
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-md-2 control-label">Cover photo</label>
-                <div class="col-md-10">
+                <label class="control-label">Cover photo</label>
+                <div>
                   Will be going here
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-md-2 control-label">Other photos</label>
-                <div class="col-md-10">
+                <label class="control-label">Other photos</label>
+                <div>
 
+{{ userEditClass.classData.id }}
+{{ authToken }}
 
-                  <button ngf-select="user.uploadClassPhotos($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
-                    Select Photos
+                  <button ngf-select="userEditClass.uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
+                    Select Files
                   </button>
                   <br><br>
                   Files:
                   <ul>
-                    <li ng-repeat="photo in user.photos">
-                      {{photo.name}}
-                      {{photo.$errorParam}}
-                      <span class="progress" ng-show="photo.progress >= 0">
-                        <div style="width:{{photo.progress}}%" ng-bind="photo.progress + '%'"></div>
+                    <li ng-repeat="f in userEditClass.files" style="font:smaller">{{f.name}}
+                      {{f.$errorParam}}
+                      <span class="progress" ng-show="f.progress >= 0">
+                        <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
                       </span>
                     </li>
-                    <li ng-repeat="f in user.errFiles">
+                    <li ng-repeat="f in userEditClass.errFiles" style="font:smaller">
                       {{f.name}}
                       {{f.$error}}
                       {{f.$errorParam}}
                     </li>
                   </ul>
-                  {{user.errorMsg}}
+                  {{userEditClass.errorMsg}}
 
 
                 </div>
               </div>
 
               <div class="form-group">
-                <div class="col-md-12 col-md-offset-2">
-                  <button type="submit" class="btn btn-primary" ng-disabled="addClassOptionalForm.$invalid">Next</button>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-md-12 col-md-offset-4">
-                  <button type="button" ng-click="user.classOptionalSkip()" class="btn btn-secondary">Skip</button>
-                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update</button>
               </div>
 
             </fieldset>
