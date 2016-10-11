@@ -47,9 +47,6 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
       vm.isLoading = false; // Hide Loader
 
-      // Refresh filter slider:
-      vm.slider.refresh();
-
       // Update pagination settings:
       vm.pagination.current = 1;
       vm.pagination.last = 1;
@@ -70,15 +67,30 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     // $log.warn('Updated search heading.');
   };
 
+  var updateSliderPrice = function(min, max) {
+    vm.slider.options.floor = min || 0;
+    vm.slider.options.ceil  = max || 1000;
+
+    if (vm.slider.max > vm.slider.options.ceil) {
+      vm.filters.price.max = vm.slider.max = vm.slider.options.ceil;
+    }
+    if (vm.slider.min < vm.slider.options.floor) {
+      vm.filters.price.min = vm.slider.min = vm.slider.options.floor;
+    }
+
+    // Refresh filter slider:
+    vm.slider.refresh();
+  };
+
 
   /* Filter model */
   // Filter: Price Slider
   vm.slider = {
-    min: searching.getFilterPriceMin() || 0,
-    max: searching.getFilterPriceMax() || 1000,
+    min: searching.getFilterPriceMin() || searching.getFilterPriceFloor() || 0,
+    max: searching.getFilterPriceMax() || searching.getFilterPriceCeil() || 0, // 1000
     options: {
       floor: searching.getFilterPriceFloor() || 0,
-      ceil: searching.getFilterPriceCeil() || 1000,
+      ceil: searching.getFilterPriceCeil() || 0, // 1000
       step: 1,
       hidePointerLabels: false,
       hideLimitLabels: true,
@@ -250,11 +262,19 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
   /* Load results on controller is load */
   if (searching.isAvailable) {
+    // Update price
+    var price = searching.getCategory().price; console.log(price);
+    updateSliderPrice(price.min, price.max);
+
     updateSearchHeading();
     loadSearchResults(vm.filters);
   }
   /* Load results after categories list and searching parameters are updated */
   $scope.$on('updatedSearching', function(event, response) {
+    // Update price
+    var price = searching.getCategory().price; console.log(price);
+    updateSliderPrice(price.min, price.max);
+
     updateSearchHeading();
     loadSearchResults(vm.filters);
 

@@ -24,7 +24,15 @@ function categories($rootScope, $http, $log, $q) {
   var createList = function(response) {
     var categoriesData = angular.fromJson(response.data).data;
     var categoriesArray = categoriesData.map(function(category) {
-      return { id: category.id, title: category.title, image: category.image };
+      return {
+        id: category.id,
+        title: category.title,
+        image: category.image,
+        price: {
+          min: category.minPrice,
+          max: category.maxPrice
+        }
+      };
     });
     return categoriesArray;
   };
