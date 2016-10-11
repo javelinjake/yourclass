@@ -46,14 +46,18 @@
               <div class="form-group">
                 <label class="control-label">Category</label>
                 <div>
-                  <select ng-model="userEditClass.classData.category.id" ng-change="userEditClass.classCategory(userEditClass.classData.category.id)" class="form-control form-full" ng-options="category.id as category.title for category in userEditClass.categories track by category.id" required></select>
+                  <select ng-model="userEditClass.classData.category.id" ng-change="userEditClass.classCategory(userEditClass.classData.category.id)" class="form-control form-full" ng-options="category.id as category.title for category in userEditClass.categories track by category.id" required>
+                    <option value="">-- Select Category --</option>
+                  </select>
                 </div>
               </div>
 
               <div ng-repeat="category in userEditClass.categories" ng-if="category.id == userEditClass.subCategory && category.subcats[0]" class="form-group">
                   <label class="control-label">Sub category</label>
                   <div>
-                    <select ng-model="userEditClass.classData.subcategory.id" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
+                    <select ng-model="userEditClass.classData.subcategory.id" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id">
+                      <option value="">-- Select Sub Category --</option>
+                    </select>
                   </div>
               </div>
 
@@ -208,9 +212,6 @@
                 <label class="control-label">Other photos</label>
                 <div>
 
-{{ userEditClass.classData.id }}
-{{ authToken }}
-
                   <button ngf-select="userEditClass.uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
                     Select Files
                   </button>
@@ -274,7 +275,74 @@
       </uib-tab-heading>
 
       <!-- The Dates -->
+      <div class="panel panel-form block">
 
+        <div class="panel-heading">
+
+          <h2 class="panel-title text-center">
+            <span>
+              Add your class dates and times
+            </span>
+          </h2>
+          <p class="text-center">
+            <span>
+              Simply add your date and time and click save
+            </span>
+          </p>
+
+        </div>
+
+        <div class="panel-body">
+          <form name="editClassDetailsForm" ng-submit="userEditClass.editClassDates()" class="form-horizontal">
+            <fieldset>
+
+              <div class="form-group">
+                <label class="control-label">Date</label>
+                <div>
+                  <div uib-datepicker ng-model="userEditClass.classDate" datepicker-options="{showWeeks: false}"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Time</label>
+                <div>
+                  <div uib-timepicker ng-model="userEditClass.classTime" hour-step="userEditClass.hstep" minute-step="userEditClass.mstep" show-meridian="true"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Duration</label>
+                <div>
+                  <select name="classDuration"
+      ng-options="option.name for option in userEditClass.classDuration.availableOptions track by option.id"
+      ng-model="userEditClass.classDuration.selectedOption"></select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Add date</button>
+              </div>
+
+            </fieldset>
+
+          </form>
+
+        </div>
+      </div>
+
+      <ul class="date-data list-group">
+        <li class="list-group-item" ng-repeat="date in userEditClass.classData.dates">
+          <strong>{{date.classDate | date: 'd MMM yyyy'}}</strong>
+          <ul class="list-unstyled" ng-repeat="time in date.times">
+            <li class="list-group-item">
+              {{time.startTime}} - {{time.endTime}}
+              <div class="italic" ng-click="userEditClass.deleteClassTime(date.classDate, time.startTime, time.endTime)">
+                delete
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
     </uib-tab>
 

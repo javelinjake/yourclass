@@ -21,19 +21,19 @@
 .list-group-item {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 10px 0;
   // Place the border on the list items and negative margin up for better styling
-  margin-bottom: -1px;
-  background-color: $list-group-bg;
-  border: 1px solid $list-group-border;
+  //margin-bottom: -1px;
+  //background-color: $list-group-bg;
+  //border: 1px solid $list-group-border;
 
   // Round the first and last items
   &:first-child {
-    @include border-top-radius($list-group-border-radius);
+    //@include border-top-radius($list-group-border-radius);
   }
   &:last-child {
-    margin-bottom: 0;
-    @include border-bottom-radius($list-group-border-radius);
+    //margin-bottom: 0;
+    //@include border-bottom-radius($list-group-border-radius);
   }
 }
 

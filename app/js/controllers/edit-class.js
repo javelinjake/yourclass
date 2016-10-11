@@ -174,6 +174,123 @@ function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $
         });
       }
 
+    vm.options = {
+      minDate: new Date(),
+      showWeeks: false
+    };
+
+      // Time steps
+      vm.hstep = 1;
+      vm.mstep = 15;
+
+      // Get current date
+      var date = new Date;
+      var minutes = date.getMinutes();
+      var hours = date.getHours();
+
+      // Round minutes and hours to nearest whole number
+      var m = (Math.round(minutes/15) * 15) % 60;
+      var h = ((((minutes/105) + .5) | 0) + hours) % 24;
+
+      // Set default time
+      date.setHours(h);
+      date.setMinutes(m);
+      vm.classTime = date;
+
+      // Class duration options
+      vm.classDuration = {
+        availableOptions: [
+          {id: '30', name: '30 minutes'},
+          {id: '45', name: '45 minutes'},
+          {id: '60', name: '1 hour'},
+          {id: '75', name: '1 hour 15 minutes'},
+          {id: '90', name: '1 hour 30 minutes'},
+          {id: '120', name: '2 hours'},
+          {id: '150', name: '2 hours 30 minutes'},
+          {id: '180', name: '3 hours'},
+          {id: '210', name: '3 hours 30 minutes'},
+          {id: '240', name: '4 hours'},
+          {id: '270', name: '4 hours 30 minutes'},
+          {id: '300', name: '5 hours'}
+        ],
+        selectedOption: {
+          id: '60', name: '1 hour'
+        }
+      };
+
+      // Add class details
+      vm.editClassDates = function() {
+
+        // Get friendly date
+        var classDate = vm.classDate.getFullYear() + "-" + (vm.classDate.getMonth()+1) + "-" + vm.classDate.getDate();
+
+        // Get class end time
+        var endTime = vm.classTime;
+        endTime = new Date(vm.classTime.getTime() + vm.classDuration.selectedOption.id*60000);
+
+        // Function to get friendly time
+        function friendlyTime(time) {
+          return time.getHours() + ":" + time.getMinutes();
+        }
+
+        // Get friendly times
+        var classStartTime = friendlyTime(vm.classTime);
+        var classEndTime = friendlyTime(endTime);
+
+        // Create data object
+        var dateTimes = {};
+        dateTimes[classDate] = [{
+          startTime: classStartTime,
+          endTime: classEndTime,
+          spots: vm.classData.size
+        }];
+
+        var classData = {
+          'id': vm.classData.id,
+          'datetimes': dateTimes
+        };
+
+        $http.post($rootScope.apiUrl + 'classes/adddates', classData).success((data) => {
+          $log.info(data);
+          $log.info('Class date updated');
+
+          // Just reload the page
+          //$state.reload();
+
+          //vm.tabIndex = 1;
+
+        }).error((err, status) => {
+
+        });
+      }
+
+      vm.deleteClassTime = function(date, startTime, endTime) {
+        $log.info(date);
+        $log.info(startTime);
+        $log.info(endTime);
+
+        var classTimeData = {
+          '_id': vm.classData.id,
+          '_date': date,
+          '_startTime': startTime,
+          '_endDate': endTime
+        };
+
+        $http.post($rootScope.apiUrl + 'classes/deletetimes', classTimeData).success((data) => {
+          $log.info(data);
+          $log.info('Class time deleted');
+
+          // Just reload the page
+          //$state.reload();
+
+          //vm.tabIndex = 1;
+
+        }).error((err, status) => {
+
+        });
+      }
+
+
     });
 
   });
