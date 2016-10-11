@@ -12,7 +12,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     imageDefault: 'background-image: url(/images/outside-yoga.jpg)'
   };
 
-  vm.isLoading = false;
+  vm.isLoading = false; // Hidden Loader
+  vm.isFirstLoad = true;
 
 
   /* Helper Functions */
@@ -25,15 +26,26 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
   var loadSearchResults = function(parameters) {
     /* Get Search results: simple request */
-    vm.isLoading = true;
+
+    // Prevent loading if category is not set
+    if (searching.getCategory() === null) {
+      return false;
+    }
+
+    vm.isLoading = true; // Show Loader
+
     searching.getResults(parameters).then(function(response) {
-      $log.info('Loaded search results.');
+      if (response === undefined) {
+        vm.isLoading = false;
+        return false;
+      }
 
       var classesArray = response;
 
       vm.classesList = $filter('orderBy')(classesArray, [vm.sorting.sortby, 'title']);
       vm.classesListSliced = sliceSearchResults(vm.classesList, 0, vm.pagination.limit);
-      vm.isLoading = false;
+
+      vm.isLoading = false; // Hide Loader
 
       // Refresh filter slider:
       vm.slider.refresh();
@@ -42,6 +54,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       vm.pagination.current = 1;
       vm.pagination.last = 1;
       vm.pagination.total = classesArray.length;
+
+      // $log.warn('Loaded search results.');
     });
   };
 
@@ -52,41 +66,19 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
     vm.heading.category = category ? category.title : null;
     vm.heading.location = location ? location.title : null;
     vm.heading.image = (category && category.image.length > 0) ? 'background-image: url(' +  $rootScope.imageUrl + category.image + ')' : vm.heading.imageDefault;
+
+    // $log.warn('Updated search heading.');
   };
-
-
-  /* Load results on controller is load */
-  // Checks the status flag. False means first app upload.
-  if (!searching.isFirstLoad) {
-    // $log.info('not first load');
-    // $log.warn(searching.getCategory());
-    // $log.warn(searching.getLocation());
-    updateSearchHeading();
-    loadSearchResults();
-    $log.info('page is updated');
-  }
-  /* Load results after categories list and searching parameters is updated */
-  $scope.$on('updatedSearching', function(event, response) {
-    // $log.info('first load');
-    // $log.warn(searching.getCategory());
-    // $log.warn(searching.getLocation());
-    updateSearchHeading();
-    loadSearchResults();
-    searching.isFirstLoad = false;
-    $log.info('page is updated');
-  });
 
 
   /* Filter model */
   // Filter: Price Slider
   vm.slider = {
-    min: 0,
-    max: 1000,
+    min: searching.getFilterPriceMin() || 0,
+    max: searching.getFilterPriceMax() || 1000,
     options: {
-      floor: 0,
-      floorLabel: 'free',
-      ceil: 1000,
-      ceilLabel: '$' + 1000,
+      floor: searching.getFilterPriceFloor() || 0,
+      ceil: searching.getFilterPriceCeil() || 1000,
       step: 1,
       hidePointerLabels: false,
       hideLimitLabels: true,
@@ -113,11 +105,12 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
   // Filter: Rating
   vm.rating = {
-    value: 8,
+    value: searching.getFilterRating() || 0,
     titles: ['0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']
   };
   // Filter: Datepicker Popup
   vm.datepicker = {
+    value: searching.getFilterDate() || new Date(),
     state: false,
     format: "dd/MM",
     options: {
@@ -133,6 +126,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
   // Filter: Distance select
   vm.distances = {
+    value: searching.getFilterDistance() || { value: '10', text: '10km' },
     options: [
       { value: '0',  text: 'Any'  },
       { value: '2',  text: '2km'  },
@@ -142,7 +136,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       { value: '30', text: '30km' }
     ],
     change: function() {
-      $log.info('Distance is changed...');
+      // $log.info('Distance is changed...');
     },
     click: function() {
       // $log.info('Distance is clicked...');
@@ -151,6 +145,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
   // Filter: Size select
   vm.sizes = {
+    value: searching.getFilterSize() || { value: '0',  text: 'Any'  },
     options: [
       { value: '0',  text: 'Any'  },
       { value: '1',  text: '1'    },
@@ -159,7 +154,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       { value: '10', text: '10+'  }
     ],
     change: function() {
-      $log.info('Size is changed...');
+      // $log.info('Size is changed...');
     },
     click: function() {
       // log.info('Size is clicked...');
@@ -169,13 +164,13 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter: Container
   vm.filters = {
     price: {
-      min: vm.slider.min,
-      max: vm.slider.max
+      min:    vm.slider.min,
+      max:    vm.slider.max
     },
-    rating: vm.rating.value,
-    date: new Date(),
-    distance: vm.distances.options[4], // gets an { value: '', text: '' }
-    size: vm.sizes.options[0] // gets an { value: '', text: '' }
+    rating:   vm.rating.value,
+    date:     vm.datepicker.value,
+    distance: vm.distances.value, // gets an { value: '', text: '' }
+    size:     vm.sizes.value // gets an { value: '', text: '' }
   };
   /* Sorting */
   vm.sorting = {
@@ -187,8 +182,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
       { value: 'distance', text: 'Distance' },
       { value: 'size', text: 'Size' }
     ],
-    sortby: searching.getSortType(),
-    selected: searching.getSortSelected(),
+    sortby: searching.getSortType() || '-price',
+    selected: searching.getSortSelected() || { value: 'rating',  text: 'Rating' },
     change: function() {
       // $log.info('Sort settings are changed...');
       var type = '';
@@ -203,7 +198,7 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
           type = '-rating';
           break;
         case 'date':
-          type = 'date';
+          type = 'dateStart';
           break;
         case 'distance':
           type = 'distance';
@@ -230,7 +225,6 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   /* Dropdowns have "dropdown-onchange" attribute, but it fires on changing and not when the selected value is already changed. This is why I used $watch event. */
 
 
-
   /* Results model */
 
   // Results: Pagination
@@ -254,6 +248,20 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   };
 
 
+  /* Load results on controller is load */
+  if (searching.isAvailable) {
+    updateSearchHeading();
+    loadSearchResults(vm.filters);
+  }
+  /* Load results after categories list and searching parameters are updated */
+  $scope.$on('updatedSearching', function(event, response) {
+    updateSearchHeading();
+    loadSearchResults(vm.filters);
+
+    searching.isAvailable = true;
+  });
+
+
   /* Watch events */
 
   // Pagination:
@@ -264,10 +272,13 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
 
     vm.classesListSliced = sliceSearchResults(vm.classesList, start, end);
   });
-  // Filter updates in searching service
+  // Filter updates in searching service. Loading new results
   $scope.$watch('search.filters', function(current, original) {
-    // Send new request
-    $log.info('Filter fires');
+    if (vm.isFirstLoad) {
+      vm.isFirstLoad = false;
+      return false;
+    }
+    updateSearchHeading();
     loadSearchResults(current);
   }, true);
 
