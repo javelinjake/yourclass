@@ -41,6 +41,17 @@ function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $
         vm.subCategory = category;
       }
 
+      vm.focusPrice = function() {
+        $timeout(function () {
+          angular.forEach(document.querySelectorAll('.price-input'), function(elem) { elem.focus(); });
+        });
+      }
+      vm.focusSize = function() {
+        $timeout(function () {
+          angular.forEach(document.querySelectorAll('.size-input'), function(elem) { elem.focus(); });
+        });
+      }
+
       // If custom price has been chosen
       if (vm.classData.price == '0.00' || vm.classData.price == '10.00' || vm.classData.price == '20.00' || vm.classData.price == '30.00') {
         vm.customPrice = false;

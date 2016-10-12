@@ -67,10 +67,10 @@
                 <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="30" ng-click="userAddClass.customPrice = false">$30</label>
               </div>
               <div class="col-md-3">
-                <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customPrice = true" ng-if="!userAddClass.customPrice">Custom</label>
+                <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customPrice = true; userAddClass.focusPrice()" ng-if="!userAddClass.customPrice">Custom</label>
               </div>
               <div class="col-md-3">
-                <input ng-model="userAddClass.priceInput" type="number" class="form-control form-full" ng-if="userAddClass.customPrice" />
+                <input ng-model="userAddClass.priceInput" type="number" min="1" class="form-control form-full price-input" ng-if="userAddClass.customPrice" />
               </div>
             </div>
 
@@ -107,10 +107,10 @@
                 <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="20" ng-click="userAddClass.customSize = false">20</label>
               </div>
               <div class="col-md-3">
-                <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customSize = true" ng-if="!userAddClass.customSize">Custom</label>
+                <label class="btn btn-default btn-block" ng-model="userAddClass.sizeRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customSize = true; userAddClass.focusSize()" ng-if="!userAddClass.customSize">Custom</label>
               </div>
               <div class="col-md-3">
-                <input ng-model="userAddClass.sizeInput" type="number" class="form-control form-full" ng-if="userAddClass.customSize" />
+                <input ng-model="userAddClass.sizeInput" type="number" min="1" class="form-control form-full size-input" ng-if="userAddClass.customSize" />
               </div>
             </div>
 

@@ -1,4 +1,4 @@
-function UserAddClassCtrl($rootScope, $http, $log, $state) {
+function UserAddClassCtrl($rootScope, $http, $log, $state, $timeout) {
   'ngInject';
 
   // ViewModel
@@ -16,6 +16,21 @@ function UserAddClassCtrl($rootScope, $http, $log, $state) {
     // Gets the sub categories from selected category
     vm.classCategory = function(category) {
       vm.subCategory = category;
+    }
+
+    vm.priceRadio = 20;
+    vm.sizeRadio = 5;
+
+    vm.focusPrice = function() {
+      $log.info('yes');
+      $timeout(function () {
+        angular.forEach(document.querySelectorAll('.price-input'), function(elem) { elem.focus(); });
+      });
+    }
+    vm.focusSize = function() {
+      $timeout(function () {
+        angular.forEach(document.querySelectorAll('.size-input'), function(elem) { elem.focus(); });
+      });
     }
 
     // Add class basic
