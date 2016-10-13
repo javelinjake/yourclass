@@ -189,12 +189,12 @@ function searching($rootScope, $http, $log, $q, $filter) {
     }
     if (typeof filterParams.date !== null) { // Equal or more
       // Format: 2016-03-25
-      /*var date  = filterParams.date,
+      var date  = filterParams.date,
           year  = date.getFullYear(),
           month = ('0' + (date.getMonth() + 1)).slice(-2),
           day   = ('0' + date.getDate()).slice(-2);
       var parameter = '%7B%3E%3D%7DstartDate=' + year + '-' + month + '-' + day;
-      resultParams.push(parameter);*/
+      resultParams.push(parameter);
     }
     if (typeof filterParams.distance !== null) { // Equal or more
       // var parameter = ...;
