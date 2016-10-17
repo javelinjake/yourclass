@@ -87,10 +87,10 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   // Filter: Price Slider
   vm.slider = {
     min: searching.getFilterPriceMin() || searching.getFilterPriceFloor() || 0,
-    max: searching.getFilterPriceMax() || searching.getFilterPriceCeil() || 0, // 1000
+    max: searching.getFilterPriceMax() || searching.getFilterPriceCeil() || 500,
     options: {
       floor: searching.getFilterPriceFloor() || 0,
-      ceil: searching.getFilterPriceCeil() || 0, // 1000
+      ceil: searching.getFilterPriceCeil() || 500,
       step: 1,
       hidePointerLabels: false,
       hideLimitLabels: true,
@@ -263,8 +263,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   /* Load results on controller is load */
   if (searching.isAvailable) {
     // Update price
-    var price = searching.getCategory().price; console.log(price);
-    updateSliderPrice(price.min, price.max);
+    var price = searching.getCategory().price;
+    updateSliderPrice(parseInt(price.min), parseInt(price.max));
 
     updateSearchHeading();
     loadSearchResults(vm.filters);
@@ -272,8 +272,8 @@ function SearchCtrl($rootScope, $scope, $http, $log, $timeout, $filter, searchin
   /* Load results after categories list and searching parameters are updated */
   $scope.$on('updatedSearching', function(event, response) {
     // Update price
-    var price = searching.getCategory().price; console.log(price);
-    updateSliderPrice(price.min, price.max);
+    var price = searching.getCategory().price;
+    updateSliderPrice(parseInt(price.min), parseInt(price.max));
 
     updateSearchHeading();
     loadSearchResults(vm.filters);
