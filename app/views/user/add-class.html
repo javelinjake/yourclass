@@ -25,14 +25,18 @@
           <div class="form-group">
             <label class="control-label">Category</label>
             <div>
-              <select ng-model="userAddClass.categoryId" ng-change="userAddClass.classCategory(userAddClass.categoryId)" class="form-control form-full" ng-options="category.id as category.title for category in userAddClass.categories track by category.id" required></select>
+              <select ng-model="userAddClass.categoryId" ng-change="userAddClass.classCategory(userAddClass.categoryId)" class="form-control form-full" ng-options="category.id as category.title for category in userAddClass.categories track by category.id" required>
+                <option value="">-- Select Category --</option>
+              </select>
             </div>
           </div>
 
           <div ng-repeat="category in userAddClass.categories" ng-if="category.id == userAddClass.subCategory && category.subcats[0]" class="form-group">
               <label class="control-label">Sub category</label>
               <div>
-                <select ng-model="userAddClass.subcategoryId" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id"></select>
+                <select ng-model="userAddClass.subcategoryId" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id">
+                  <option value="">-- Select Sub Category --</option>
+                </select>
               </div>
           </div>
 

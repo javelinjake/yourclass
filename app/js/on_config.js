@@ -49,8 +49,9 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
       }
     })
     .state('User', {
+      url: '/user/user',
       controller: 'UserCtrl as user',
-      templateUrl: 'user/user.html',
+      templateUrl: 'user/edit-profile.html',
       ncyBreadcrumb: {
         skip: true
       }
