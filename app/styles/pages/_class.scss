@@ -27,7 +27,10 @@
 /* BOOKING BLOCK */
 .booking {
   position: relative;
+  top: -50px;
+  float: right;
   width: 400px;
+  margin: 0 0 0 40px;
   box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.2);
   background: #fff;
   font-size: 14px;
@@ -275,6 +278,18 @@
 
     .lead {
       font-size: 16px;
+    }
+  }
+}
+
+/* Panels */
+.class {
+
+  .container {
+
+    &:before,
+    &:after {
+      display: none;
     }
   }
 }
