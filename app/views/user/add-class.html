@@ -70,7 +70,7 @@
                 <label class="btn btn-default btn-block" ng-model="userAddClass.priceRadio" uib-btn-radio="'custom'" ng-click="userAddClass.customPrice = true; userAddClass.focusPrice()" ng-if="!userAddClass.customPrice">Custom</label>
               </div>
               <div class="col-md-3">
-                <input ng-model="userAddClass.priceInput" type="number" min="1" class="form-control form-full price-input" ng-if="userAddClass.customPrice" />
+                <input ng-model="userAddClass.priceInput" type="number" min="0" class="form-control form-full price-input" ng-if="userAddClass.customPrice" />
               </div>
             </div>
 

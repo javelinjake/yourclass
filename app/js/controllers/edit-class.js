@@ -36,6 +36,8 @@ function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $
           vm.categories = response.data.data;
         });
 
+      vm.subCategory = vm.classData.category.id;
+
       // Gets the sub categories from selected category
       vm.classCategory = function(category) {
         vm.subCategory = category;

@@ -46,7 +46,7 @@
               <div class="form-group">
                 <label class="control-label">Category</label>
                 <div>
-                  <select ng-model="userEditClass.classData.category.id" ng-change="userEditClass.classCategory(userEditClass.classData.category.id)" class="form-control form-full" ng-options="category.id as category.title for category in userEditClass.categories track by category.id" required>
+                  <select ng-model="userEditClass.classData.category" ng-change="userEditClass.classCategory(userEditClass.classData.category.id)" class="form-control form-full" ng-options="category as category.title for category in userEditClass.categories track by category.id" required>
                     <option value="">-- Select Category --</option>
                   </select>
                 </div>
@@ -55,7 +55,7 @@
               <div ng-repeat="category in userEditClass.categories" ng-if="category.id == userEditClass.subCategory && category.subcats[0]" class="form-group">
                   <label class="control-label">Sub category</label>
                   <div>
-                    <select ng-model="userEditClass.classData.subcategory.id" class="form-control form-full" ng-options="subCategory.id as subCategory.title for subCategory in category.subcats track by subCategory.id">
+                    <select ng-model="userEditClass.classData.subcategory" class="form-control form-full" ng-options="subCategory as subCategory.title for subCategory in category.subcats track by subCategory.id">
                       <option value="">-- Select Sub Category --</option>
                     </select>
                   </div>
@@ -91,7 +91,7 @@
                     <label class="btn btn-default btn-block" ng-model="userEditClass.classData.price" uib-btn-radio="'custom'" ng-click="userEditClass.customPrice = true; userEditClass.focusPrice()" ng-if="!userEditClass.customPrice">Custom</label>
                   </div>
                   <div class="col-md-3">
-                    <input ng-model="userEditClass.priceInput" type="number" min="1" class="form-control form-full price-input" ng-if="userEditClass.customPrice" />
+                    <input ng-model="userEditClass.priceInput" type="number" min="0" class="form-control form-full price-input" ng-if="userEditClass.customPrice" />
                   </div>
                 </div>
 
