@@ -70,119 +70,30 @@
 <section class="panel">
     <div class="container">
         <!-- Booking Class -->
-        <div class="booking" ng-class="{'view-expanded': class.booking.view.expanded}">
+        <div class="booking" ng-class="{'view-expanded': class.booking.view.expanded}" sticky sticky-class="fixed" media-query="min-width: 1001px" offset="20">
             <div class="booking-title">{{class.booking.price | currency : '$'}} per person</div>
-            <div class="booking-spots">
+            <div class="booking-empty" ng-hide="class.booking.list.length > 0">No available classes</div>
+            <div class="booking-spots" ng-show="class.booking.list.length > 0">
                 <div class="booking-spots-top">
                     <div class="booking-spots-toggle" ng-show="class.booking.list.length > class.booking.view.limit" ng-click="class.booking.view.toggle()">View {{class.booking.view.expanded ? 'less' : 'all'}}</div>
-                    <div class="booking-spots-title">{{class.booking.view.expanded ? 'All available classes' : 'Available classes'}}</div>
+                    <div class="booking-spots-title">{{class.booking.view.expanded || class.booking.list.length <= class.booking.view.limit ? 'All available classes' : 'Available classes'}}</div>
                 </div>
                 <div class="booking-spots-content">
                     <ul class="booking-list">
-                        <li class="booking-list-item">
+                        <li class="booking-list-item" ng-repeat="item in class.booking.list">
                             <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
+                                <input class="booking-list-radio" ng-model="class.booking.selected" ng-value="item" name="booking" type="radio">
                                 <div class="booking-list-text">
                                     <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
-                                </div>
-                            </label>
-                        </li>
-                        <li class="booking-list-item">
-                            <label class="booking-list-label">
-                                <input class="booking-list-radio" name="booking" type="radio">
-                                <div class="booking-list-text">
-                                    <span class="booking-list-mark"></span>
-                                    <span class="booking-list-date">15 May 2016</span>
-                                    <span class="booking-list-time">12:00pm - 1:00pm</span>
+                                    <span class="booking-list-date">{{item.date.start | date : 'd MMMM yyyy'}}</span>
+                                    <span class="booking-list-time">{{item.date.start | date : 'h:mma' | lowercase}} - {{item.date.end | date : 'h:mma' | lowercase}}</span>
                                 </div>
                             </label>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="booking-friends">
+            <div class="booking-friends" ng-show="class.booking.list.length > 0">
                 <div class="booking-friends-description">Are you bringing any friends?</div>
                 <div class="booking-friends-counter">
                     <span class="booking-friends-control less" title="Less" ng-click="class.booking.friends.less()" ng-disabled="class.booking.friends.count === 0">-</span>
@@ -190,11 +101,11 @@
                     <span class="booking-friends-control more" title="More" ng-click="class.booking.friends.more()" ng-disabled="class.booking.friends.count === class.booking.friends.limit">+</span>
                 </div>
             </div>
-            <div class="booking-submit">
-                <button class="booking-button btn" ng-click="class.booking.submit()">Book now</button>
+            <div class="booking-submit" ng-show="class.booking.list.length > 0">
+                <button class="booking-button btn" ng-disabled="class.booking.selected === null" ng-click="class.booking.submit()">Book now</button>
                 <div class="booking-note" ng-show="class.booking.error">Please select a class date to book</div>
             </div>
-            <div class="booking-bottom">Only {{::class.booking.spots}} spots left!</div>
+            <div class="booking-bottom" ng-show="class.booking.list.length > 0">Only {{class.booking.spots}} spots left!</div>
         </div>
         <!-- Booking Class End -->
 
