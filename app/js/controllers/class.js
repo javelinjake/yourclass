@@ -6,13 +6,48 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
 	// ViewModel
 	const vm = this;
 
-	// Get Classes
-	$http.get($rootScope.apiUrl + 'classes/one', {params: {_alias: getClassAlias}}).success((data) => {
-		vm.class = data.data;
+  var createBookingList = function(dates) {
+    var list = [];
 
-    // Update booking price
-    vm.booking.price = vm.class.price;
-	}).error((err, status) => {});
+    // Return empty array if dates are empty
+    if (!dates || dates.length === 0) return list;
+
+    dates.forEach(function(date, i, a){
+      if (date.times && date.times.length > 0) {
+        date.times.forEach(function(time, i, a) {
+
+          // Continue if time has available spots
+          if (time.spotsLeft === 0) return false;
+
+          list.push({
+            dateId: date.id,
+            timeId: time.id,
+            date: {
+              start: new Date(date.classDate + ' ' + time.startTime),
+              end: new Date(date.classDate + ' ' + time.endTime)
+            },
+            size: time.spots,
+            left: time.spotsLeft
+          });
+
+        });
+      }
+    });
+
+    return list;
+  };
+
+	// Get Classes
+	$http
+    .get($rootScope.apiUrl + 'classes/one', {params: {_alias: getClassAlias}})
+    .success((response) => {
+  		vm.class = response.data;
+
+      // Update booking price and create list of dates
+      vm.booking.price = vm.class.price;
+      vm.booking.list = createBookingList(response.data.dates);
+  	})
+    .error((err, status) => {});
 
 
   /**
@@ -21,7 +56,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
    * One item has: date, time, size and number of bookings
    *
    */
-  var bookingData = [
+  var bookingList = [
     {
       id: 1,
       date: {
@@ -77,13 +112,12 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
       left: 8
     }
   ];
-  $log.info(bookingData);
 
   vm.booking = {
-    spots: 6,
+    spots: 0,
 
     friends: {
-      count: 0,
+      count: 21,
       less: function() {
         var count = vm.booking.friends.count;
         vm.booking.friends.count = count > 0 ? --count : 0;
@@ -93,16 +127,13 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
             limit = vm.booking.friends.limit;
         vm.booking.friends.count = count < limit ? ++count : limit;
       },
-      limit: 5
+      limit: 0
     },
 
-    list: bookingData, // TEMP
+    list: [],
 
     price: 0,
 
-    select: function(e) {
-      console.log(arguments);
-    },
     selected: null, // an obj with properties
 
     view: {
@@ -110,17 +141,13 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
       toggle: function() {
         vm.booking.view.expanded = !vm.booking.view.expanded;
       },
-      limit: 5
+      limit: 5 // default value
     },
 
     submit: function() {
       console.log('submit');
 
-      if (vm.booking.selected.length === 0) {
-        vm.booking.error = true;
-      } else {
-        vm.booking.error = false;
-      }
+      vm.booking.error = vm.booking.selected === null;
     },
 
     error: false
@@ -128,8 +155,10 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
 
   /* Watch Selected date and update Booking data */
   $scope.$watch('class.booking.selected', function(next, prev) {
-    vm.booking.spots = next.left || 0;
-    vm.booking.friends.limit = next.left - 1 || 0;
+    vm.booking.spots = next && next.left || 0;
+    vm.booking.friends.limit = next && next.left > 0 ? next.left - 1 : 0;
+    vm.booking.friends.count = vm.booking.friends.count > vm.booking.friends.limit ? vm.booking.friends.limit : vm.booking.friends.count;
+    vm.booking.error = false;
   });
 
 }
