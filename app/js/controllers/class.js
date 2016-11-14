@@ -1,6 +1,6 @@
 
 
-function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
+function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
 	'ngInject';
 
 	// ViewModel
@@ -38,14 +38,18 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
   };
 
 	// Get Classes
+  // OR use wuthout ?_auth_key=
 	$http
-    .get($rootScope.apiUrl + 'classes/one', {params: {_alias: getClassAlias}})
+    .get($rootScope.apiUrl + 'classes/one?_auth_key=' + $cookies.get('auth_key'), {params: {_alias: getClassAlias}})
     .success((response) => {
+      // Create class data
   		vm.class = response.data;
 
-      // Update booking price and create list of dates
-      vm.booking.price = vm.class.price;
-      vm.booking.list = createBookingList(response.data.dates);
+      // Create list of dates for booking block
+      vm.booking.list  = createBookingList(response.data.dates);
+
+      // Check user data. update booking price
+      vm.booking.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' ? vm.class.price : vm.class.studentPrice;
   	})
     .error((err, status) => {});
 
@@ -56,7 +60,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
    * One item has: date, time, size and number of bookings
    *
    */
-  var bookingList = [
+  /*  var bookingList = [
     {
       id: 1,
       date: {
@@ -111,43 +115,47 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
       size: 10,
       left: 8
     }
-  ];
+    ];*/
 
   vm.booking = {
+    size: 0,
     spots: 0,
+    price: 0,
 
     friends: {
       count: 21,
       less: function() {
-        var count = vm.booking.friends.count;
-        vm.booking.friends.count = count > 0 ? --count : 0;
+        var count = this.count;
+        this.count = count > 0 ? --count : 0;
       },
       more: function() {
-        var count = vm.booking.friends.count,
-            limit = vm.booking.friends.limit;
-        vm.booking.friends.count = count < limit ? ++count : limit;
+        var count = this.count,
+            limit = this.limit;
+        this.count = count < limit ? ++count : limit;
       },
       limit: 0
     },
 
     list: [],
-
-    price: 0,
-
     selected: null, // an obj with properties
 
     view: {
       expanded: false,
       toggle: function() {
-        vm.booking.view.expanded = !vm.booking.view.expanded;
+        this.expanded = !this.expanded;
       },
       limit: 5 // default value
     },
 
     submit: function() {
-      console.log('submit');
+      this.error = this.selected === null;
 
-      vm.booking.error = vm.booking.selected === null;
+      if (this.selected === null) {
+        $log.error('Time slot is not selected.');
+        return false;
+      }
+
+      $log.info('Submit booking...');
     },
 
     error: false
@@ -155,10 +163,19 @@ function ClassCtrl($http, $rootScope, $scope, $log, getClassAlias) {
 
   /* Watch Selected date and update Booking data */
   $scope.$watch('class.booking.selected', function(next, prev) {
+    vm.booking.size  = next && next.size || 0;
     vm.booking.spots = next && next.left || 0;
     vm.booking.friends.limit = next && next.left > 0 ? next.left - 1 : 0;
     vm.booking.friends.count = vm.booking.friends.count > vm.booking.friends.limit ? vm.booking.friends.limit : vm.booking.friends.count;
     vm.booking.error = false;
+  });
+
+  /* Watch and check user data: teacher, student or user taht is not logged in */
+  $rootScope.$watch('userData', function(next, prev) {
+    // Update booking price. Price for student or user that is not logged in is 14% more than actual
+    // Checks the response with class data from the promise
+    if (!vm.class) return false;
+    vm.booking.price = next.roles[0].role === 'teacher' ? vm.class.price : vm.class.studentPrice;
   });
 
 }

@@ -67,6 +67,7 @@
   Spots left
 
  -->
+
 <section class="panel">
     <div class="container">
         <!-- Booking Class -->
@@ -105,7 +106,7 @@
                 <button class="booking-button btn" ng-click="class.booking.submit()">Book now</button>
                 <div class="booking-note" ng-show="class.booking.error">Please select a class date to book</div>
             </div>
-            <div class="booking-bottom" ng-show="class.booking.list.length > 0">Only {{class.booking.spots}} spots left!</div>
+            <div class="booking-bottom" ng-show="class.booking.selected !== null">{{class.booking.spots <= class.booking.size/2 && class.booking.spots !== 0 ? 'Only ' : ''}}{{class.booking.spots}} spots left{{class.booking.spots <= class.booking.size/2 && class.booking.spots !== 0 ? '!' : '.'}}</div>
         </div>
         <!-- Booking Class End -->
 

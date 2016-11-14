@@ -210,7 +210,7 @@
   }
 
   &-submit {
-    padding: 0 20px;
+    padding: 0 20px 15px;
     text-align: center;
   }
   &-button {
@@ -230,7 +230,6 @@
   }
   &-note {
     position: relative;
-    top: 0;
     z-index: 1;
     margin: 0 30px;
     padding: 5px 10px;
@@ -238,15 +237,17 @@
     background: #f4f4f4;
     font-weight: 700;
     color: $brand-salmon;
-    transition: top 0.2s ease 0s;
+    opacity: 1;
+    transition: all 0.2s ease-in-out 0s;
 
-    .ng-hide {
-      top: -30px;
+    &.ng-hide {
+      margin-top: -30px;
+      opacity: 0;
     }
   }
 
   &-bottom {
-    padding: 15px 20px;
+    padding: 0 20px 15px;
     font-weight: 700;
     font-size: 0.86em;
     text-align: right;
