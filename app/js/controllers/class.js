@@ -6,6 +6,8 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
 	// ViewModel
 	const vm = this;
 
+
+  /* Additional functions */
   var createBookingList = function(dates) {
     var list = [];
 
@@ -36,19 +38,36 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
 
     return list;
   };
+  var createBookingObject = function(bookingData) {
+    var result = {};
 
-	// Get Classes
-  // OR use wuthout ?_auth_key=
+    result.classId = bookingData.classId;
+    result.dateId  = bookingData.selected.dateId;
+    result.timeId  = bookingData.selected.timeId;
+    result.date    = bookingData.selected.date;
+    result.price   = bookingData.price;
+    result.friends = bookingData.friends.count;
+
+    return result;
+  };
+
+  console.warn("$cookies", $cookies.getAll());
+
+
+	/* Get Classes
+   * OR use wuthout ?_auth_key= */
 	$http
     .get($rootScope.apiUrl + 'classes/one?_auth_key=' + $cookies.get('auth_key'), {params: {_alias: getClassAlias}})
     .success((response) => {
       // Create class data
   		vm.class = response.data;
 
+      // Update booking block with class ID
+      vm.booking.classId  = vm.class.id;
+
       // Create list of dates for booking block
       vm.booking.list  = createBookingList(response.data.dates);
 
-      $log.warn('vm.class.teacher.id', vm.class.teacher.id);
       // Check user data. update booking price
       vm.booking.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
   	})
@@ -119,6 +138,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
     ];*/
 
   vm.booking = {
+    classId: null,
     size: 0,
     spots: 0,
     price: 0,
@@ -156,11 +176,13 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
         return false;
       }
 
-      $log.info('Submit booking...');
+      var bookingData = createBookingObject(this);
+      $log.warn('Submit booking...', 'bookingData', bookingData);
     },
 
     error: false
   };
+
 
   /* Watch Selected date and update Booking data */
   $scope.$watch('class.booking.selected', function(next, prev) {
@@ -175,11 +197,9 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
   $rootScope.$watch('userData', function(next, prev) {
     // Update booking price. Price for student or user that is not logged in is 14% more than actual
     // Checks the response with class data from the promise
-    $log.warn('$rootScope.userData.id', $rootScope.userData && $rootScope.userData.id);
     if (!vm.class) return false;
     vm.booking.price = next.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
   });
-
 }
 
 export default {

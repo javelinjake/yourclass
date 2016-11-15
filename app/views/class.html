@@ -81,7 +81,7 @@
                 </div>
                 <div class="booking-spots-content">
                     <ul class="booking-list">
-                        <li class="booking-list-item" ng-repeat="item in class.booking.list">
+                        <li class="booking-list-item" ng-repeat="item in class.booking.list | orderBy : 'date.start'">
                             <label class="booking-list-label">
                                 <input class="booking-list-radio" ng-model="class.booking.selected" ng-value="item" name="booking" type="radio">
                                 <div class="booking-list-text">
