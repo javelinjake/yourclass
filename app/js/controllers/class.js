@@ -48,8 +48,9 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
       // Create list of dates for booking block
       vm.booking.list  = createBookingList(response.data.dates);
 
+      $log.warn('vm.class.teacher.id', vm.class.teacher.id);
       // Check user data. update booking price
-      vm.booking.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' ? vm.class.price : vm.class.studentPrice;
+      vm.booking.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
   	})
     .error((err, status) => {});
 
@@ -174,8 +175,9 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
   $rootScope.$watch('userData', function(next, prev) {
     // Update booking price. Price for student or user that is not logged in is 14% more than actual
     // Checks the response with class data from the promise
+    $log.warn('$rootScope.userData.id', $rootScope.userData && $rootScope.userData.id);
     if (!vm.class) return false;
-    vm.booking.price = next.roles[0].role === 'teacher' ? vm.class.price : vm.class.studentPrice;
+    vm.booking.price = next.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
   });
 
 }
