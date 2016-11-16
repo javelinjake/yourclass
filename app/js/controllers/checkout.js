@@ -6,11 +6,18 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies) {
   // ViewModel
   const vm = this;
 
-  vm.pattern = {
+  vm.patterns = {
     name: /[a-zA-Z]{4,}/,
     email: /\.{2,}@\..{2,}\.{1,}/,
     number: /[\d\(\)\-\+\s]{8,}/
   };
+
+  vm.details = {};
+  vm.payment = {};
+
+
+  /* Details */
+  vm.booking = $cookies.getObject('booking');
 
   console.warn("$cookies", $cookies.getAll());
 }

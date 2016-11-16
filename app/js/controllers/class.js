@@ -41,11 +41,13 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
   var createBookingObject = function(bookingData) {
     var result = {};
 
-    result.classId = bookingData.classId;
+    result.classId = bookingData.class.id;
+    result.price   = bookingData.class.price; // added that not to request class data again
+    result.title   = bookingData.class.title; // added that not to request class data again
+    result.venue   = bookingData.class.venue; // added that not to request class data again
     result.dateId  = bookingData.selected.dateId;
     result.timeId  = bookingData.selected.timeId;
     result.date    = bookingData.selected.date;
-    result.price   = bookingData.price;
     result.friends = bookingData.friends.count;
 
     return result;
@@ -60,8 +62,10 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
       // Create class data
   		vm.class = response.data;
 
-      // Update booking block with class ID
-      vm.booking.classId  = vm.class.id;
+      // Update booking block with class ID, title and venue
+      vm.booking.class.id    = vm.class.id;
+      vm.booking.class.title = vm.class.title;
+      vm.booking.class.venue = vm.class.venue;
 
       // Create list of dates for booking block
       vm.booking.list  = createBookingList(response.data.dates);
@@ -76,70 +80,17 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
    * BOOKING
    * -------
    * One item has: date, time, size and number of bookings
-   *
    */
-  /*  var bookingList = [
-    {
-      id: 1,
-      date: {
-        start: new Date('2016-08-15' + ' ' + '02:00:00'),
-        end: new Date('2016-08-15' + ' ' + '03:00:00')
-      },
-      size: 10,
-      left: 8
-    },
-    {
-      id: 2,
-      date: {
-        start: new Date('2016-08-15' + ' ' + '02:00:00'),
-        end: new Date('2016-08-15' + ' ' + '03:00:00')
-      },
-      size: 10,
-      left: 8
-    },
-    {
-      id: 3,
-      date: {
-        start: new Date('2016-08-15' + ' ' + '02:00:00'),
-        end: new Date('2016-08-15' + ' ' + '03:00:00')
-      },
-      size: 10,
-      left: 8
-    },
-    {
-      id: 4,
-      date: {
-        start: new Date('2016-08-15' + ' ' + '02:00:00'),
-        end: new Date('2016-08-15' + ' ' + '03:00:00')
-      },
-      size: 10,
-      left: 8
-    },
-    {
-      id: 5,
-      date: {
-        start: new Date('2016-08-15' + ' ' + '02:00:00'),
-        end: new Date('2016-08-15' + ' ' + '03:00:00')
-      },
-      size: 10,
-      left: 8
-    },
-    {
-      id: 6,
-      date: {
-        start: new Date('2016-08-15' + ' ' + '02:00:00'),
-        end: new Date('2016-08-15' + ' ' + '03:00:00')
-      },
-      size: 10,
-      left: 8
-    }
-    ];*/
 
   vm.booking = {
-    classId: null,
-    size: 0,
-    spots: 0,
-    price: 0,
+    class: {
+      id: null,
+      title: null,
+      venue: null,
+      size: 0,
+      spots: 0,
+      price: 0,
+    },
 
     friends: {
       count: 21,

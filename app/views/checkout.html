@@ -15,10 +15,10 @@
               <div class="checkout-details-class">
                 <div class="checkout-details-class-illustration" style="background-image: url(/images/outside-yoga.jpg)"></div>
                 <div class="checkout-details-class-description">
-                  <span class="checkout-details-class-title">Learn to make sushi</span>
-                  Monday 8th November 2016<br>
+                  <span class="checkout-details-class-title">{{::checkout.booking.title}}</span>
+                  Monday 8th November 2016 {{::checkout.booking.date.start | 'date' : 'd MMMM yyyy'}}<br>
                   12:00pm - 3:00pm<br>
-                  25 Harris Street, Ultimo, NSW 2000
+                  {{checkout.booking.venue || 'Address is not set yet'}}
                 </div>
                 <div class="checkout-details-class-summary">
                   <strong>Price per student:</strong> $34.20<br>
@@ -33,7 +33,7 @@
                     <div class="checkout-details-member row">
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="member_1.name" ng-pattern="checkout.pattern.name" type="text" value="Hillary Pewter" placeholder="Name" required/>
+                        <input class="form-control form-full" ng-model="member_1.name" ng-pattern="checkout.patterns.name" type="text" value="Hillary Pewter" placeholder="Name" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Email</label>
@@ -41,7 +41,7 @@
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="member_1.number" ng-pattern="checkout.pattern.number" type="tel" value="0423248372" placeholder="Number" required/>
+                        <input class="form-control form-full" ng-model="member_1.number" ng-pattern="checkout.patterns.number" type="tel" value="0423248372" placeholder="Number" required/>
                       </div>
                       <div class="col-md-3 col-sm-6 text-right">
                         {{member_1.name}}<br>
@@ -54,7 +54,7 @@
                     <div class="checkout-details-member row">
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="member_2.name" ng-pattern="checkout.pattern.name" type="text" value="" placeholder="Name" required/>
+                        <input class="form-control form-full" ng-model="member_2.name" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Name" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Email</label>
@@ -62,7 +62,7 @@
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="member_2.number" ng-pattern="checkout.pattern.number" type="tel" value="" placeholder="Number" required/>
+                        <input class="form-control form-full" ng-model="member_2.number" ng-pattern="checkout.patterns.number" type="tel" value="" placeholder="Number" required/>
                       </div>
                       <div class="col-md-3 col-sm-6 text-right">
                         {{member_2.name}}<br>
@@ -75,7 +75,7 @@
                     <div class="checkout-details-member row">
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="member_3.name" ng-pattern="checkout.pattern.name" type="text" value="" placeholder="Name" required/>
+                        <input class="form-control form-full" ng-model="member_3.name" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Name" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Email</label>
@@ -83,7 +83,7 @@
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="member_3.number" ng-pattern="checkout.pattern.number" type="tel" value="" placeholder="Number" required/>
+                        <input class="form-control form-full" ng-model="member_3.number" ng-pattern="checkout.patterns.number" type="tel" value="" placeholder="Number" required/>
                       </div>
                       <div class="col-md-3 col-sm-6 text-right">
                         {{member_3.name}}<br>
