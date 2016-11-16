@@ -1,6 +1,6 @@
 
 
-function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
+function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClassAlias) {
 	'ngInject';
 
 	// ViewModel
@@ -50,8 +50,6 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
 
     return result;
   };
-
-  console.warn("$cookies", $cookies.getAll());
 
 
 	/* Get Classes
@@ -176,8 +174,9 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, getClassAlias) {
         return false;
       }
 
-      var bookingData = createBookingObject(this);
-      $log.warn('Submit booking...', 'bookingData', bookingData);
+      $cookies.putObject('booking', createBookingObject(this));
+      $log.info('Loaction is changed to ', $location.path() + '/booking');
+      $location.path($location.path() + '/booking');
     },
 
     error: false

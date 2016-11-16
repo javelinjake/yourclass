@@ -48,6 +48,16 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
         label: 'Class'
       }
     })
+    .state('Checkout', {
+      url: '/class/:classAlias/booking',
+      controller: 'CheckoutCtrl as checkout',
+      templateUrl: 'checkout.html',
+      title: 'Booking',
+      class: 'checkout',
+      ncyBreadcrumb: {
+        label: 'Booking'
+      }
+    })
     .state('User', {
       url: '/user/user',
       controller: 'UserCtrl as user',
