@@ -72,7 +72,7 @@
     <div class="container">
         <!-- Booking Class -->
         <div class="class-booking" ng-class="{'view-expanded': class.booking.view.expanded}" sticky sticky-class="fixed" media-query="min-width: 1001px" offset="20">
-            <div class="class-booking-title">{{class.booking.price | currency : '$'}} per person</div>
+            <div class="class-booking-title">{{class.booking.class.price | currency : '$'}} per person</div>
             <div class="class-booking-empty" ng-hide="class.booking.list.length > 0">No available classes</div>
             <div class="class-booking-spots" ng-show="class.booking.list.length > 0">
                 <div class="class-booking-spots-top">
@@ -106,7 +106,7 @@
                 <button class="class-booking-button btn btn-block" ng-click="class.booking.submit()">Book now</button>
                 <div class="class-booking-note" ng-show="class.booking.error">Please select a class date to book</div>
             </div>
-            <div class="class-booking-bottom" ng-show="class.booking.selected !== null">{{class.booking.spots <= class.booking.size/2 && class.booking.spots !== 0 ? 'Only ' : ''}}{{class.booking.spots}} spots left{{class.booking.spots <= class.booking.size/2 && class.booking.spots !== 0 ? '!' : '.'}}</div>
+            <div class="class-booking-bottom" ng-show="class.booking.selected !== null">{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? 'Only ' : ''}}{{class.booking.class.spots}} spots left{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? '!' : '.'}}</div>
         </div>
         <!-- Booking Class End -->
 

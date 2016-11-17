@@ -158,6 +158,10 @@ md-tabs {
       font-weight: 700;
       color: inherit;
     }
+
+    &[disabled] {
+      color: #777;
+    }
   }
 
   md-ink-bar {

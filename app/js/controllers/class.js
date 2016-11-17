@@ -44,6 +44,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
     result.classId = bookingData.class.id;
     result.price   = bookingData.class.price; // added that not to request class data again
     result.title   = bookingData.class.title; // added that not to request class data again
+    result.alias   = bookingData.class.alias; // added that not to request class data again
     result.venue   = bookingData.class.venue; // added that not to request class data again
     result.dateId  = bookingData.selected.dateId;
     result.timeId  = bookingData.selected.timeId;
@@ -65,13 +66,14 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
       // Update booking block with class ID, title and venue
       vm.booking.class.id    = vm.class.id;
       vm.booking.class.title = vm.class.title;
+      vm.booking.class.alias = vm.class.alias;
       vm.booking.class.venue = vm.class.venue;
 
       // Create list of dates for booking block
       vm.booking.list  = createBookingList(response.data.dates);
 
       // Check user data. update booking price
-      vm.booking.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
+      vm.booking.class.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
   	})
     .error((err, status) => {});
 
@@ -86,6 +88,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
     class: {
       id: null,
       title: null,
+      alias: null,
       venue: null,
       size: 0,
       spots: 0,
@@ -93,7 +96,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
     },
 
     friends: {
-      count: 21,
+      count: 0,
       less: function() {
         var count = this.count;
         this.count = count > 0 ? --count : 0;
@@ -126,7 +129,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
       }
 
       $cookies.putObject('booking', createBookingObject(this));
-      $log.info('Loaction is changed to ', $location.path() + '/booking');
+      $log.info('Location is changed to ', $location.path() + '/booking');
       $location.path($location.path() + '/booking');
     },
 
@@ -136,8 +139,8 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
 
   /* Watch Selected date and update Booking data */
   $scope.$watch('class.booking.selected', function(next, prev) {
-    vm.booking.size  = next && next.size || 0;
-    vm.booking.spots = next && next.left || 0;
+    vm.booking.class.size  = next && next.size || 0;
+    vm.booking.class.spots = next && next.left || 0;
     vm.booking.friends.limit = next && next.left > 0 ? next.left - 1 : 0;
     vm.booking.friends.count = vm.booking.friends.count > vm.booking.friends.limit ? vm.booking.friends.limit : vm.booking.friends.count;
     vm.booking.error = false;
@@ -148,7 +151,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
     // Update booking price. Price for student or user that is not logged in is 14% more than actual
     // Checks the response with class data from the promise
     if (!vm.class) return false;
-    vm.booking.price = next.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
+    vm.booking.class.price = next.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
   });
 }
 

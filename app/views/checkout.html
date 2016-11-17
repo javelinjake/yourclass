@@ -9,90 +9,49 @@
           <!-- Details -->
           <div class="checkout-details">
             <div class="checkout-details-top">
-              <a class="checkout-details-back" href="#">Back to 'Class name'</a>
+              <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.booking.alias})" target="_blank">Back to 'Class name'</a>
             </div>
             <div class="checkout-details-content">
               <div class="checkout-details-class">
                 <div class="checkout-details-class-illustration" style="background-image: url(/images/outside-yoga.jpg)"></div>
                 <div class="checkout-details-class-description">
                   <span class="checkout-details-class-title">{{::checkout.booking.title}}</span>
-                  Monday 8th November 2016 {{::checkout.booking.date.start | 'date' : 'd MMMM yyyy'}}<br>
-                  12:00pm - 3:00pm<br>
-                  {{checkout.booking.venue || 'Address is not set yet'}}
+                  {{::checkout.booking.date.start | date : 'EEEE d MMMM yyyy'}}<br>
+                  {{::checkout.booking.date.start | date : 'h:mma' | lowercase}} - {{::checkout.booking.date.end | date : 'h:mma' | lowercase}}<br>
+                  {{::checkout.booking.venue || 'Address is not set yet'}}
                 </div>
                 <div class="checkout-details-class-summary">
-                  <strong>Price per student:</strong> $34.20<br>
-                  <strong>Number of students:</strong> 3<br>
-                  <span class="checkout-details-class-total"><strong>Total price</strong> $102.60</span>
+                  <strong>Price per student:</strong> {{::checkout.booking.price | currency : '$'}}<br>
+                  <strong>Number of students:</strong> {{::checkout.students.length}}<br>
+                  <span class="checkout-details-class-total"><strong>Total price:</strong> {{::checkout.booking.price * (checkout.students.length) | currency : '$'}}</span>
                 </div>
               </div>
               <div class="checkout-details-members">
                 <div class="checkout-details-members-header">Who are the students attending this class?</div>
                 <ul class="checkout-details-members-list">
-                  <li>
+                  <li ng-repeat="student in checkout.students">
                     <div class="checkout-details-member row">
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="member_1.name" ng-pattern="checkout.patterns.name" type="text" value="Hillary Pewter" placeholder="Name" required/>
+                        <input class="form-control form-full" ng-model="student.name" ng-pattern="checkout.patterns.name" type="text" value="{{student.name}}" placeholder="Name" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Email</label>
-                        <input class="form-control form-full" ng-model="member_1.email" type="email" value="hillary.pewter@gmail.com" placeholder="Email" required/>
+                        <input class="form-control form-full" ng-model="student.email" type="email" value="hillary.pewter@gmail.com" placeholder="{{student.email}}" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="member_1.number" ng-pattern="checkout.patterns.number" type="tel" value="0423248372" placeholder="Number" required/>
+                        <input class="form-control form-full" ng-model="student.number" ng-pattern="checkout.patterns.number" type="tel" value="{{student.number}}" placeholder="Number"/>
                       </div>
                       <div class="col-md-3 col-sm-6 text-right">
-                        {{member_1.name}}<br>
-                        {{member_1.email}}<br>
-                        {{member_1.number}}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="checkout-details-member row">
-                      <div class="col-md-3 col-sm-6">
-                        <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="member_2.name" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Name" required/>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                        <label class="control-label">Email</label>
-                        <input class="form-control form-full" ng-model="member_2.email" type="email" value="" placeholder="Email" required/>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                        <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="member_2.number" ng-pattern="checkout.patterns.number" type="tel" value="" placeholder="Number" required/>
-                      </div>
-                      <div class="col-md-3 col-sm-6 text-right">
-                        {{member_2.name}}<br>
-                        {{member_2.email}}<br>
-                        {{member_2.number}}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="checkout-details-member row">
-                      <div class="col-md-3 col-sm-6">
-                        <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="member_3.name" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Name" required/>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                        <label class="control-label">Email</label>
-                        <input class="form-control form-full" ng-model="member_3.email" type="email" value="" placeholder="Email" required/>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                        <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="member_3.number" ng-pattern="checkout.patterns.number" type="tel" value="" placeholder="Number" required/>
-                      </div>
-                      <div class="col-md-3 col-sm-6 text-right">
-                        {{member_3.name}}<br>
-                        {{member_3.email}}<br>
-                        {{member_3.number}}
+                        {{student.name}}<br>
+                        {{student.email}}<br>
+                        {{student.number}}
                       </div>
                     </div>
                   </li>
                 </ul>
+                {{checkout.students}}
               </div>
             </div>
             <div class="checkout-details-bottom">
