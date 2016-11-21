@@ -1,10 +1,15 @@
 
 
-function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClassAlias) {
+function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter, getClassAlias) {
 	'ngInject';
 
 	// ViewModel
 	const vm = this;
+
+
+  /* Get booking saved data from cookies */
+  var savedBookingData = $cookies.getObject('booking');
+  // $log.warn('savedBookingData', savedBookingData);
 
 
   /* Additional functions */
@@ -70,7 +75,13 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
       vm.booking.class.venue = vm.class.venue;
 
       // Create list of dates for booking block
-      vm.booking.list  = createBookingList(response.data.dates);
+      vm.booking.list = createBookingList(response.data.dates);
+
+      // Check if there is booking data in the cookies and use it
+      vm.booking.selected = savedBookingData ? vm.booking.list.filter(function(item) {
+        return item.timeId === savedBookingData.timeId;
+      })[0] : null;
+      vm.booking.friends.count = savedBookingData ? savedBookingData.friends : 0;
 
       // Check user data. update booking price
       vm.booking.class.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
@@ -121,15 +132,24 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, getClas
     },
 
     submit: function() {
+      // Show error message if time slot is not selected
       this.error = this.selected === null;
 
+      // Prevent submission if time slot is not selected
       if (this.selected === null) {
         $log.error('Time slot is not selected.');
         return false;
       }
 
+      // Save booked data into cookies
       $cookies.putObject('booking', createBookingObject(this));
-      $log.info('Location is changed to ', $location.path() + '/booking');
+
+      // Change the location, show some booked data in the search string
+      $location.search({
+        'price': $filter('currency')(this.class.price, '$'),
+        'students': this.friends.count + 1,
+        'date': $filter('date')(this.selected.date.start, 'MM/dd/yyyy')
+      });
       $location.path($location.path() + '/booking');
     },
 

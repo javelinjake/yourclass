@@ -37,7 +37,7 @@
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Email</label>
-                        <input class="form-control form-full" ng-model="student.email" type="email" value="hillary.pewter@gmail.com" placeholder="{{student.email}}" required/>
+                        <input class="form-control form-full" ng-model="student.email" type="email" value="{{student.email}}" placeholder="Email" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Number</label>
@@ -61,11 +61,83 @@
           <!-- Details End -->
         </md-tab-body>
       </md-tab>
-      <md-tab id="tab2" ng-disabled="true">
+      <md-tab id="tab2" ng-disabled="false">
         <md-tab-label>Payment</md-tab-label>
         <md-tab-body>
-          View for Item #2 <br/>
-          data.selectedIndex = 1;
+          <!-- Payment -->
+          <div class="checkout-payment">
+            <div class="checkout-payment-top">
+              Total amount<br/>
+              <strong>$102.60</strong>
+            </div>
+            <div class="checkout-payment-content row">
+
+              <div class="checkout-payment-details billing col-md-4 col-sm-6">
+                <div class="checkout-payment-details-title">Billing details</div>
+                <div class="checkout-payment-details-content row">
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">First name <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.firstName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="First name" required/>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">Last name <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.lastName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Last name" required/>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12">
+                    <label class="control-label">Address 1 <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.address_1" type="text" value="" placeholder="Street address" required/>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12">
+                    <label class="control-label">Address 2</label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.address_2" type="text" value="" placeholder="Apartment, suite, unit, etc."/>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12">
+                    <label class="control-label">Suburb <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.suburb" type="text" value="" placeholder="Suburb" required/>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">State <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.state" type="text" value="" placeholder="NSW" required/>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">Postcode <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.billing.postcode" ng-pattern="checkout.patterns.postcode" type="text" value="" placeholder="####" required/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="checkout-payment-details card col-md-4 col-sm-6">
+                <div class="checkout-payment-details-title">Card details</div>
+                <div class="checkout-payment-details-content row">
+                  <div class="col-md-12 col-sm-12">
+                    <label class="control-label">Credit card number <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.card.number" ng-pattern="checkout.patterns.creditcard" type="text" value="" placeholder="#### #### #### ####" required/>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">Start date</label>
+                    <input class="form-control form-full" ng-model="checkout.payment.card.start" type="text" value="" placeholder="mm/yy"/>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">Expiry date <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.card.expiry" type="text" value="" placeholder="mm/yy" required/>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <label class="control-label">CVC Code <span class="control-label-mark">*</span></label>
+                    <input class="form-control form-full" ng-model="checkout.payment.card.cvc" ng-pattern="checkout.patterns.cvc" type="text" value="" placeholder="***" required/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="checkout-payment-bottom"></div>
+          </div>
+          <!-- Payment End -->
         </md-tab-body>
       </md-tab>
       <md-tab id="tab3">

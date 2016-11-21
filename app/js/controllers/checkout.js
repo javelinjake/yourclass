@@ -6,17 +6,20 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $state, $stateP
   // ViewModel
   const vm = this;
 
-  console.warn("$cookies", $cookies.getAll());
 
   /* Common */
   vm.patterns = {
     name: /^[a-zA-Z\s\-\.]+$/,
     email: /^\.{2,}@\..{2,}\.{1,}$/,
-    number: /^[\d\(\)\-\+\s]{6,}$/
+    number: /^[\d\(\)\-\+\s]{6,}$/,
+    creditcard: /^([\d]{4}\s?){4}$/,
+    postcode: /^[\d]{4}$/,
+    cvccode: /^[\d]{3}$/
   };
 
-  vm.details = {};
-  vm.payment = {};
+  // vm.details = {};
+  // vm.payment = {};
+  // vm.confirmation = {};
 
 
   /* Details */
