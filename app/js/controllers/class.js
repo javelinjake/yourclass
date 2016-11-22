@@ -9,7 +9,6 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
-  // $log.warn('savedBookingData', savedBookingData);
 
 
   /* Additional functions */

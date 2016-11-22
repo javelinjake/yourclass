@@ -107,7 +107,6 @@
                 <div class="class-booking-note" ng-show="class.booking.error">Please select a class date to book</div>
             </div>
             <div class="class-booking-bottom" ng-show="class.booking.selected !== null">{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? 'Only ' : ''}}{{class.booking.class.spots}} spots left{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? '!' : '.'}}</div>
-            {{class.booking.selected}}
         </div>
         <!-- Booking Class End -->
 

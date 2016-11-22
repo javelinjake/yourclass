@@ -15,33 +15,33 @@
               <div class="checkout-details-class">
                 <div class="checkout-details-class-illustration" style="background-image: url(/images/outside-yoga.jpg)"></div>
                 <div class="checkout-details-class-description">
-                  <span class="checkout-details-class-title">{{::checkout.booking.title}}</span>
-                  {{::checkout.booking.date.start | date : 'EEEE d MMMM yyyy'}}<br>
-                  {{::checkout.booking.date.start | date : 'h:mma' | lowercase}} - {{::checkout.booking.date.end | date : 'h:mma' | lowercase}}<br>
-                  {{::checkout.booking.venue || 'Address is not set yet'}}
+                  <span class="checkout-details-class-title">{{::checkout.details.booking.title}}</span>
+                  {{::checkout.details.booking.date.start | date : 'EEEE d MMMM yyyy'}}<br>
+                  {{::checkout.details.booking.date.start | date : 'h:mma' | lowercase}} - {{::checkout.details.booking.date.end | date : 'h:mma' | lowercase}}<br>
+                  {{::checkout.details.booking.venue || 'Address is not set yet'}}
                 </div>
                 <div class="checkout-details-class-summary">
-                  <strong>Price per student:</strong> {{::checkout.booking.price | currency : '$'}}<br>
-                  <strong>Number of students:</strong> {{::checkout.students.length}}<br>
-                  <span class="checkout-details-class-total"><strong>Total price:</strong> {{::checkout.booking.price * (checkout.students.length) | currency : '$'}}</span>
+                  <strong>Price per student:</strong> {{::checkout.details.booking.price | currency : '$'}}<br>
+                  <strong>Number of students:</strong> {{::checkout.details.students.length}}<br>
+                  <span class="checkout-details-class-total"><strong>Total price:</strong> {{::checkout.details.booking.price * (checkout.details.students.length) | currency : '$'}}</span>
                 </div>
               </div>
               <div class="checkout-details-members">
                 <div class="checkout-details-members-header">Who are the students attending this class?</div>
                 <ul class="checkout-details-members-list">
-                  <li ng-repeat="student in checkout.students">
+                  <li ng-repeat="student in checkout.details.students">
                     <div class="checkout-details-member row">
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Name</label>
-                        <input class="form-control form-full" ng-model="student.name" ng-pattern="checkout.patterns.name" type="text" value="{{student.name}}" placeholder="Name" required/>
+                        <input class="form-control form-full" ng-model="student.name" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Name" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Email</label>
-                        <input class="form-control form-full" ng-model="student.email" type="email" value="{{student.email}}" placeholder="Email" required/>
+                        <input class="form-control form-full" ng-model="student.email" type="email" value="" placeholder="Email" required/>
                       </div>
                       <div class="col-md-3 col-sm-6">
                         <label class="control-label">Number</label>
-                        <input class="form-control form-full" ng-model="student.number" ng-pattern="checkout.patterns.number" type="tel" value="{{student.number}}" placeholder="Number"/>
+                        <input class="form-control form-full" ng-model="student.number" ng-pattern="checkout.patterns.number" type="tel" value="" placeholder="Number"/>
                       </div>
                       <div class="col-md-3 col-sm-6 text-right">
                         {{student.name}}<br>
@@ -51,7 +51,6 @@
                     </div>
                   </li>
                 </ul>
-                {{checkout.students}}
               </div>
             </div>
             <div class="checkout-details-bottom">

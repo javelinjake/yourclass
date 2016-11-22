@@ -1,10 +1,25 @@
 
 
-function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $state, $stateParams) {
+function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter, $state, $stateParams) {
   'ngInject';
 
   // ViewModel
   const vm = this;
+
+
+  /* Get booking saved data from cookies */
+  var savedBookingData = $cookies.getObject('booking');
+
+      // If booking data is empty redirect to the Index page
+      if (!savedBookingData) { $state.go('Home'); return false; }
+
+
+  /* Check saved data and update location search parameters */
+  $location.search({
+    'price': $filter('currency')(savedBookingData.price, '$'),
+    'students': savedBookingData.friends + 1,
+    'date': $filter('date')(savedBookingData.date.start, 'MM/dd/yyyy')
+  });
 
 
   /* Common */
@@ -17,7 +32,14 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $state, $stateP
     cvccode: /^[\d]{3}$/
   };
 
-  // vm.details = {};
+
+  /* Main Objects */
+  vm.details = {
+    booking: savedBookingData,
+    user: $rootScope.userData,
+    backlink: 'Class({classAlias: vm.booking.alias})',
+    students: new Array(savedBookingData.friends + 1)
+  };
   vm.payment = {
     billing: {
       firstName: '',
@@ -41,19 +63,17 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $state, $stateP
 
 
   /* Details */
-  vm.booking = $cookies.getObject('booking');
+  /*vm.booking = savedBookingData;
   vm.user = $rootScope.userData;
-  vm.backlink = 'Class({classAlias: vm.booking.alias})';
-
-  // If booking data is empty redirect to the Index page
-  if (!vm.booking) { $state.go('Home'); return false; }
+  vm.backlink = 'Class({classAlias: vm.booking.alias})';*/
 
   // Amount of students
-  vm.students = new Array(vm.booking.friends + 1);
+  // vm.students = new Array(vm.booking.friends + 1);
 
-  // Create an array of students
-  for (var i = 0; i < vm.students.length; i++) {
-    vm.students[i] = {
+
+  // Fill an array of students
+  for (var i = 0; i < vm.details.students.length; i++) {
+    vm.details.students[i] = {
       name: '',
       email: '',
       number: ''
@@ -65,10 +85,10 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $state, $stateP
     if (!next) { /*$state.go('Home');*/ return false; }
 
     vm.user = next;
-    vm.students[0].id     = next.id || '';
-    vm.students[0].name   = (next.profile.firstName || '') + ' ' + (next.profile.lastName || '');
-    vm.students[0].email  = next.email || '';
-    vm.students[0].number = next.profile.number || '';
+    vm.details.students[0].id     = next.id || '';
+    vm.details.students[0].name   = (next.profile.firstName || '') + ' ' + (next.profile.lastName || '');
+    vm.details.students[0].email  = next.email || '';
+    vm.details.students[0].number = next.profile.number || '';
   });
 }
 
