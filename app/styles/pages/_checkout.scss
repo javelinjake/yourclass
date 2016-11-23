@@ -211,8 +211,8 @@ md-tabs {
   color: #333;
 
   .md-tab {
-    float: none;
-    display: inline-block;
+    // float: none;
+    // display: inline-block;
     margin: 0 32px;
     padding: 0 6px;
     font-size: 25px;
@@ -245,5 +245,5 @@ md-tabs-canvas {
 md-pagination-wrapper {
   width: 100% !important;
   height: 32px;
-  text-align: center;
+  // text-align: center;
 }

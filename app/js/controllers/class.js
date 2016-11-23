@@ -50,6 +50,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
     result.title   = bookingData.class.title; // added that not to request class data again
     result.alias   = bookingData.class.alias; // added that not to request class data again
     result.venue   = bookingData.class.venue; // added that not to request class data again
+    result.image   = bookingData.class.image.length > 0 ? $rootScope.imageUrl + bookingData.class.image : ''; // added that not to request class data again
     result.dateId  = bookingData.selected.dateId;
     result.timeId  = bookingData.selected.timeId;
     result.date    = bookingData.selected.date;
@@ -72,15 +73,16 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       vm.booking.class.title = vm.class.title;
       vm.booking.class.alias = vm.class.alias;
       vm.booking.class.venue = vm.class.venue;
+      vm.booking.class.image = vm.class.photos && vm.class.photos[0] && vm.class.photos[0].src || vm.class.category && vm.class.category.image || '';
 
       // Create list of dates for booking block
       vm.booking.list = createBookingList(response.data.dates);
 
       // Check if there is booking data in the cookies and use it
-      vm.booking.selected = savedBookingData ? vm.booking.list.filter(function(item) {
+      vm.booking.selected = (savedBookingData && vm.booking.list.filter(function(item) {
         return item.timeId === savedBookingData.timeId;
-      })[0] : null;
-      vm.booking.friends.count = savedBookingData ? savedBookingData.friends : 0;
+      })[0]) || null;
+      vm.booking.friends.count = (savedBookingData && savedBookingData.friends) || 0;
 
       // Check user data. update booking price
       vm.booking.class.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
@@ -93,16 +95,16 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
    * -------
    * One item has: date, time, size and number of bookings
    */
-
   vm.booking = {
     class: {
       id: null,
       title: null,
       alias: null,
       venue: null,
+      image: null,
       size: 0,
       spots: 0,
-      price: 0,
+      price: 0
     },
 
     friends: {

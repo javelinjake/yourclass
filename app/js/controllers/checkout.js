@@ -9,6 +9,7 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
 
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
+  $log.warn('savedBookingData', savedBookingData);
 
       // If booking data is empty redirect to the Index page
       if (!savedBookingData) { $state.go('Home'); return false; }
@@ -31,6 +32,7 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
     postcode: /^[\d]{4}$/,
     cvccode: /^[\d]{3}$/
   };
+  vm.step = 0;
 
 
   /* Main Objects */
@@ -38,7 +40,11 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
     booking: savedBookingData,
     user: $rootScope.userData,
     backlink: 'Class({classAlias: vm.booking.alias})',
-    students: new Array(savedBookingData.friends + 1)
+    students: new Array(savedBookingData.friends + 1),
+    submit: function() {
+      vm.step = 1;
+      $log.info('Confirm details.');
+    }
   };
   vm.payment = {
     billing: {

@@ -2,18 +2,18 @@
 
   <div class="checkout-content">
 
-    <md-tabs md-dynamic-height md-border-bottom md-selected="0" md-align-tabs="top">
+    <md-tabs md-dynamic-height md-border-bottom md-align-tabs="top" md-selected="checkout.step" md-center-tabs>
       <md-tab id="tab1">
         <md-tab-label>Details</md-tab-label>
         <md-tab-body>
           <!-- Details -->
-          <div class="checkout-details">
+          <form class="checkout-details" ng-submit="checkout.details.submit()">
             <div class="checkout-details-top">
-              <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.booking.alias})" target="_blank">Back to 'Class name'</a>
+              <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.details.booking.alias})" target="_blank">Back to 'Class name'</a>
             </div>
             <div class="checkout-details-content">
               <div class="checkout-details-class">
-                <div class="checkout-details-class-illustration" style="background-image: url(/images/outside-yoga.jpg)"></div>
+                <div class="checkout-details-class-illustration" style="background-image: url({{::checkout.details.booking.image}})"></div>
                 <div class="checkout-details-class-description">
                   <span class="checkout-details-class-title">{{::checkout.details.booking.title}}</span>
                   {{::checkout.details.booking.date.start | date : 'EEEE d MMMM yyyy'}}<br>
@@ -56,11 +56,11 @@
             <div class="checkout-details-bottom">
               <button class="checkout-details-confirm btn btn-primary">Confirm Details</button>
             </div>
-          </div>
+          </form>
           <!-- Details End -->
         </md-tab-body>
       </md-tab>
-      <md-tab id="tab2" ng-disabled="false">
+      <md-tab id="tab2">
         <md-tab-label>Payment</md-tab-label>
         <md-tab-body>
           <!-- Payment -->
