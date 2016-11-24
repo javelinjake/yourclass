@@ -9,21 +9,21 @@
           <!-- Details -->
           <form class="checkout-details" ng-submit="checkout.details.submit()">
             <div class="checkout-details-top">
-              <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.details.booking.alias})" target="_blank">Back to 'Class name'</a>
+              <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.details.class.alias})" target="_blank">Back to 'Class name'</a>
             </div>
             <div class="checkout-details-content">
               <div class="checkout-details-class">
-                <div class="checkout-details-class-illustration" style="background-image: url({{::checkout.details.booking.image}})"></div>
+                <div class="checkout-details-class-illustration" style="background-image: url({{::checkout.details.class.image}})"></div>
                 <div class="checkout-details-class-description">
-                  <span class="checkout-details-class-title">{{::checkout.details.booking.title}}</span>
+                  <span class="checkout-details-class-title">{{::checkout.details.class.title}}</span>
                   {{::checkout.details.booking.date.start | date : 'EEEE d MMMM yyyy'}}<br>
                   {{::checkout.details.booking.date.start | date : 'h:mma' | lowercase}} - {{::checkout.details.booking.date.end | date : 'h:mma' | lowercase}}<br>
-                  {{::checkout.details.booking.venue || 'Address is not set yet'}}
+                  {{::checkout.details.class.venue || 'Address is not set yet'}}
                 </div>
                 <div class="checkout-details-class-summary">
-                  <strong>Price per student:</strong> {{::checkout.details.booking.price | currency : '$'}}<br>
+                  <strong>Price per student:</strong> {{::checkout.details.class.price | currency : '$'}}<br>
                   <strong>Number of students:</strong> {{::checkout.details.students.length}}<br>
-                  <span class="checkout-details-class-total"><strong>Total price:</strong> {{::checkout.details.booking.price * (checkout.details.students.length) | currency : '$'}}</span>
+                  <span class="checkout-details-class-total"><strong>Total price:</strong> {{::checkout.details.class.price * (checkout.details.students.length) | currency : '$'}}</span>
                 </div>
               </div>
               <div class="checkout-details-members">

@@ -7,6 +7,10 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
   const vm = this;
 
 
+  /* Check if user is known and redirect to the home page if not */
+  // if (!$rootScope.userLoggedIn) { $state.go('Home'); return false; }
+
+
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
   $log.warn('savedBookingData', savedBookingData);
@@ -17,10 +21,12 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
 
   /* Check saved data and update location search parameters */
   $location.search({
-    'price': $filter('currency')(savedBookingData.price, '$'),
-    'students': savedBookingData.friends + 1,
-    'date': $filter('date')(savedBookingData.date.start, 'MM/dd/yyyy')
+    'price': $filter('currency')(savedBookingData.class.price, '$'),
+    'students': savedBookingData.booking.friends + 1,
+    'date': $filter('date')(savedBookingData.booking.date.start, 'MM/dd/yyyy')
   });
+
+
 
 
   /* Common */
@@ -37,10 +43,11 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
 
   /* Main Objects */
   vm.details = {
-    booking: savedBookingData,
-    user: $rootScope.userData,
+    class: savedBookingData.class,
+    booking: savedBookingData.booking,
+    user: savedBookingData.user,
     backlink: 'Class({classAlias: vm.booking.alias})',
-    students: new Array(savedBookingData.friends + 1),
+    students: new Array(savedBookingData.booking.friends + 1),
     submit: function() {
       vm.step = 1;
       $log.info('Confirm details.');
@@ -68,34 +75,23 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
   // vm.confirmation = {};
 
 
-  /* Details */
-  /*vm.booking = savedBookingData;
-  vm.user = $rootScope.userData;
-  vm.backlink = 'Class({classAlias: vm.booking.alias})';*/
-
-  // Amount of students
-  // vm.students = new Array(vm.booking.friends + 1);
-
-
   // Fill an array of students
   for (var i = 0; i < vm.details.students.length; i++) {
-    vm.details.students[i] = {
-      name: '',
-      email: '',
-      number: ''
-    };
+    if (i === 0) {
+      vm.details.students[i] = {
+        name: vm.details.user.name,
+        email: vm.details.user.email,
+        number: vm.details.user.number
+      };
+    }
+    else {
+      vm.details.students[i] = {
+        name: '',
+        email: '',
+        number: ''
+      };
+    }
   }
-
-  // Watch user data and update first student info in array of students
-  $rootScope.$watch('userData', function(next, prev) {
-    if (!next) { /*$state.go('Home');*/ return false; }
-
-    vm.user = next;
-    vm.details.students[0].id     = next.id || '';
-    vm.details.students[0].name   = (next.profile.firstName || '') + ' ' + (next.profile.lastName || '');
-    vm.details.students[0].email  = next.email || '';
-    vm.details.students[0].number = next.profile.number || '';
-  });
 }
 
 export default {

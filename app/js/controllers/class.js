@@ -9,6 +9,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
+  $log.warn('savedBookingData', savedBookingData);
 
 
   /* Additional functions */
@@ -42,19 +43,32 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
     return list;
   };
-  var createBookingObject = function(bookingData) {
-    var result = {};
+  var createBookingObject = function(bookingData, userData) {
+    var result = {
+      class: {},
+      booking: {},
+      user: {}
+    };
 
-    result.classId = bookingData.class.id;
-    result.price   = bookingData.class.price; // added that not to request class data again
-    result.title   = bookingData.class.title; // added that not to request class data again
-    result.alias   = bookingData.class.alias; // added that not to request class data again
-    result.venue   = bookingData.class.venue; // added that not to request class data again
-    result.image   = bookingData.class.image.length > 0 ? $rootScope.imageUrl + bookingData.class.image : ''; // added that not to request class data again
-    result.dateId  = bookingData.selected.dateId;
-    result.timeId  = bookingData.selected.timeId;
-    result.date    = bookingData.selected.date;
-    result.friends = bookingData.friends.count;
+    // Class:
+    result.class.id    = bookingData.class.id;
+    result.class.price = bookingData.class.price; // added that not to request class data again
+    result.class.title = bookingData.class.title; // added that not to request class data again
+    result.class.alias = bookingData.class.alias; // added that not to request class data again
+    result.class.venue = bookingData.class.venue; // added that not to request class data again
+    result.class.image = bookingData.class.image.length > 0 ? $rootScope.imageUrl + bookingData.class.image : ''; // added that not to request class data again
+
+    // Booking
+    result.booking.dateId  = bookingData.selected.dateId;
+    result.booking.timeId  = bookingData.selected.timeId;
+    result.booking.date    = bookingData.selected.date;
+    result.booking.friends = bookingData.friends.count;
+
+    // User
+    result.user.id     = userData.id;
+    result.user.name   = [userData.profile.firstName, userData.profile.lastName].join(' ');
+    result.user.email  = userData.email;
+    result.user.number = userData.profile.phone;
 
     return result;
   };
@@ -80,9 +94,9 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
       // Check if there is booking data in the cookies and use it
       vm.booking.selected = (savedBookingData && vm.booking.list.filter(function(item) {
-        return item.timeId === savedBookingData.timeId;
+        return item.timeId === savedBookingData.booking.timeId;
       })[0]) || null;
-      vm.booking.friends.count = (savedBookingData && savedBookingData.friends) || 0;
+      vm.booking.friends.count = (savedBookingData && savedBookingData.booking.friends) || 0;
 
       // Check user data. update booking price
       vm.booking.class.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
@@ -137,25 +151,34 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       this.error = this.selected === null;
 
       // Prevent submission if time slot is not selected
-      if (this.selected === null) {
+      if (this.error) {
         $log.error('Time slot is not selected.');
         return false;
       }
 
-      // Save booked data into cookies
-      $cookies.putObject('booking', createBookingObject(this));
+      // Check user data. If user is not logged in, ask to sign in, otherwise go to the checkout page
+      if (!$rootScope.userLoggedIn) {
+        $log.error('User hasn\'t logged in.');
+        $rootScope.LogInModal('sm');
+      }
+      else {
+        // Save booked data into cookies
+        $cookies.putObject('booking', createBookingObject(this, $rootScope.userData));
 
-      // Change the location, show some booked data in the search string
-      $location.search({
-        'price': $filter('currency')(this.class.price, '$'),
-        'students': this.friends.count + 1,
-        'date': $filter('date')(this.selected.date.start, 'MM/dd/yyyy')
-      });
-      $location.path($location.path() + '/booking');
+        // Change the location, show some booked data in the search string
+        $location.search({
+          'price': $filter('currency')(this.class.price, '$'),
+          'students': this.friends.count + 1,
+          'date': $filter('date')(this.selected.date.start, 'MM/dd/yyyy')
+        });
+        $location.path($location.path() + '/booking');
+      }
     },
 
     error: false
   };
+
+
 
 
   /* Watch Selected date and update Booking data */
@@ -169,6 +192,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
   /* Watch and check user data: teacher, student or user taht is not logged in */
   $rootScope.$watch('userData', function(next, prev) {
+    $log.warn('userData', next);
     // Update booking price. Price for student or user that is not logged in is 14% more than actual
     // Checks the response with class data from the promise
     if (!vm.class) return false;
