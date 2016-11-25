@@ -2,8 +2,8 @@
 
   <div class="checkout-content">
 
-    <md-tabs md-dynamic-height md-border-bottom md-align-tabs="top" md-selected="checkout.step" md-center-tabs>
-      <md-tab id="tab1">
+    <md-tabs md-dynamic-height md-border-bottom md-align-tabs="top" md-selected="checkout.step" md-center-tabs ng-class="{'step-details': checkout.step === 0, 'step-payment': checkout.step === 1, 'step-confirmation': checkout.step === 2}">
+      <md-tab id="tab1" ng-disabled="checkout.details.disabled">
         <md-tab-label>Details</md-tab-label>
         <md-tab-body>
           <!-- Details -->
@@ -60,7 +60,7 @@
           <!-- Details End -->
         </md-tab-body>
       </md-tab>
-      <md-tab id="tab2">
+      <md-tab id="tab2" ng-disabled="checkout.payment.disabled || checkout.payment.status">
         <md-tab-label>Payment</md-tab-label>
         <md-tab-body>
           <!-- Payment -->
@@ -130,6 +130,24 @@
                     <label class="control-label">CVC Code <span class="control-label-mark">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.card.cvc" ng-pattern="checkout.patterns.cvccode" type="text" value="" placeholder="***" required/>
                   </div>
+
+                  <div class="col-md-12 col-sm-12">
+                    <label class="control-label">
+                      <input class="checkout.payment.card.save" type="checkbox"/>
+                      Save card details for next time?
+                    </label>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12">
+                    <label class="control-label">
+                      <input class="checkout.payment.card.save" type="checkbox"/>
+                      I agree to the <em>terms and conditions</em> <span class="control-label-mark">*</span>
+                    </label>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12">
+                    <button class="checkout-payment-confirm btn btn-primary btn-block">Submit Payment</button>
+                  </div>
                 </div>
               </div>
 
@@ -139,7 +157,7 @@
           <!-- Payment End -->
         </md-tab-body>
       </md-tab>
-      <md-tab id="tab3">
+      <md-tab id="tab3" ng-disabled="checkout.confirmation.disabled">
         <md-tab-label>Confirmation</md-tab-label>
         <md-tab-body>
           View for Item #3 <br/>

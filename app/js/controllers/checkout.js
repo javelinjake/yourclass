@@ -42,6 +42,7 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
 
 
   /* Main Objects */
+  // (Check cookies for the saved student details before)
   vm.details = {
     class: savedBookingData.class,
     booking: savedBookingData.booking,
@@ -49,10 +50,21 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
     backlink: 'Class({classAlias: vm.booking.alias})',
     students: new Array(savedBookingData.booking.friends + 1),
     submit: function() {
+      $log.info('Confirm "Details" step.');
+
+      // Increase step
       vm.step = 1;
-      $log.info('Confirm details.');
-    }
+
+      // Mark stage as completed and unlock next step (payment)
+      this.status = true;
+      vm.payment.disabled = false;
+
+      // (Save list of students data into cookies)
+    },
+    disabled: false, // According to the task "details" are always enabled
+    status: false
   };
+  // (Check cookies for the saved payment details before)
   vm.payment = {
     billing: {
       firstName: '',
@@ -70,9 +82,37 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       cvc: '',
       save: false,
       agreement: false
-    }
+    },
+    submit: function() {
+      $log.info('Confirm "Payment" step.');
+
+      // Increase step
+      vm.step = 2;
+
+      // Mark stage as completed and unlock next step (confirmation)
+      this.status = true;
+      // this.disabled = true;
+      vm.confirmation.disabled = false;
+
+      // (Save payment data into cookies)
+    },
+    disabled: true,
+    status: false
   };
-  // vm.confirmation = {};
+  vm.confirmation = {
+    submit: function() {
+      $log.info('Confirm "Confirmation" step.');
+
+      // Increase step
+      vm.step = 3;
+
+      // Mark stage as completed and unlock next step (confirmation)
+      this.status = true;
+      // this.disabled = true;
+    },
+    disabled: true,
+    status: false
+  };
 
 
   // Fill an array of students

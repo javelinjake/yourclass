@@ -164,7 +164,6 @@
   }
   &-bottom {}
 
-
   &-details {
     padding: 0 50px;
 
@@ -202,7 +201,19 @@
     }
   }
 
+  &-confirm {
+    border-width: 0;
+    border-color: transparent;
+    background-color: $brand-salmon;
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff;
 
+    &:hover, &:active, &:focus, &:active:focus {
+      background-color: darken($brand-salmon, 10%);
+      color: #fff;
+    }
+  }
 }
 
 
@@ -225,14 +236,28 @@ md-tabs {
       color: inherit;
     }
 
-    &[disabled] {
-      color: #777;
-    }
+    // &[disabled] {
+    //   color: #777;
+    // }
   }
 
   md-ink-bar {
     background: $brand-blue;
     color: $brand-blue;
+  }
+
+  /* Steps */
+  &.step-details {}
+  &.step-payment {
+    .md-tab:nth-child(1) {
+      color: #777;
+    }
+  }
+  &.step-confirmation {
+    .md-tab:nth-child(1),
+    .md-tab:nth-child(2) {
+      color: #777;
+    }
   }
 }
 md-tabs-wrapper {
