@@ -1,0 +1,274 @@
+/* CHECKOUT PAGE: */
+.checkout {
+
+  /* Main Container BG */
+  .main {
+    background: #f4f4f4;
+  }
+
+  &-content {
+    padding: 40px 0 0;
+  }
+}
+
+
+/* Details */
+.checkout-details {
+
+  &-top {
+    margin: 0 0 15px;
+    // font-size: 14px;
+    color: #555;
+  }
+  &-back {
+    position: relative;
+    padding: 0 0 0 25px;
+    color: inherit;
+
+    &:before {
+      content: '\2190';
+      position: absolute;
+      left: 0;
+    }
+
+    &:hover, &:active, &:focus {
+      color: inherit;
+    }
+  }
+
+  &-content {
+    background: #fff;
+    font-size: 1.14em;
+    color: #333;
+  }
+
+  &-class {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    min-height: 160px;
+    line-height: 1.8;
+
+    &-illustration {
+      flex-basis: 220px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      background-position: 50% 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &-description {
+      flex-basis: 50%;
+      padding: 20px 30px;
+    }
+    &-title {
+      display: block;
+      margin: 0 0 0.6em;
+      font-weight: 700;
+      font-size: 1.25em;
+    }
+    &-summary {
+      flex-basis: 50%;
+      padding: 20px 30px;
+      text-align: right;
+    }
+    &-total {
+      display: block;
+      margin: 1.5em 0 0;
+      font-size: 1.125em;
+    }
+  }
+
+  &-members {
+
+    &-header {
+      padding: 25px 30px;
+      font-weight: 700;
+      font-size: 1em;
+    }
+    &-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+
+        &:nth-child(2n + 1) {
+          background: #eaeaea;
+        }
+      }
+    }
+  }
+
+  &-member {
+    padding: 25px 30px;
+
+    // Columns
+    [class^='col-'] {
+      margin: 0 0 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // Form label and textfield
+    .control-label {
+      font-weight: 400;
+    }
+    .form-control {
+      border-color: #dedede;
+      background-color: #fff;
+    }
+  }
+
+  &-bottom {
+    padding: 10px 0;
+    text-align: right;
+  }
+  &-confirm {
+    width: 360px;
+    max-width: 100%;
+    border-width: 0;
+    border-color: transparent;
+    background-color: $brand-salmon;
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff;
+
+    &:hover, &:active, &:focus, &:active:focus {
+      background-color: darken($brand-salmon, 10%);
+      color: #fff;
+    }
+  }
+}
+
+
+/* Payment */
+.checkout-payment {
+  background: #fff;
+  color: #333;
+
+  &-top {
+    padding: 40px 30px;
+    border-bottom: 1px solid #efefef;
+    font-size: 1.78em;
+    text-align: center;
+  }
+  &-content {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 45px 0 50px;
+  }
+  &-bottom {}
+
+  &-details {
+    padding: 0 50px;
+
+    &.booking {
+      border-right: 1px solid #efefef;
+    }
+    &.card {
+      border-left: 1px solid #efefef;
+    }
+
+    &-title {
+      margin: 0 0 0.8em;
+      font-size: 1.78em;
+      text-align: center;
+    }
+    &-content {}
+
+    // Columns
+    [class^='col-'] {
+      margin: 0 0 30px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // Form label and textfield
+    .control-label {
+      margin: 0 0 10px;
+      font-size: 1.28em;
+    }
+    .form-control {
+      border-color: #dedede;
+      background-color: #fff;
+    }
+  }
+
+  &-confirm {
+    border-width: 0;
+    border-color: transparent;
+    background-color: $brand-salmon;
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff;
+
+    &:hover, &:active, &:focus, &:active:focus {
+      background-color: darken($brand-salmon, 10%);
+      color: #fff;
+    }
+  }
+}
+
+
+/* MD Tabs */
+md-tabs {
+  color: #333;
+
+  .md-tab {
+    // float: none;
+    // display: inline-block;
+    margin: 0 32px;
+    padding: 0 6px;
+    font-size: 25px;
+    line-height: 32px;
+    color: inherit;
+    text-transform: none;
+
+    &.md-active {
+      font-weight: 700;
+      color: inherit;
+    }
+
+    // &[disabled] {
+    //   color: #777;
+    // }
+  }
+
+  md-ink-bar {
+    background: $brand-blue;
+    color: $brand-blue;
+  }
+
+  /* Steps */
+  &.step-details {}
+  &.step-payment {
+    .md-tab:nth-child(1) {
+      color: #777;
+    }
+  }
+  &.step-confirmation {
+    .md-tab:nth-child(1),
+    .md-tab:nth-child(2) {
+      color: #777;
+    }
+  }
+}
+md-tabs-wrapper {
+  margin: 0 0 30px;
+  border-width: 0 !important;
+}
+md-tabs-canvas {
+  height: 32px;
+}
+md-pagination-wrapper {
+  width: 100% !important;
+  height: 32px;
+  // text-align: center;
+}
