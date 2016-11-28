@@ -5,7 +5,7 @@
     width: 150px;
     position: absolute;
     bottom: 15px;
-    left: 0;
+    left: 15px;
   }
   &-content {
     padding-right: 315px;
@@ -258,9 +258,6 @@
     .navbar-nav > .open > a {
       background-color: transparent;
     }
-    .nav-wrapper {
-      padding: 0 220px;
-    }
   }
 }
 
@@ -277,7 +274,6 @@
 
     h1 {
       margin-bottom: 0;
-      font-size: 40px;
     }
 
     .lead {

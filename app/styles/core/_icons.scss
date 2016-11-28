@@ -309,9 +309,9 @@
     @font-face {
         font-family: 'yourclass';
         src:
-          url('#{$icon-font-path}#{$icon-font-name}.ttf?3dvxqs') format('truetype'),
-          url('#{$icon-font-path}#{$icon-font-name}.woff?3dvxqs') format('woff'),
-          url('#{$icon-font-path}#{$icon-font-name}.svg?3dvxqs#yourclass') format('svg');
+          url('#{$icon-font-path}#{$icon-font-name-yourclass}.ttf?3dvxqs') format('truetype'),
+          url('#{$icon-font-path}#{$icon-font-name-yourclass}.woff?3dvxqs') format('woff'),
+          url('#{$icon-font-path}#{$icon-font-name-yourclass}.svg?3dvxqs#yourclass') format('svg');
     }
 }
 // Catchall baseclass

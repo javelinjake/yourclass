@@ -2,7 +2,7 @@
 // Bootswatch
 // -----------------------------------------------------
 
-$web-font-path: "https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Muli:400,300|Merriweather+Sans:400,700|Varela+Round'" !default;
+$web-font-path: "https://fonts.googleapis.com/css?family=Montserrat:400,700|PT+Sans:400,400i,700" !default;
 @import url($web-font-path);
 
 // Navbar =====================================================================
@@ -173,8 +173,8 @@ input[type=number],
 
   &[disabled],
   &[readonly] {
-    @include box-shadow(none);
-    border-bottom: 1px dotted #ddd;
+    // @include box-shadow(none);
+    // border-bottom: 1px dotted #ddd;
   }
 
   &.input {

@@ -1,8 +1,8 @@
 <section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
-    <div class="container clear">
+    <div class="container clear position-relative">
 
         <div class="class-teacher">
-            <div class="thumbnail" ng-repeat="image in userImage" ng-if="image.isMain == 1">
+            <div class="thumbnail" ng-repeat="image in class.class.teacher.photos" ng-if="image.isMain == 1">
               <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
             </div>
             <div class="text-center text">

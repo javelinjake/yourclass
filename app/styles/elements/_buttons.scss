@@ -9,6 +9,7 @@
 .btn {
   display: inline-block;
   margin-bottom: 0; // For input.btn
+  font-family: $font-family-montserrat;
   font-weight: $btn-font-weight;
   text-align: center;
   text-transform: uppercase;
@@ -51,9 +52,9 @@
   &.disabled,
   &[disabled],
   fieldset[disabled] & {
-    cursor: $cursor-disabled;
-    @include opacity(.40);
-    @include box-shadow(none);
+    // cursor: $cursor-disabled;
+    // @include opacity(.40);
+    // @include box-shadow(none);
   }
 
   .text {

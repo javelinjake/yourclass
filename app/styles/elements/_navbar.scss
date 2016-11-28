@@ -1,75 +1,39 @@
 //
 // Navbars
 // --------------------------------------------------
-
-
-// Wrapper and base class
-//
-// Provide a static navbar from which we expand to create full-width, fixed, and
-// other navbar variations.
-
-
-// Sticky header
-
-// header {
-//   position: fixed;
-//   width: 100%;
-//   z-index: 50;
-// }
-// .main-wrapper {
-//   margin-top: 91px;
-// }
+$links-width: 160px;
+$links-width-logged-in: 160px;
+$nav-item-padding: 20px;
 
 .navbar {
   position: relative;
-  //min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
-  //margin-bottom: $navbar-margin-bottom;
-  border-bottom: 1px solid #efefef;
-  background-color: rgba(255,255,255,0.9);
-  border-bottom: 2px solid rgba(0,0,0,0.2);
-
   padding: 20px 0;
-  //height: 92px;
 
   // Prevent floats from breaking the navbar
   @include clearfix;
-
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: $navbar-border-radius;
-  }
-}
-
-.home {
-  .navbar {
-    margin-bottom: 0;
-  }
 }
 
 // Main top navigation
-$logo-height: 49px;
-$logo-width: 61px;
-$links-width: 140px;
-$links-width-logged-in: 150px;
-$nav-item-padding: 20px;
-
 .nav-wrapper {
   position: relative;
   width: 100%;
   //padding-left: $logo-width + $nav-item-padding; // Width of logo
-  padding: 0 $links-width + $nav-item-padding; // Width of links
+  padding: 0 ($links-width + $nav-item-padding); // Width of links
 }
 .navbar-logo {
   position: absolute;
   top: 0;
-  left: 15px;
-  width: $logo-width;
-  height: $logo-height;
+  left: 0;
+  width: auto;
+  height: 100%;
+  padding: 5px 0;
 }
 .navbar-links {
   position: absolute;
   top: 0;
   right: 0;
   width: $links-width;
+  height: 100%;
 }
 
 .logged-in {
@@ -82,30 +46,14 @@ $nav-item-padding: 20px;
 }
 
 .nav-image {
-  width: 40px;
+  width: 48px;
+  height: 48px;
   float: right;
-  margin-top: -10px;
   border-radius: 50%;
   overflow: hidden;
   margin-left: 10px;
+  margin-top: 5px;
 }
-
-
-
-
-// Navbar heading
-//
-// Groups `.navbar-brand` and `.navbar-toggle` into a single component for easy
-// styling of responsive aspects.
-
-.navbar-header {
-  @include clearfix;
-
-  @media (min-width: $grid-float-breakpoint) {
-    float: left;
-  }
-}
-
 
 // Navbar collapse (body)
 //
@@ -157,18 +105,6 @@ $nav-item-padding: 20px;
   }
 }
 
-.navbar-fixed-top,
-.navbar-fixed-bottom {
-  .navbar-collapse {
-    max-height: $navbar-collapse-max-height;
-
-    @media (max-device-width: $screen-xs-min) and (orientation: landscape) {
-      max-height: 200px;
-    }
-  }
-}
-
-
 // Both navbar header and collapse
 //
 // When a container is present, change the behavior of the header and collapse.
@@ -188,57 +124,12 @@ $nav-item-padding: 20px;
 }
 
 
-//
-// Navbar alignment options
-//
-// Display the navbar across the entirety of the page or fixed it to the top or
-// bottom of the page.
-
-// Static top (unfixed, but 100% wide) navbar
-.navbar-static-top {
-  z-index: $zindex-navbar;
-  border-width: 0 0 1px;
-
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: 0;
-  }
-}
-
-// Fix the top/bottom navbars when screen real estate supports it
-.navbar-fixed-top,
-.navbar-fixed-bottom {
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: $zindex-navbar-fixed;
-
-  // Undo the rounded corners
-  @media (min-width: $grid-float-breakpoint) {
-    border-radius: 0;
-  }
-}
-.navbar-fixed-top {
-  top: 0;
-  border-width: 0 0 1px;
-}
-.navbar-fixed-bottom {
-  bottom: 0;
-  margin-bottom: 0; // override .navbar defaults
-  border-width: 1px 0 0;
-}
-
-
 // Brand/project name
 
 .navbar-brand {
   display: block;
   height: 100%;
   width: 100%;
-  //float: left;
-  //padding: $navbar-padding-horizontal;
-  //font-size: $font-size-large;
-  //line-height: $line-height-computed;
-  //height: 72px;
 
   &:hover,
   &:focus {
@@ -249,13 +140,6 @@ $nav-item-padding: 20px;
     display: block;
     height: 100%;
     width: auto;
-  }
-
-  @media (min-width: $grid-float-breakpoint) {
-    .navbar > .container &,
-    .navbar > .container-fluid & {
-      margin-left: -$navbar-padding-horizontal;
-    }
   }
 }
 
@@ -308,9 +192,11 @@ $nav-item-padding: 20px;
   margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
 
   > li > a {
-    height: 49px;
-    line-height: 49px;
+    height: 58px;
+    line-height: 58px;
     padding: 0 15px;
+    color: $white;
+    text-transform: uppercase;
   }
 
   @media (max-width: $grid-float-breakpoint-max) {
@@ -347,8 +233,8 @@ $nav-item-padding: 20px;
       > a {
         // padding-top:    $navbar-padding-vertical;
         // padding-bottom: $navbar-padding-vertical;
-        height: 49px;
-        line-height: 49px;
+        height: 58px;
+        line-height: 58px;
         padding: 0 15px;
       }
     }
@@ -599,141 +485,6 @@ $nav-item-padding: 20px;
       &:hover,
       &:focus {
         color: $navbar-default-link-disabled-color;
-      }
-    }
-  }
-}
-
-// Inverse navbar
-
-.navbar-inverse {
-  background-color: $navbar-inverse-bg;
-  border-color: $navbar-inverse-border;
-
-  .navbar-brand {
-    //color: $navbar-inverse-brand-color;
-    &:hover,
-    &:focus {
-      //color: $navbar-inverse-brand-hover-color;
-      //background-color: $navbar-inverse-brand-hover-bg;
-    }
-  }
-
-  .navbar-text {
-    color: $navbar-inverse-color;
-  }
-
-  .navbar-nav {
-    > li > a {
-      color: $navbar-inverse-link-color;
-
-      &:hover,
-      &:focus {
-        color: $navbar-inverse-link-hover-color;
-        background-color: $navbar-inverse-link-hover-bg;
-      }
-    }
-    > .active > a {
-      &,
-      &:hover,
-      &:focus {
-        color: $navbar-inverse-link-active-color;
-        background-color: $navbar-inverse-link-active-bg;
-      }
-    }
-    > .disabled > a {
-      &,
-      &:hover,
-      &:focus {
-        color: $navbar-inverse-link-disabled-color;
-        background-color: $navbar-inverse-link-disabled-bg;
-      }
-    }
-  }
-
-  // Darken the responsive nav toggle
-  .navbar-toggle {
-    border-color: $navbar-inverse-toggle-border-color;
-    &:hover,
-    &:focus {
-      background-color: $navbar-inverse-toggle-hover-bg;
-    }
-    .icon-bar {
-      background-color: $navbar-inverse-toggle-icon-bar-bg;
-    }
-  }
-
-  .navbar-collapse,
-  .navbar-form {
-    border-color: darken($navbar-inverse-bg, 7%);
-  }
-
-  // Dropdowns
-  .navbar-nav {
-    > .open > a {
-      &,
-      &:hover,
-      &:focus {
-        background-color: $navbar-inverse-link-active-bg;
-        color: $navbar-inverse-link-active-color;
-      }
-    }
-
-    @media (max-width: $grid-float-breakpoint-max) {
-      // Dropdowns get custom display
-      .open .dropdown-menu {
-        > .dropdown-header {
-          border-color: $navbar-inverse-border;
-        }
-        .divider {
-          background-color: $navbar-inverse-border;
-        }
-        > li > a {
-          color: $navbar-inverse-link-color;
-          &:hover,
-          &:focus {
-            color: $navbar-inverse-link-hover-color;
-            background-color: $navbar-inverse-link-hover-bg;
-          }
-        }
-        > .active > a {
-          &,
-          &:hover,
-          &:focus {
-            color: $navbar-inverse-link-active-color;
-            background-color: $navbar-inverse-link-active-bg;
-          }
-        }
-        > .disabled > a {
-          &,
-          &:hover,
-          &:focus {
-            color: $navbar-inverse-link-disabled-color;
-            background-color: $navbar-inverse-link-disabled-bg;
-          }
-        }
-      }
-    }
-  }
-
-  .navbar-link {
-    color: $navbar-inverse-link-color;
-    &:hover {
-      color: $navbar-inverse-link-hover-color;
-    }
-  }
-
-  .btn-link {
-    color: $navbar-inverse-link-color;
-    &:hover,
-    &:focus {
-      color: $navbar-inverse-link-hover-color;
-    }
-    &[disabled],
-    fieldset[disabled] & {
-      &:hover,
-      &:focus {
-        color: $navbar-inverse-link-disabled-color;
       }
     }
   }

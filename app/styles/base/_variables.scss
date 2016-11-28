@@ -54,26 +54,24 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$web-font-path: "https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Muli:400,300|Merriweather+Sans:400,700|Varela+Round'" !default;
+// $web-font-path: "https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Muli:400,300|Merriweather+Sans:400,700|Varela+Round'" !default;
 //@import url($web-font-path);
 
-$font-family-oxygen:       "Oxygen", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-muli:         "Muli", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-merriweather: "Merriweather Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-varela:       "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-pt-sans:     "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-montserrat:  "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
-$font-family-base:        $font-family-oxygen !default;
-$font-family-heading:     $font-family-oxygen !default;
+$font-family-base:        $font-family-pt-sans !default;
+$font-family-heading:     $font-family-montserrat !default;
 
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.1)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.9)) !default; // ~12px
 $font-size-xsmall:        ceil(($font-size-base * 0.7)) !default; // ~12px
 
-$font-size-h1:            30px !default;
-$font-size-h2:            22px !default;
-$font-size-h3:            18px !default;
-$font-size-h4:            14px !default;
+$font-size-h1:            32px !default;
+$font-size-h2:            25px !default;
+$font-size-h3:            20px !default;
+$font-size-h4:            16px !default;
 $font-size-h5:            12px !default;
 $font-size-h6:            10px !default;
 
@@ -86,8 +84,8 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    $font-family-heading !default;
-$headings-font-weight:    300 !default;
-$headings-line-height:    1.1 !default;
+$headings-font-weight:    400 !default;
+$headings-line-height:    1 !default;
 $headings-color:          #444 !default;
 
 
@@ -96,11 +94,12 @@ $headings-color:          #444 !default;
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
 
 //** Load fonts from this directory.
-$icon-font-path:          "../../fonts/" !default;
+$icon-font-path:           "../../fonts/" !default;
 //** File name for all font files.
-$icon-font-name:          "glyphicons-halflings-regular" !default; // yourclass
+$icon-font-name:           "glyphicons-halflings-regular" !default; // yourclass
+$icon-font-name-yourclass: "yourclass" !default; // yourclass
 //** Element ID within SVG icon file.
-$icon-font-svg-id:        "glyphicons-halflings-regular" !default; // yourclass
+$icon-font-svg-id:         "glyphicons-halflings-regular" !default; // yourclass
 
 
 //== Components
@@ -162,14 +161,14 @@ $table-border-color:            #ddd !default;
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-$btn-font-weight:                300 !default;
+$btn-font-weight:                400 !default;
 
 $btn-default-color:              #444 !default;
 $btn-default-bg:                 #fff !default;
 $btn-default-border:             #cccccc !default;
 
 $btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $brand-orange !default;
+$btn-primary-bg:                 $brand-salmon !default;
 $btn-primary-border:             transparent !default;
 
 $btn-success-color:              #fff !default;

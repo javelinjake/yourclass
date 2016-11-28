@@ -4,17 +4,14 @@
   max-width: $search-form-width + 4*2;
   margin: 20px auto;
   border: 4px solid rgba(0,0,0,0.2);
-  border-radius: 4px;
 
   .navbar & {
-    top: 4px;
     margin: 0 auto;
   }
 
   &-fieldset {
     position: relative;
     padding-right: $search-button-width;
-    // @include box-shadow(0 0 0 4px rgba(0,0,0,0.2));
   }
   &-submit {
     position: absolute;
@@ -35,10 +32,9 @@
     float: left;
     width: 50%;
     margin-bottom: 0;
-    border-right: 1px solid $gray-light;
 
-    &:last-of-type {
-      border-right: none;
+    &:first-child {
+      border-right: 1px solid $gray-light;
     }
   }
   .form-control {
