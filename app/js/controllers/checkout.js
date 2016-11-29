@@ -49,6 +49,9 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
     user: savedBookingData.user,
     backlink: 'Class({classAlias: vm.booking.alias})',
     students: new Array(savedBookingData.booking.friends + 1),
+    click: function() {
+      this.submitted = true;
+    },
     submit: function() {
       $log.info('Confirm "Details" step.');
 
@@ -61,27 +64,31 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
 
       // (Save list of students data into cookies)
     },
+    submitted: false,
     disabled: false, // According to the task "details" are always enabled
     status: false
   };
   // (Check cookies for the saved payment details before)
   vm.payment = {
     billing: {
-      firstName: '',
-      lastName: '',
-      address_1: '',
-      address_2: '',
-      suburb: '',
-      state: '',
-      postcode: ''
+      firstName: null,
+      lastName: null,
+      address_1: null,
+      address_2: null,
+      suburb: null,
+      state: null,
+      postcode: null
     },
     card: {
-      number: '',
-      start: '',
-      expiry: '',
-      cvc: '',
+      number: null,
+      start: null,
+      expiry: null,
+      cvc: null,
       save: false,
       agreement: false
+    },
+    click: function() {
+      this.submitted = true;
     },
     submit: function() {
       $log.info('Confirm "Payment" step.');
@@ -90,16 +97,20 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       vm.step = 2;
 
       // Mark stage as completed and unlock next step (confirmation)
-      this.status = true;
       // this.disabled = true;
+      this.status = true;
       vm.confirmation.disabled = false;
 
       // (Save payment data into cookies)
     },
+    submitted: false,
     disabled: true,
     status: false
   };
   vm.confirmation = {
+    click: function() {
+      this.submitted = true;
+    },
     submit: function() {
       $log.info('Confirm "Confirmation" step.');
 
@@ -107,9 +118,10 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       vm.step = 3;
 
       // Mark stage as completed and unlock next step (confirmation)
-      this.status = true;
       // this.disabled = true;
+      this.status = true;
     },
+    submitted: false,
     disabled: true,
     status: false
   };

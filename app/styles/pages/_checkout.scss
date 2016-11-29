@@ -15,6 +15,28 @@
 /* Details */
 .checkout-details {
 
+  // Highlight all invalid fields
+  &.submitted {
+
+    // Labels
+    .control-label {
+
+      &-mark {
+        color: $brand-pink;
+      }
+    }
+    
+    // Fields
+    .form-control.ng-invalid {
+      border-bottom-color: $brand-pink;
+
+      &:focus {
+        border-bottom-color: $brand-pink;
+      }
+    }
+  }
+
+  // Elements
   &-top {
     margin: 0 0 15px;
     // font-size: 14px;
@@ -150,6 +172,28 @@
   background: #fff;
   color: #333;
 
+  // Highlight all invalid fields
+  &.submitted {
+
+    // Labels
+    .control-label {
+
+      &-mark {
+        color: $brand-pink;
+      }
+    }
+    
+    // Fields
+    .form-control.ng-invalid {
+      border-bottom-color: $brand-pink;
+
+      &:focus {
+        border-bottom-color: $brand-pink;
+      }
+    }
+  }
+
+  // Elements
   &-top {
     padding: 40px 30px;
     border-bottom: 1px solid #efefef;
@@ -194,6 +238,13 @@
     .control-label {
       margin: 0 0 10px;
       font-size: 1.28em;
+
+      &-mark {
+
+        &.invalid {
+          color: $brand-pink;
+        }
+      }
     }
     .form-control {
       border-color: #dedede;

@@ -7,7 +7,7 @@
         <md-tab-label>Details</md-tab-label>
         <md-tab-body>
           <!-- Details -->
-          <form class="checkout-details" ng-submit="checkout.details.submit()">
+          <form class="checkout-details" ng-class="{'submitted': checkout.details.submitted}" ng-submit="checkout.details.submit()">
             <div class="checkout-details-top">
               <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.details.class.alias})" target="_blank">Back to 'Class name'</a>
             </div>
@@ -54,7 +54,7 @@
               </div>
             </div>
             <div class="checkout-details-bottom">
-              <button class="checkout-details-confirm btn btn-primary">Confirm Details</button>
+              <button class="checkout-details-confirm btn btn-primary" ng-click="checkout.details.click()">Confirm Details</button>
             </div>
           </form>
           <!-- Details End -->
@@ -64,7 +64,7 @@
         <md-tab-label>Payment</md-tab-label>
         <md-tab-body>
           <!-- Payment -->
-          <div class="checkout-payment">
+          <form class="checkout-payment" ng-class="{'submitted': checkout.payment.submitted}" ng-submit="checkout.payment.submit()">
             <div class="checkout-payment-top">
               Total amount<br/>
               <strong>$102.60</strong>
@@ -75,16 +75,18 @@
                 <div class="checkout-payment-details-title">Billing details</div>
                 <div class="checkout-payment-details-content row">
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">First name <span class="control-label-mark">*</span></label>
+                    <label class="control-label">First name <span class="control-label-mark" ng-class="{'invalid': 
+                    checkout.payment.billing.firstName !== null && checkout.payment.billing.firstName.length === 0}">*</span></label>
+                    {{checkout.payment.billing.firstName !== null}} and {{checkout.payment.billing.firstName.length}}
                     <input class="form-control form-full" ng-model="checkout.payment.billing.firstName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="First name" required/>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">Last name <span class="control-label-mark">*</span></label>
+                    <label class="control-label">Last name <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.billing.lastName.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.billing.lastName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Last name" required/>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Address 1 <span class="control-label-mark">*</span></label>
+                    <label class="control-label">Address 1 <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.billing.address_1.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.billing.address_1" type="text" value="" placeholder="Street address" required/>
                   </div>
 
@@ -94,16 +96,16 @@
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Suburb <span class="control-label-mark">*</span></label>
+                    <label class="control-label">Suburb <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.billing.suburb.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.billing.suburb" type="text" value="" placeholder="Suburb" required/>
                   </div>
 
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">State <span class="control-label-mark">*</span></label>
+                    <label class="control-label">State <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.billing.state.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.billing.state" type="text" value="" placeholder="NSW" required/>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">Postcode <span class="control-label-mark">*</span></label>
+                    <label class="control-label">Postcode <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.billing.postcode.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.billing.postcode" ng-pattern="checkout.patterns.postcode" type="text" value="" placeholder="####" required/>
                   </div>
                 </div>
@@ -113,7 +115,7 @@
                 <div class="checkout-payment-details-title">Card details</div>
                 <div class="checkout-payment-details-content row">
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Credit card number <span class="control-label-mark">*</span></label>
+                    <label class="control-label">Credit card number <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.card.number.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.card.number" ng-pattern="checkout.patterns.creditcard" type="text" value="" placeholder="#### #### #### ####" required/>
                   </div>
 
@@ -122,12 +124,12 @@
                     <input class="form-control form-full" ng-model="checkout.payment.card.start" type="text" value="" placeholder="mm/yy"/>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">Expiry date <span class="control-label-mark">*</span></label>
+                    <label class="control-label">Expiry date <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.card.expiry.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.card.expiry" type="text" value="" placeholder="mm/yy" required/>
                   </div>
 
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">CVC Code <span class="control-label-mark">*</span></label>
+                    <label class="control-label">CVC Code <span class="control-label-mark" ng-class="{'invalid': !checkout.payment.card.cvc.length > 0}">*</span></label>
                     <input class="form-control form-full" ng-model="checkout.payment.card.cvc" ng-pattern="checkout.patterns.cvccode" type="text" value="" placeholder="***" required/>
                   </div>
 
@@ -146,22 +148,21 @@
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <button class="checkout-payment-confirm btn btn-primary btn-block">Submit Payment</button>
+                    <button class="checkout-payment-confirm btn btn-primary btn-block" ng-click="checkout.payment.click()">Submit Payment</button>
                   </div>
                 </div>
               </div>
 
             </div>
             <div class="checkout-payment-bottom"></div>
-          </div>
+          </form>
           <!-- Payment End -->
         </md-tab-body>
       </md-tab>
       <md-tab id="tab3" ng-disabled="checkout.confirmation.disabled">
         <md-tab-label>Confirmation</md-tab-label>
         <md-tab-body>
-          View for Item #3 <br/>
-          data.selectedIndex = 2;
+          View for Confirmation
         </md-tab-body>
       </md-tab>
     </md-tabs>
