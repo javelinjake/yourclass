@@ -96,7 +96,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       vm.booking.selected = (savedBookingData && vm.booking.list.filter(function(item) {
         return item.timeId === savedBookingData.booking.timeId;
       })[0]) || null;
-      vm.booking.friends.count = (savedBookingData && savedBookingData.booking.friends) || 0;
+      vm.booking.friends.count = vm.booking.selected !== null ? (savedBookingData && savedBookingData.booking.friends) : 0;
 
       // Check user data. update booking price
       vm.booking.class.price = $rootScope.userData && $rootScope.userData.roles[0].role === 'teacher' && vm.class.teacher.id === $rootScope.userData.id ? vm.class.price : vm.class.studentPrice;
