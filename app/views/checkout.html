@@ -54,7 +54,7 @@
               </div>
             </div>
             <div class="checkout-details-bottom">
-              <button class="checkout-details-confirm btn btn-primary" ng-click="checkout.details.click()">Confirm Details</button>
+              <button class="checkout-details-confirm btn btn-primary" ng-click="checkout.details.click()" ng-disabled="checkout.details.status">Confirm Details</button>
             </div>
           </form>
           <!-- Details End -->
@@ -67,7 +67,7 @@
           <form class="checkout-payment" name="payment" ng-class="{'submitted': checkout.payment.submitted}" ng-submit="checkout.payment.submit()">
             <div class="checkout-payment-top">
               Total amount<br/>
-              <strong>$102.60</strong>
+              <strong>{{::checkout.details.class.price * (checkout.details.students.length) | currency : '$'}}</strong>
             </div>
             <div class="checkout-payment-content row">
 
@@ -75,7 +75,7 @@
                 <div class="checkout-payment-details-title">Billing details</div>
                 <div class="checkout-payment-details-content row">
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">First name <span class="control-label-mark" ng-class="{'invalid': payment.first_name.$touched && payment.first_name.$invalid}">*</span></label>
+                    <label class="control-label">First name <span class="control-label-mark" ng-class="{'invalid': payment.first_name.$touched && payment.first_name.$invalid, 'valid': payment.first_name.$valid}">*</span></label>
                     <input class="form-control form-full" name="first_name" ng-model="checkout.payment.billing.firstName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="First name" required/>
                   </div>
                   <div class="col-md-6 col-sm-12">

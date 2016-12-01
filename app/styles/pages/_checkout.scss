@@ -8,33 +8,45 @@
 
   &-content {
     padding: 40px 0 0;
+  
+    // Common Form styles
+    form {
+
+      // Label mark
+      .control-label-mark {
+        &.valid { color: inherit; }
+        &.invalid { color: $brand-pink; }
+      }
+
+      // Fields
+      .form-control {
+        border-color: #dedede;
+        background-color: #fff;
+      }
+
+      // Highlight all invalid fields on first form submit
+      &.submitted {
+
+        // Label mark
+        .control-label-mark {
+          &.valid { color: inherit; }
+          &.invalid { color: $brand-pink; }
+        }
+
+        // Fields
+        .form-control.ng-invalid { border-bottom-color: $brand-pink;
+          &:focus { border-bottom-color: $brand-pink; }
+        }
+
+      }
+
+    }
   }
 }
 
 
 /* Details */
 .checkout-details {
-
-  // Highlight all invalid fields
-  &.submitted {
-
-    // Labels
-    .control-label {
-
-      &-mark {
-        color: $brand-pink;
-      }
-    }
-
-    // Fields
-    .form-control.ng-invalid {
-      border-bottom-color: $brand-pink;
-
-      &:focus {
-        border-bottom-color: $brand-pink;
-      }
-    }
-  }
 
   // Elements
   &-top {
@@ -134,22 +146,6 @@
         margin-bottom: 0;
       }
     }
-
-    // Form label and textfield
-    .control-label {
-      font-weight: 400;
-
-      &-mark {
-
-        &.invalid {
-          color: $brand-pink;
-        }
-      }
-    }
-    .form-control {
-      border-color: #dedede;
-      background-color: #fff;
-    }
   }
 
   &-bottom {
@@ -171,6 +167,12 @@
       color: #fff;
     }
   }
+
+  // Form elements
+  .control-label {
+    margin: 0 0 10px;
+    font-size: 1.28em;
+  }
 }
 
 
@@ -178,27 +180,6 @@
 .checkout-payment {
   background: #fff;
   color: #333;
-
-  // Highlight all invalid fields
-  &.submitted {
-
-    // Labels
-    .control-label {
-
-      &-mark {
-        color: $brand-pink;
-      }
-    }
-
-    // Fields
-    .form-control.ng-invalid {
-      border-bottom-color: $brand-pink;
-
-      &:focus {
-        border-bottom-color: $brand-pink;
-      }
-    }
-  }
 
   // Elements
   &-top {
@@ -258,23 +239,6 @@
         margin-bottom: 0;
       }
     }
-
-    // Form label and textfield
-    .control-label {
-      margin: 0 0 10px;
-      font-size: 1.28em;
-
-      &-mark {
-
-        &.invalid {
-          color: $brand-pink;
-        }
-      }
-    }
-    .form-control {
-      border-color: #dedede;
-      background-color: #fff;
-    }
   }
 
   &-confirm {
@@ -289,6 +253,11 @@
       background-color: darken($brand-salmon, 10%);
       color: #fff;
     }
+  }
+
+  // Form elements
+  .control-label {
+    font-weight: 400;
   }
 }
 
