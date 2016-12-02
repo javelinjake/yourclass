@@ -132,17 +132,21 @@
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">
-                      <input class="checkout.payment.card.save" type="checkbox"/>
+                    <div class="control-label">
+                      <input class="checkout.payment.card.save" name="save_card_details" ng-model="checkout.payment.card.save" type="checkbox" value="" required/>
                       Save card details for next time?
-                    </label>
+                    </div>
                   </div>
 
+                  <md-checkbox aria-label="Save card details for next time?">
+                    <span>Save card details for next time?</span>
+                  </md-checkbox>
+
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">
-                      <input class="checkout.payment.card.save" type="checkbox"/>
-                      I agree to the <em>terms and conditions</em> <span class="control-label-mark">*</span>
-                    </label>
+                    <div class="control-label">
+                      <input class="checkout.payment.card.save" name="agreement" ng-model="checkout.payment.card.agreement" type="checkbox" value="" required/>
+                      I agree to the <em>terms and conditions</em> <span class="control-label-mark" ng-class="{'invalid': payment.agreement.$touched && payment.agreement.$invalid}">*</span>
+                    </div>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
