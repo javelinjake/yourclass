@@ -51,12 +51,13 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
     };
 
     // Class:
-    result.class.id    = bookingData.class.id;
-    result.class.price = bookingData.class.price; // added that not to request class data again
-    result.class.title = bookingData.class.title; // added that not to request class data again
-    result.class.alias = bookingData.class.alias; // added that not to request class data again
-    result.class.venue = bookingData.class.venue; // added that not to request class data again
-    result.class.image = bookingData.class.image.length > 0 ? $rootScope.imageUrl + bookingData.class.image : ''; // added that not to request class data again
+    result.class.id      = bookingData.class.id;
+    result.class.title   = bookingData.class.title; // added that not to request class data again
+    result.class.alias   = bookingData.class.alias; // added that not to request class data again
+    result.class.teacher = bookingData.class.teacher; // added that not to request class data again
+    result.class.venue   = bookingData.class.venue; // added that not to request class data again
+    result.class.price   = bookingData.class.price; // added that not to request class data again
+    result.class.image   = bookingData.class.image.length > 0 ? $rootScope.imageUrl + bookingData.class.image : ''; // added that not to request class data again
 
     // Booking
     result.booking.dateId  = bookingData.selected.dateId;
@@ -83,11 +84,12 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
   		vm.class = response.data;
 
       // Update booking block with class ID, title and venue
-      vm.booking.class.id    = vm.class.id;
-      vm.booking.class.title = vm.class.title;
-      vm.booking.class.alias = vm.class.alias;
-      vm.booking.class.venue = vm.class.venue;
-      vm.booking.class.image = vm.class.photos && vm.class.photos[0] && vm.class.photos[0].src || vm.class.category && vm.class.category.image || '';
+      vm.booking.class.id      = vm.class.id || null;
+      vm.booking.class.title   = vm.class.title || null;
+      vm.booking.class.alias   = vm.class.alias || null;
+      vm.booking.class.venue   = vm.class.venue || null;
+      vm.booking.class.teacher = vm.class.teacher && vm.class.teacher.profile && (`${vm.class.teacher.profile.firstName} ${vm.class.teacher.profile.lastName}`) || null;
+      vm.booking.class.image   = vm.class.photos && vm.class.photos[0] && vm.class.photos[0].src || vm.class.category && vm.class.category.image || '';
 
       // Create list of dates for booking block
       vm.booking.list = createBookingList(response.data.dates);
@@ -115,6 +117,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       title: null,
       alias: null,
       venue: null,
+      teacher: null,
       image: null,
       size: 0,
       spots: 0,
@@ -164,6 +167,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       else {
         // Save booked data into cookies
         $cookies.putObject('booking', createBookingObject(this, $rootScope.userData));
+        $log.error(vm.booking);
 
         // Change the location, show some booked data in the search string
         $location.search({

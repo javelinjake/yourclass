@@ -27,6 +27,16 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
   });
 
 
+  /* Result */
+  var result = {
+    studentId: savedBookingData.user.id,
+    classId: savedBookingData.class.id,
+    dateId: savedBookingData.booking.dateId,
+    timeId: savedBookingData.booking.timeId,
+    students: null,
+    billing: null,
+    card: null
+  };
 
 
   /* Common */
@@ -63,6 +73,10 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       vm.payment.disabled = false;
 
       // (Save list of students data into cookies)
+
+      // Add students list into result Object
+      result.students = this.students;
+      $log.warn(result);
     },
     submitted: false,
     disabled: false, // According to the task "details" are always enabled
@@ -90,7 +104,12 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
     click: function() {
       this.submitted = true;
     },
-    submit: function() {
+    submit: function(flag_valid) {
+      // On submission required checbox is ignored
+      // Chek is Form valid
+      console.log(flag_valid);
+      if (!flag_valid) { return false; }
+
       $log.info('Confirm "Payment" step.');
 
       // Increase step
@@ -102,6 +121,11 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       vm.confirmation.disabled = false;
 
       // (Save payment data into cookies)
+
+      // Add billing and card details into result Object
+      result.billing = this.billing;
+      result.card = this.card;
+      $log.warn(result);
     },
     submitted: false,
     disabled: true,
