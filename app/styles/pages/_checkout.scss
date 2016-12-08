@@ -8,6 +8,74 @@
 
   &-content {
     padding: 40px 0 0;
+
+    // Common Form styles
+    form {
+
+      // Label mark
+      .control-label {
+        line-height: 1.2;
+
+        a {
+          font-style: normal;
+          color: $brand-blue;
+          text-decoration: none;
+
+          &:hover, &:active {
+            text-decoration: underline;
+          }
+        }
+
+        &-mark {
+          &.valid { color: inherit; }
+          &.touched.invalid { color: $brand-pink; }
+        }
+      }
+
+      // Fields
+      .form-control {
+        border-color: #dedede;
+        background-color: #fff;
+      }
+
+      // Highlight all invalid fields on first form submit
+      &.submitted {
+
+        // Label mark
+        .control-label {
+          &-mark {
+            &.invalid { color: $brand-pink; }
+          }
+        }
+
+        // Fields
+        .form-control.ng-invalid,
+        md-checkbox.ng-invalid .md-icon { border-bottom-color: $brand-pink;
+          &:focus { border-bottom-color: $brand-pink; }
+        }
+      }
+
+      // Divider
+      hr { margin: 30px 0; }
+    }
+  }
+
+  &-confirm-note {
+    position: relative;
+    z-index: 1;
+    margin: 0 5px;
+    padding: 5px 10px;
+    box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.5);
+    background: #f4f4f4;
+    font-weight: 700;
+    color: $brand-salmon;
+    opacity: 1;
+    transition: all 0.2s ease-in-out 0s;
+
+    &.ng-hide {
+      margin-top: -30px;
+      opacity: 0;
+    }
   }
 }
 
@@ -15,6 +83,7 @@
 /* Details */
 .checkout-details {
 
+  // Elements
   &-top {
     margin: 0 0 15px;
     // font-size: 14px;
@@ -112,15 +181,6 @@
         margin-bottom: 0;
       }
     }
-
-    // Form label and textfield
-    .control-label {
-      font-weight: 400;
-    }
-    .form-control {
-      border-color: #dedede;
-      background-color: #fff;
-    }
   }
 
   &-bottom {
@@ -128,6 +188,8 @@
     text-align: right;
   }
   &-confirm {
+    position: relative;
+    z-index: 2;
     width: 360px;
     max-width: 100%;
     border-width: 0;
@@ -142,6 +204,11 @@
       color: #fff;
     }
   }
+
+  // Form elements
+  .control-label {
+    font-weight: 400;
+  }
 }
 
 
@@ -150,6 +217,7 @@
   background: #fff;
   color: #333;
 
+  // Elements
   &-top {
     padding: 40px 30px;
     border-bottom: 1px solid #efefef;
@@ -157,21 +225,39 @@
     text-align: center;
   }
   &-content {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    padding: 45px 0 50px;
+    padding: 45px 30px 50px;
+
+    @media (min-width: $screen-sm-min) {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
   }
   &-bottom {}
 
   &-details {
-    padding: 0 50px;
+    margin-bottom: 80px;
+
+    @media (min-width: $screen-sm-min) {
+      margin-bottom: 0;
+      padding: 0 50px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &.booking {
-      border-right: 1px solid #efefef;
+
+      @media (min-width: $screen-sm-min) {
+        border-right: 1px solid #efefef;
+      }
     }
     &.card {
-      border-left: 1px solid #efefef;
+
+      @media (min-width: $screen-sm-min) {
+        border-left: 1px solid #efefef;
+      }
     }
 
     &-title {
@@ -189,19 +275,11 @@
         margin-bottom: 0;
       }
     }
-
-    // Form label and textfield
-    .control-label {
-      margin: 0 0 10px;
-      font-size: 1.28em;
-    }
-    .form-control {
-      border-color: #dedede;
-      background-color: #fff;
-    }
   }
 
   &-confirm {
+    position: relative;
+    z-index: 2;
     border-width: 0;
     border-color: transparent;
     background-color: $brand-salmon;
@@ -213,6 +291,92 @@
       background-color: darken($brand-salmon, 10%);
       color: #fff;
     }
+  }
+
+  &-flag {
+    margin: 10px 0 0;
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  // Form elements
+  .control-label {
+    margin: 0 0 12px;
+    font-weight: 700;
+    font-size: 1.28em;
+  }
+}
+
+
+/* Confirmation */
+.checkout-confirmation {
+  text-align: center;
+
+  &-top {
+    margin: 0;
+    padding: 30px 30px 0;
+    background: #fff;
+    font-weight: 700;
+    font-size: 1.8em;
+    text-transform: none;
+  }
+  &-content {
+    padding: 30px 30px;
+    background: #fff;
+    font-size: 1.14em;
+
+    h3, h4 {
+      font-weight: 700;
+      text-transform: none;
+    }
+
+    h3 {
+      margin: 1.6em 0 1.6em;
+      font-size: 1.25em;
+    }
+    h4 {
+      margin: 1.6em 0 0.6em;
+      font-size: 1em;
+    }
+
+    p {
+      margin: 0 0 0.6em;
+    }
+
+    ul {
+      margin: 0 0 0.6em;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      margin: 0.3em 0;
+    }
+  }
+  &-illustration {
+    width: 220px;
+    height: 170px;
+    margin: 0 auto;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &-bottom {
+    padding: 10px 30px;
+  }
+  &-button {
+    max-width: 100%;
+    width: 360px;
+    border-width: 0;
+    border-color: transparent;
+    background-color: $brand-salmon;
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff;
   }
 }
 
@@ -270,5 +434,39 @@ md-tabs-canvas {
 md-pagination-wrapper {
   width: 100% !important;
   height: 32px;
-  // text-align: center;
+}
+
+
+/* MD Checkbox */
+md-checkbox {
+  margin: 0;
+
+  .md-container {
+    width: 30px;
+    height: 30px;
+  }
+
+  .md-icon {
+    width: 30px;
+    height: 30px;
+    border-width: 1px;
+    border-color: #dedede;
+    border-radius: 0;
+  }
+
+  &.md-checked .md-icon {
+
+    &:after {
+      top: 6px;
+      left: 12px;
+    }
+  }
+
+  &:not(.md-checked) .md-icon {
+    border-color: #dedede;
+  }
+
+  .md-label {
+    margin-left: 45px;
+  }
 }

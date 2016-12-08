@@ -7,7 +7,7 @@
         <md-tab-label>Details</md-tab-label>
         <md-tab-body>
           <!-- Details -->
-          <form class="checkout-details" ng-submit="checkout.details.submit()">
+          <form class="checkout-details" name="details" ng-class="{'submitted': checkout.details.submitted}" ng-submit="checkout.details.submit(details.$valid)">
             <div class="checkout-details-top">
               <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.details.class.alias})" target="_blank">Back to 'Class name'</a>
             </div>
@@ -54,7 +54,8 @@
               </div>
             </div>
             <div class="checkout-details-bottom">
-              <button class="checkout-details-confirm btn btn-primary">Confirm Details</button>
+              <button class="checkout-details-confirm btn btn-primary" ng-click="checkout.details.click()" ng-disabled="checkout.details.status">Confirm Details</button>
+              <div class="checkout-confirm-note" ng-show="checkout.details.submitted && details.$invalid">Please fill in all required fields</div>
             </div>
           </form>
           <!-- Details End -->
@@ -64,10 +65,10 @@
         <md-tab-label>Payment</md-tab-label>
         <md-tab-body>
           <!-- Payment -->
-          <div class="checkout-payment">
+          <form class="checkout-payment" name="payment" ng-class="{'submitted': checkout.payment.submitted}" ng-submit="checkout.payment.submit(payment.$valid)">
             <div class="checkout-payment-top">
               Total amount<br/>
-              <strong>$102.60</strong>
+              <strong>{{::checkout.details.class.price * (checkout.details.students.length) | currency : '$'}}</strong>
             </div>
             <div class="checkout-payment-content row">
 
@@ -75,36 +76,36 @@
                 <div class="checkout-payment-details-title">Billing details</div>
                 <div class="checkout-payment-details-content row">
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">First name <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.firstName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="First name" required/>
+                    <label class="control-label">First name <span class="control-label-mark" ng-class="{'valid': payment.first_name.$valid, 'invalid': payment.first_name.$invalid, 'touched': payment.first_name.$touched}">*</span></label>
+                    <input class="form-control form-full" name="first_name" ng-model="checkout.payment.billing.firstName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="First name" required/>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">Last name <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.lastName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Last name" required/>
+                    <label class="control-label">Last name <span class="control-label-mark" ng-class="{'valid': payment.last_name.$valid, 'invalid': payment.last_name.$invalid, 'touched': payment.last_name.$touched}">*</span></label>
+                    <input class="form-control form-full" name="last_name" ng-model="checkout.payment.billing.lastName" ng-pattern="checkout.patterns.name" type="text" value="" placeholder="Last name" required/>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Address 1 <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.address_1" type="text" value="" placeholder="Street address" required/>
+                    <label class="control-label">Address 1 <span class="control-label-mark" ng-class="{'valid': payment.address_1.$valid, 'invalid': payment.address_1.$invalid, 'touched': payment.address_1.$touched}">*</span></label>
+                    <input class="form-control form-full" name="address_1" ng-model="checkout.payment.billing.address_1" type="text" value="" placeholder="Street address" required/>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
                     <label class="control-label">Address 2</label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.address_2" type="text" value="" placeholder="Apartment, suite, unit, etc."/>
+                    <input class="form-control form-full" name="address_2" ng-model="checkout.payment.billing.address_2" type="text" value="" placeholder="Apartment, suite, unit, etc."/>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Suburb <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.suburb" type="text" value="" placeholder="Suburb" required/>
+                    <label class="control-label">Suburb <span class="control-label-mark" ng-class="{'valid': payment.suburb.$valid, 'invalid': payment.suburb.$invalid, 'touched': payment.suburb.$touched}">*</span></label>
+                    <input class="form-control form-full" name="suburb" ng-model="checkout.payment.billing.suburb" type="text" value="" placeholder="Suburb" required/>
                   </div>
 
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">State <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.state" type="text" value="" placeholder="NSW" required/>
+                    <label class="control-label">State <span class="control-label-mark" ng-class="{'valid': payment.state.$valid, 'invalid': payment.state.$invalid, 'touched': payment.state.$touched}">*</span></label>
+                    <input class="form-control form-full" name="state" ng-model="checkout.payment.billing.state" type="text" value="" placeholder="NSW" required/>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">Postcode <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.billing.postcode" ng-pattern="checkout.patterns.postcode" type="text" value="" placeholder="####" required/>
+                    <label class="control-label">Postcode <span class="control-label-mark" ng-class="{'valid': payment.postcode.$valid, 'invalid': payment.postcode.$invalid, 'touched': payment.postcode.$touched}">*</span></label>
+                    <input class="form-control form-full" name="postcode" ng-model="checkout.payment.billing.postcode" ng-pattern="checkout.patterns.postcode" type="text" value="" placeholder="####" required/>
                   </div>
                 </div>
               </div>
@@ -113,55 +114,81 @@
                 <div class="checkout-payment-details-title">Card details</div>
                 <div class="checkout-payment-details-content row">
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">Credit card number <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.card.number" ng-pattern="checkout.patterns.creditcard" type="text" value="" placeholder="#### #### #### ####" required/>
+                    <label class="control-label">Credit card number <span class="control-label-mark" ng-class="{'valid': payment.card_number.$valid, 'invalid': payment.card_number.$invalid, 'touched': payment.card_number.$touched}">*</span></label>
+                    <input class="form-control form-full" name="card_number" ng-model="checkout.payment.card.number" ng-pattern="checkout.patterns.creditcard" type="text" value="" placeholder="#### #### #### ####" required/>
                   </div>
 
                   <div class="col-md-6 col-sm-12">
                     <label class="control-label">Start date</label>
-                    <input class="form-control form-full" ng-model="checkout.payment.card.start" type="text" value="" placeholder="mm/yy"/>
+                    <input class="form-control form-full" name="card_start_date" ng-model="checkout.payment.card.start" type="text" value="" placeholder="mm/yy"/>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">Expiry date <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.card.expiry" type="text" value="" placeholder="mm/yy" required/>
+                    <label class="control-label">Expiry date <span class="control-label-mark" ng-class="{'valid': payment.card_expiry_date.$valid, 'invalid': payment.card_expiry_date.$invalid, 'touched': payment.card_expiry_date.$touched}">*</span></label>
+                    <input class="form-control form-full" name="card_expiry_date" ng-model="checkout.payment.card.expiry" type="text" value="" placeholder="mm/yy" required/>
                   </div>
 
                   <div class="col-md-6 col-sm-12">
-                    <label class="control-label">CVC Code <span class="control-label-mark">*</span></label>
-                    <input class="form-control form-full" ng-model="checkout.payment.card.cvc" ng-pattern="checkout.patterns.cvccode" type="text" value="" placeholder="***" required/>
+                    <label class="control-label">CVC Code <span class="control-label-mark" ng-class="{'valid': payment.card_cvc_code.$valid, 'invalid': payment.card_cvc_code.$invalid, 'touched': payment.card_cvc_code.$touched}">*</span></label>
+                    <input class="form-control form-full" name="card_cvc_code" ng-model="checkout.payment.card.cvc" ng-pattern="checkout.patterns.cvccode" type="text" value="" placeholder="***" required/>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">
-                      <input class="checkout.payment.card.save" type="checkbox"/>
-                      Save card details for next time?
-                    </label>
+                    <div class="control-label">
+                      <md-checkbox name="card_details_save" ng-model="checkout.payment.card.save" aria-label="Save card details for next time?">Save card details for next time?</md-checkbox>
+                    </div>
+                    <hr>
+                    <div class="control-label">
+                      <md-checkbox name="agreement" ng-model="checkout.payment.card.agreement" aria-label="I agree to the terms and conditions." required>I agree to the <a href="#" title="Terms and Conditions" target="_blank">terms and conditions</a> <span class="control-label-mark" ng-class="{'valid': payment.agreement.$valid, 'invalid': payment.agreement.$invalid, 'touched': payment.agreement.$touched}">*</span></md-checkbox>
+                    </div>
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <label class="control-label">
-                      <input class="checkout.payment.card.save" type="checkbox"/>
-                      I agree to the <em>terms and conditions</em> <span class="control-label-mark">*</span>
-                    </label>
-                  </div>
-
-                  <div class="col-md-12 col-sm-12">
-                    <button class="checkout-payment-confirm btn btn-primary btn-block">Submit Payment</button>
+                    <button class="checkout-payment-confirm btn btn-primary btn-block" ng-click="checkout.payment.click()">Submit Payment</button>
+                    <div class="checkout-confirm-note" ng-show="checkout.payment.submitted && payment.$invalid">Please fill in all required fields</div>
+                    <div class="checkout-payment-flag">
+                      <img src="images/promisepay.jpg" alt="Promisepay banner">
+                    </div>
                   </div>
                 </div>
               </div>
 
             </div>
             <div class="checkout-payment-bottom"></div>
-          </div>
+          </form>
           <!-- Payment End -->
         </md-tab-body>
       </md-tab>
       <md-tab id="tab3" ng-disabled="checkout.confirmation.disabled">
         <md-tab-label>Confirmation</md-tab-label>
         <md-tab-body>
-          View for Item #3 <br/>
-          data.selectedIndex = 2;
+          <div class="checkout-confirmation">
+            <h2 class="checkout-confirmation-top">
+              Great, your confirmed in this class!
+            </h2>
+            <div class="checkout-confirmation-content">
+              <div class="checkout-confirmation-illustration" style="background-image: url({{::checkout.details.class.image}})"></div>
+              <h3>{{::checkout.details.class.title}}</h3>
+
+              <h4>With</h4>
+              <p>{{::checkout.details.class.teacher}}</p>
+
+              <h4>When</h4>
+              <p>{{::checkout.details.booking.date.start | date : 'EEEE d MMMM yyyy'}}<br>{{::checkout.details.booking.date.start | date : 'h:mma' | lowercase}} - {{::checkout.details.booking.date.end | date : 'h:mma' | lowercase}}</p>
+
+              <h4>Where</h4>
+              <p>{{::checkout.details.class.venue || 'Address is not set yet'}}</p>
+
+              <h4>Confirmed quests</h4>
+              <ul>
+                <li ng-repeat="member in checkout.details.students">
+                  {{member.name}}
+                </li>
+              </ul>
+            </div>
+            <div class="checkout-confirmation-bottom">
+              <a class="checkout-confirmation-button btn btn-primary" ui-sref="Home()">View more classes</a>
+            </div>
+          </div>
         </md-tab-body>
       </md-tab>
     </md-tabs>
