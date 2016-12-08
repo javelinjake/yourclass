@@ -6,11 +6,11 @@
               <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
             </div>
             <div class="text-center text">
-                <div>
+                <div class="font-big line-height-1">
                     {{ class.class.teacher.profile.firstName | capitalize }}
                     {{ class.class.teacher.profile.lastName | capitalize }}
                 </div>
-                <small class="italic">
+                <small class="italic line-height-1">
                     Teacher
                 </small>
             </div>
@@ -23,19 +23,18 @@
                 <small class="italic">
                     Sydney, NSW
                 </small>
-                <div class="review-stars">
-                    <div class="stars">
-                        <span class="icon icon-star"></span>
-                        <span class="icon icon-star"></span>
-                        <span class="icon icon-star"></span>
-                        <span class="icon icon-star_half"></span>
-                        <span class="icon icon-star_border"></span>
-                    </div>
-                    <div class="">
-                        4 Reviews
+                <div class="review-stars my4">
+                  <input-stars max="5" icon-base="icon icon-star" icon-empty="icon-star" icon-full="icon-star" ng-model="class.rating" readonly></input-stars>
+                    <div class="font-bold">
+                        <span ng-if="class.class.reviews.length > 0">
+                          {{ class.class.reviews.length }} Reviews
+                        </span>
+                        <span ng-if="class.class.reviews.length == 0">
+                          No reviews yet
+                        </span>
                     </div>
                 </div>
-                <div class="">
+                <div>
                   {{ class.class.brief }}
                 </div>
             </div>
@@ -44,75 +43,54 @@
     </div>
 </section>
 
-<!--
-
-  Class title
-
-  Teacher pic
-  Teacher name
-
-  Class reviews
-  Location
-  Tags
-  Mini description
-
-  About class name
-  Big description
-  Images
-
-  Class fee
-  List of class dates
-  Number of students
-  Book button
-  Spots left
-
- -->
+<div class="container position-relative">
+ <!-- Booking Class -->
+ <div class="class-booking" ng-class="{'view-expanded': class.booking.view.expanded}" sticky sticky-class="fixed" media-query="min-width: 1001px" offset="20">
+     <div class="class-booking-title">{{class.booking.class.price | currency : '$'}} per person</div>
+     <div class="class-booking-empty" ng-hide="class.booking.list.length > 0">No available classes</div>
+     <div class="class-booking-spots" ng-show="class.booking.list.length > 0">
+         <div class="class-booking-spots-top">
+             <div class="class-booking-spots-toggle" ng-show="class.booking.list.length > class.booking.view.limit" ng-click="class.booking.view.toggle()">View {{class.booking.view.expanded ? 'less' : 'all'}}</div>
+             <div class="class-booking-spots-title">{{class.booking.view.expanded || class.booking.list.length <= class.booking.view.limit ? 'All available classes' : 'Available classes'}}</div>
+         </div>
+         <div class="class-booking-spots-content">
+             <ul class="class-booking-list">
+                 <li class="class-booking-list-item" ng-repeat="item in class.booking.list | orderBy : 'date.start'">
+                     <label class="class-booking-list-label">
+                         <input class="class-booking-list-radio" ng-model="class.booking.selected" ng-value="item" name="booking" type="radio">
+                         <div class="class-booking-list-text">
+                             <span class="class-booking-list-mark"></span>
+                             <span class="class-booking-list-date">{{::item.date.start | date : 'd MMMM yyyy'}}</span>
+                             <span class="class-booking-list-time">{{::item.date.start | date : 'h:mma' | lowercase}} - {{item.date.end | date : 'h:mma' | lowercase}}</span>
+                         </div>
+                     </label>
+                 </li>
+             </ul>
+         </div>
+     </div>
+     <div class="class-booking-friends" ng-show="class.booking.list.length > 0">
+         <div class="class-booking-friends-description">Are you bringing any friends?</div>
+         <div class="class-booking-friends-counter">
+             <span class="class-booking-friends-control less" title="Less" ng-click="class.booking.friends.less()" ng-disabled="class.booking.friends.count === 0">-</span>
+             <span class="class-booking-friends-count">{{class.booking.friends.count}}</span>
+             <span class="class-booking-friends-control more" title="More" ng-click="class.booking.friends.more()" ng-disabled="class.booking.friends.count === class.booking.friends.limit">+</span>
+         </div>
+     </div>
+     <div class="class-booking-submit" ng-show="class.booking.list.length > 0">
+         <button class="class-booking-button btn btn-block" ng-click="class.booking.submit()">Book now</button>
+         <div class="class-booking-note" ng-show="class.booking.error">Please select a class date to book</div>
+     </div>
+     <div class="class-booking-bottom" ng-show="class.booking.selected !== null">{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? 'Only ' : ''}}{{class.booking.class.spots}} spots left{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? '!' : '.'}}</div>
+ </div>
+ <!-- Booking Class End -->
+</div>
 
 <section class="panel">
-    <div class="container">
-        <!-- Booking Class -->
-        <div class="class-booking" ng-class="{'view-expanded': class.booking.view.expanded}" sticky sticky-class="fixed" media-query="min-width: 1001px" offset="20">
-            <div class="class-booking-title">{{class.booking.class.price | currency : '$'}} per person</div>
-            <div class="class-booking-empty" ng-hide="class.booking.list.length > 0">No available classes</div>
-            <div class="class-booking-spots" ng-show="class.booking.list.length > 0">
-                <div class="class-booking-spots-top">
-                    <div class="class-booking-spots-toggle" ng-show="class.booking.list.length > class.booking.view.limit" ng-click="class.booking.view.toggle()">View {{class.booking.view.expanded ? 'less' : 'all'}}</div>
-                    <div class="class-booking-spots-title">{{class.booking.view.expanded || class.booking.list.length <= class.booking.view.limit ? 'All available classes' : 'Available classes'}}</div>
-                </div>
-                <div class="class-booking-spots-content">
-                    <ul class="class-booking-list">
-                        <li class="class-booking-list-item" ng-repeat="item in class.booking.list | orderBy : 'date.start'">
-                            <label class="class-booking-list-label">
-                                <input class="class-booking-list-radio" ng-model="class.booking.selected" ng-value="item" name="booking" type="radio">
-                                <div class="class-booking-list-text">
-                                    <span class="class-booking-list-mark"></span>
-                                    <span class="class-booking-list-date">{{::item.date.start | date : 'd MMMM yyyy'}}</span>
-                                    <span class="class-booking-list-time">{{::item.date.start | date : 'h:mma' | lowercase}} - {{item.date.end | date : 'h:mma' | lowercase}}</span>
-                                </div>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="class-booking-friends" ng-show="class.booking.list.length > 0">
-                <div class="class-booking-friends-description">Are you bringing any friends?</div>
-                <div class="class-booking-friends-counter">
-                    <span class="class-booking-friends-control less" title="Less" ng-click="class.booking.friends.less()" ng-disabled="class.booking.friends.count === 0">-</span>
-                    <span class="class-booking-friends-count">{{class.booking.friends.count}}</span>
-                    <span class="class-booking-friends-control more" title="More" ng-click="class.booking.friends.more()" ng-disabled="class.booking.friends.count === class.booking.friends.limit">+</span>
-                </div>
-            </div>
-            <div class="class-booking-submit" ng-show="class.booking.list.length > 0">
-                <button class="class-booking-button btn btn-block" ng-click="class.booking.submit()">Book now</button>
-                <div class="class-booking-note" ng-show="class.booking.error">Please select a class date to book</div>
-            </div>
-            <div class="class-booking-bottom" ng-show="class.booking.selected !== null">{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? 'Only ' : ''}}{{class.booking.class.spots}} spots left{{class.booking.class.spots <= class.booking.class.size/2 && class.booking.class.spots !== 0 ? '!' : '.'}}</div>
-        </div>
-        <!-- Booking Class End -->
+    <div class="container py4">
 
-        <div class="class-content">
+        <div class="class-content booking-padding">
 
-            <h2>{{ class.class.title }}
+            <h2 class="mt0">{{ class.class.title }}
                 taught by
                 {{ class.class.teacher.profile.firstName | capitalize }}
                 {{ class.class.teacher.profile.lastName | capitalize }}</h2>
@@ -120,48 +98,116 @@
               {{ class.class.description }}
             </div>
 
+            <div class="row py3">
+              <div class="col col-sm-4">
+
+                <h3>Highlights</h3>
+                <ul class="list-red">
+                  <li>One</li>
+                  <li>Two</li>
+                  <li>Three</li>
+                </ul>
+
+              </div>
+
+              <div class="col col-sm-4">
+
+                <h3>What to bring</h3>
+                <ul class="list-red">
+                  <li>One</li>
+                  <li>Two</li>
+                  <li>Three</li>
+                </ul>
+
+              </div>
+
+              <div class="col col-sm-4">
+
+                <h3>Provided</h3>
+                <ul class="list-red">
+                  <li>One</li>
+                  <li>Two</li>
+                  <li>Three</li>
+                </ul>
+
+              </div>
+            </div>
+
+            <div class="row">
+
+            <div class="col col-sm-12">
+              <h3>Venue</h3>
+            </div>
+
+              <div class="col col-sm-6">
+
+              <div map-lazy-load="{{class.googleMapsUrl}}">
+                <ng-map center="-33.933726, 151.148207" zoom="14">
+                  <shape id="circle"
+                    name="circle"
+                    stroke-opacity="0"
+                    stroke-weight="2"
+                    fill-color="#f45c69"
+                    fill-opacity="0.6"
+                    center="-33.933726, 151.148207"
+                    radius="300"
+                    editable="false" >
+                  </shape>
+                  </ng-map>
+                </div>
+
+              </div>
+              <div class="col col-sm-6">
+
+                <div class="mb3">
+                  <h4 class="mb1 mt0">Type</h4>
+                  <ul class="list-red">
+                    <li>One</li>
+                    <li>Two</li>
+                    <li>Three</li>
+                  </ul>
+                </div>
+
+                <div class="mb3">
+                  <h4 class="mb1 mt0">Facilities</h4>
+                  <ul class="list-inline">
+                    <li>One</li>
+                    <li>Two</li>
+                    <li>Three</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 class="mb1 mt0">Address</h4>
+                  <p class="p0">
+                    Arncliffe, NSW <small class="italic">(exact address will be sent when booked)</small>
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+
         </div>
     </div>
 </section>
 
 <section class="panel panel-grey">
-    <div class="container">
-        <div class="class-content">
+    <div class="container py4">
+        <div class="class-content booking-padding">
 
-            <h2>Photos</h2>
-            <div class="class-photos">
-                <ul>
-                    <li>
-                        <a href="#">
-                            Photo 1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Photo 1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Photo 1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Photo 1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Photo 1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Photo 1
-                        </a>
-                    </li>
-                </ul>
+            <h2 class="mt0">Photos</h2>
+            <div class="class-photos layout-{{class.images.length}}">
+
+              <ng-image-gallery
+                images="class.images"
+                thumbnails="true"
+                inline="false"
+                img-bubbles="false"
+                bg-close="true"
+                bubbles="false"
+                img-anim="fadeup"></ng-image-gallery>
+
             </div>
 
         </div>
@@ -169,17 +215,154 @@
 </section>
 
 <section class="panel">
-    <div class="container">
-        <div class="class-content">
+    <div class="container py4">
+        <div class="class-content booking-padding">
 
-            <h2>Reviews</h2>
+            <h2 class="mt0">Reviews</h2>
             <div class="class-reviews">
-                <ul>
-                    <li>Review 1</li>
-                    <li>Review 2</li>
-                    <li>Review 3</li>
-                </ul>
+              <div class="font-bold font-big">
+                Average customer reviews
+              </div>
+              <div class="review-stars clearfix mb4">
+                <input-stars class="left" max="5" icon-base="icon icon-star" icon-empty="icon-star" icon-full="icon-star" ng-model="class.rating" readonly></input-stars>
+                <div class="left ml2 pt1">
+                    <span ng-if="class.class.reviews.length > 0">
+                      <span class="font-bold">{{ class.class.rating }}</span> from {{ class.class.reviews.length }} Reviews
+                    </span>
+                    <span ng-if="class.class.reviews.length == 0">
+                      No reviews yet
+                    </span>
+                </div>
+              </div>
+              <ul class="reviews list-unstyled">
+                  <li>
+
+                    <div class="reviewer-details text-center">
+                      <div class="reviewer-image" style="background-image: url('http://v2lab.com/blog/wp-content/uploads/2013/12/front_lk.jpg')"></div>
+                      <div class="font-bold">
+                        Lauren King
+                      </div>
+                      <small class="italic">
+                        6 months ago
+                      </small>
+                    </div>
+
+                    <div class="review-content">
+                      <input-stars max="5" icon-base="icon icon-star" icon-empty="icon-star" icon-full="icon-star" ng-model="class.rating" readonly></input-stars>
+                      <div class="font-big font-bold">
+                        Pri explicari deseruisse an
+                      </div>
+                      <p class="m0">
+                        Pri explicari deseruisse an, pro an fugit munere qualisque. Ex animal pertinacia vituperata eos. Audire dolorum ne duo, quem fuisset qui ad. No veniam scripta moderatius qui, habeo aeque ignota te vel. Cum nemore forensibus et. Vim et indoctum reformidans, pri graecis adipiscing et.
+                      </p>
+                    </div>
+
+                  </li>
+
+                  <li>
+
+                    <div class="reviewer-details text-center">
+                      <div class="reviewer-image" style="background-image: url('http://v2lab.com/blog/wp-content/uploads/2013/12/front_lk.jpg')"></div>
+                      <div class="font-bold">
+                        Lauren King
+                      </div>
+                      <small class="italic">
+                        6 months ago
+                      </small>
+                    </div>
+
+                    <div class="review-content">
+                      <input-stars max="5" icon-base="icon icon-star" icon-empty="icon-star" icon-full="icon-star" ng-model="class.rating" readonly></input-stars>
+                      <div class="font-big font-bold">
+                        Pri explicari deseruisse an
+                      </div>
+                      <p class="m0">
+                        Pri explicari deseruisse an, pro an fugit munere qualisque. Ex animal pertinacia vituperata eos. Audire dolorum ne duo, quem fuisset qui ad. No veniam scripta moderatius qui, habeo aeque ignota te vel. Cum nemore forensibus et. Vim et indoctum reformidans, pri graecis adipiscing et.
+                      </p>
+                    </div>
+
+                  </li>
+
+                  <li>
+
+                    <div class="reviewer-details text-center">
+                      <div class="reviewer-image" style="background-image: url('http://v2lab.com/blog/wp-content/uploads/2013/12/front_lk.jpg')"></div>
+                      <div class="font-bold">
+                        Lauren King
+                      </div>
+                      <small class="italic">
+                        6 months ago
+                      </small>
+                    </div>
+
+                    <div class="review-content">
+                      <input-stars max="5" icon-base="icon icon-star" icon-empty="icon-star" icon-full="icon-star" ng-model="class.rating" readonly></input-stars>
+                      <div class="font-big font-bold">
+                        Pri explicari deseruisse an
+                      </div>
+                      <p class="m0">
+                        Pri explicari deseruisse an, pro an fugit munere qualisque. Ex animal pertinacia vituperata eos. Audire dolorum ne duo, quem fuisset qui ad. No veniam scripta moderatius qui, habeo aeque ignota te vel. Cum nemore forensibus et. Vim et indoctum reformidans, pri graecis adipiscing et.
+                      </p>
+                    </div>
+
+                  </li>
+
+                  <li>
+
+                    <div class="reviewer-details text-center">
+                      <div class="reviewer-image" style="background-image: url('http://v2lab.com/blog/wp-content/uploads/2013/12/front_lk.jpg')"></div>
+                      <div class="font-bold">
+                        Lauren King
+                      </div>
+                      <small class="italic">
+                        6 months ago
+                      </small>
+                    </div>
+
+                    <div class="review-content">
+                      <input-stars max="5" icon-base="icon icon-star" icon-empty="icon-star" icon-full="icon-star" ng-model="class.rating" readonly></input-stars>
+                      <div class="font-big font-bold">
+                        Pri explicari deseruisse an
+                      </div>
+                      <p class="m0">
+                        Pri explicari deseruisse an, pro an fugit munere qualisque. Ex animal pertinacia vituperata eos. Audire dolorum ne duo, quem fuisset qui ad. No veniam scripta moderatius qui, habeo aeque ignota te vel. Cum nemore forensibus et. Vim et indoctum reformidans, pri graecis adipiscing et.
+                      </p>
+                    </div>
+
+                  </li>
+              </ul>
             </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="panel panel-grey">
+    <div class="container py4">
+        <div class="class-content booking-padding">
+
+          <div class="teacher-bio">
+            <div class="teacher-details bg-white pb2">
+              <div class="mb2" ng-repeat="image in class.class.teacher.photos" ng-if="image.isMain == 1">
+                <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
+              </div>
+              <div class="text-center text">
+                  <div class="font-big line-height-1">
+                      {{ class.class.teacher.profile.firstName | capitalize }}
+                      {{ class.class.teacher.profile.lastName | capitalize }}
+                  </div>
+                  <small class="italic line-height-1">
+                      Teacher
+                  </small>
+              </div>
+            </div>
+            <div class="teacher-content">
+              <h2 class="mt0 h4">Bio</h2>
+              <p>
+                Pri explicari deseruisse an, pro an fugit munere qualisque. Ex animal pertinacia vituperata eos. Audire dolorum ne duo, quem fuisset qui ad. No veniam scripta moderatius qui, habeo aeque ignota te vel. Cum nemore forensibus et. Vim et indoctum reformidans, pri graecis adipiscing et. Pri explicari deseruisse an, pro an fugit munere qualisque. Ex animal pertinacia vituperata eos. Audire dolorum ne duo, quem fuisset qui ad. No veniam scripta moderatius qui, habeo aeque ignota te vel. Cum nemore forensibus et. Vim et indoctum reformidans, pri graecis adipiscing et.
+              </p>
+            </div>
+          </div>
 
         </div>
     </div>

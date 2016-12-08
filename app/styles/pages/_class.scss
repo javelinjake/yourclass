@@ -1,4 +1,7 @@
 /* ONE CLASS PAGE: */
+
+$booking-width: 400px;
+
 .class {
 
   &-teacher {
@@ -7,23 +10,22 @@
     bottom: 15px;
     left: 15px;
   }
-  &-content {
-    padding-right: 315px;
-  }
+
+}
+
+.booking-padding {
+  padding-right: $booking-width + 20px;
 }
 
 
 /* BOOKING BLOCK */
 .class-booking {
-  position: relative;
-  top: -50px;
-  float: right;
-  width: 400px;
-  margin: 0 0 0 40px;
+  position: absolute;
+  top: -20px;
+  right: 0px;
+  width: $booking-width;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  font-size: 14px;
-  color: #444;
+  background-color: $white;
 
   $block: &;
 

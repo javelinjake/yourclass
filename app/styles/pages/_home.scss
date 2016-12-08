@@ -13,6 +13,7 @@
     background-color: transparent;
     border: none;
     z-index: 10;
+    padding: 0;
 
     .search-form,
     .navbar-logo {
@@ -35,6 +36,107 @@
 /* Hero */
 .home {
   .hero {
-    margin-top: -($navbar-height);
+    //margin-top: -($navbar-height);
   }
+}
+.home {
+  .search-form {
+    margin-bottom: 0;
+  }
+}
+
+
+
+.home-blocks {
+  li a {
+    height: 200px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    &:before {
+      content: "";
+      @include gradient-radial(rgba(0,0,0,0.6), rgba(0,0,0,0));
+      position: absolute;
+      bottom: 0px;
+      left: 50%;
+      margin-left: -75px;
+      width: 150px;
+      height: 150px;
+
+      @include transition(all 0.2s ease);
+    }
+    .text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      @include translate(0, 165px);
+      @include transition(all 0.2s ease);
+      span {
+        display: block;
+      }
+      .content {
+        font-size: 16px;
+        padding: 10px;
+        font-weight: normal;
+      }
+    }
+    &:hover {
+      color: $white;
+      text-decoration: none;
+
+      &:before {
+        margin-left: -250px;
+        width: 500px;
+        height: 500px;
+      }
+      .text {
+        @include translate(0, 75px);
+      }
+    }
+  }
+}
+
+.find-classes {
+  .search-form {
+    max-width: 500px;
+    border: none;
+    .search-form-fieldset {
+      padding-right: 150px;
+    }
+    .form-group {
+      width: 100%;
+      border: none;
+    }
+    .search-form-submit {
+      width: 150px;
+      .btn {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+
+
+video#bgvid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    // width: auto;
+    // height: auto;
+
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+
+    background: url(/images/crossfit-bg.jpg) no-repeat;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }

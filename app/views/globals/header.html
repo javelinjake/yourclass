@@ -67,10 +67,14 @@
             <div class="navbar-links">
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-if="!userLoggedIn">
-                        <a href="#" ng-click="SignUpModal('sm')">Sign Up</a>
+                        <a href="#" ng-click="LogInModal('sm')">
+                          <span>Log In</span>
+                        </a>
                     </li>
                     <li ng-if="!userLoggedIn">
-                        <a href="#" ng-click="LogInModal('sm')">Log In</a>
+                        <a href="#" ng-click="SignUpModal('sm')" class="sign-up">
+                          <span>Sign Up</span>
+                        </a>
                     </li>
                     <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
                         <a href="/user/dashboard" role="button" uib-dropdown-toggle>

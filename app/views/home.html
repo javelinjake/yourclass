@@ -1,8 +1,12 @@
-<section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
+<section class="hero hero-video" style="background-image: url('/images/cat-bg.jpg')">
+
+  <video playsinline autoplay muted loop poster="/images/video-bg.jpg" id="bgvid">
+    <source src="http://yourclass.co/videos/baking-video.webm" type="video/webm">
+    <source src="http://yourclass.co/videos/baking-video.mp4" type="video/mp4">
+  </video>
+
   <div class="container clear">
     <div class="content">
-
-      <button ng-click="home.simpleLogin()">Simple login</button>
 
       <div class="logo-wrapper">
         <img src="/images/logo.png" alt="Your Class - logo"/>
@@ -13,7 +17,7 @@
       </h1>
 
       <div class="text-center lead">
-        Inspiring everyone to learn, share and teach what you love
+        Learn anything. Teach anything.
       </div>
 
       <form class="search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform">
@@ -66,48 +70,200 @@
         </fieldset>
       </form>
 
-      <div class="info-button center-block">
+      <!-- <div class="info-button center-block">
         <button type="submit" ng-click="home.aboutModal('lg')" class="btn btn-info btn-block btn-shadow">
           <span class="text">Who are we?</span>
         </button>
-      </div>
+      </div> -->
 
     </div>
   </div>
 </section>
 
-<section class="top-categories container">
-  <h2 class="text-center">Top categories</h2>
+<section class="top-categories container py4">
 
-  <ul class="list-unstyled row">
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Sports</a>
+  <h2 class="text-center mt0 mb3">Explore Sydney</h2>
+
+  <ul class="list-unstyled row home-blocks">
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/yoga.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Yoga</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Academic</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/cooking.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Baking</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Arts</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/bootcamp.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Bootcamp</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Cooking</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/painting.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Painting</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Life skills</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/tutoring.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Tutoring</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Hobbies</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/dance.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Dance</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Yoga</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/woodwork.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Woodwork</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
-    <li class="col-sm-3" style="background-image: url('/images/categories/sports.jpg')">
-      <a href="#">Fitness</a>
+    <li class="col-sm-3 p0">
+      <div class="m2">
+        <a style="background-image: url('/images/home/sushi.jpg')" href="#" class="font-bold font-bigger white text-center">
+          <div class="text">
+            <span>Sushi</span>
+            <div class="content">
+              Browse our Yoga classes all around Sydney, we have beginner, intermediate and expert classes!
+            </div>
+          </div>
+        </a>
+      </div>
     </li>
   </ul>
 </section>
 
-<section class="top-categories container">
+<section class="panel-red find-classes">
+  <div class="container py4 white text-center">
+    <h2 class="white mt0">
+      Find your next class
+    </h2>
+    <p class="font-big">
+      There are hundreds of classes to choose from.<br />
+      Browse by all of our categories in Sydney below.
+    </p>
+    <form class="search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform">
+      <fieldset class="search-form-fieldset">
+
+        <div class="form-group">
+          <label class="control-label hidden">Keyword</label>
+          <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
+          <md-autocomplete
+            md-selected-item="searchform.categories.selected"
+            md-search-text="searchform.categories.searched"
+            md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
+            md-item-text="category.title"
+            md-min-length="0"
+            md-selected-item-change="searchform.categories.change(category)"
+            placeholder="Category">
+            <md-item-template>
+              <span md-highlight-text="searchform.categories.searched" md-highlight-flags="i">{{category.title}}</span>
+            </md-item-template>
+            <md-not-found>
+              No categories matching "{{searchform.categories.searched}}" were found.
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+        <div class="form-group hide">
+          <label class="control-label hidden">Location</label>
+          <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
+          <md-autocomplete
+            md-selected-item="searchform.locations.selected"
+            md-search-text="searchform.locations.searched"
+            md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
+            md-item-text="location.title"
+            md-min-length="0"
+            md-selected-item-change="searchform.locations.change(location)"
+            placeholder="Location">
+            <md-item-template>
+              <span md-highlight-text="searchform.locations.searched" md-highlight-flags="i">{{location.title}}</span>
+            </md-item-template>
+            <md-not-found>
+              No locations matching "{{searchform.locations.searched}}" were found.
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+        <div class="search-form-submit">
+          <button type="submit" class="btn btn-primary btn-block" ng-disabled="!searchform.categories.selected">
+            <span class="text">Search</span>
+          </button>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+</section>
+
+<section class="container py4 text-center">
+  <h2 class="mt0">Why Your Class?</h2>
+  <p class="font-big">
+    We are an online platform that gives the opportunity to anyone to list, find, book and review in-person classes.
+  </p>
+</section>
+
+<section class="hero" style="background-image: url('/images/crossfit-bg.jpg')">
+  <div class="container py4 text-center">
+    <div class="content">
+      <h2 class="mt0 white heading-font uppercase mb3">Get paid to share what you love</h2>
+      <div class="btn btn-white btn-lg">
+        Teach
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="top-categories container">
   <h2 class="text-center">Latest classes</h2>
 
   <ul class="list-unstyled row">
@@ -116,4 +272,4 @@
     </li>
   </ul>
 
-</section>
+</section> -->

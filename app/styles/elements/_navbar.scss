@@ -1,8 +1,8 @@
 //
 // Navbars
 // --------------------------------------------------
-$links-width: 160px;
-$links-width-logged-in: 160px;
+$links-width: 200px;
+$links-width-logged-in: 200px;
 $nav-item-padding: 20px;
 
 .navbar {
@@ -197,6 +197,18 @@ $nav-item-padding: 20px;
     padding: 0 15px;
     color: $white;
     text-transform: uppercase;
+    font-family: $font-family-montserrat;
+    span {
+      padding: 5px 0px;
+    }
+    &.sign-up span {
+      border: 2px solid $white;
+      padding: 5px 8px;
+      &:hover {
+        background-color: $white;
+        color: $text-color;
+      }
+    }
   }
 
   @media (max-width: $grid-float-breakpoint-max) {

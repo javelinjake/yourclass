@@ -1,11 +1,33 @@
-.review-stars {
-  margin: 10px 0;
+.angular-input-stars {
+	display: inline-block;
+	padding: 0;
+	list-style: none;
   line-height: 1;
-  .icon {
-    font-size: 22px;
-    color: lighten($brand-yellow, 10%);
+}
+.angular-input-stars > li {
+	display: inline-block;
+	padding-right: 5px;
+  &:last-child {
+    padding-right: 0;
   }
-  .stars {
-    margin-bottom: 5px;
+  .icon {
+    font-size: 25px;
+    color: rgba(255,255,255,0.4);
+    cursor: default;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+.angular-input-stars > li .active {
+		color: lighten($brand-yellow, 0%);
+}
+
+.class-reviews .angular-input-stars > li {
+  .icon {
+    color: rgba(0,0,0,0.1);
+		&.active {
+			color: lighten($brand-yellow, 0%);
+		}
   }
 }

@@ -5,6 +5,7 @@ import constants from './constants';
 import onConfig  from './on_config';
 import onRun     from './on_run';
 import 'angular-ui-router';
+import 'ngMap';
 import 'angular-ui-bootstrap';
 import 'angular-animate';
 import 'angular-material';
@@ -13,7 +14,9 @@ import 'ngsticky';
 import 'angular-dropdowns';
 import 'angular-cookies';
 import 'ng-file-upload';
+import 'ng-image-gallery';
 import 'angular-breadcrumb';
+import 'angular-input-stars';
 //import 'ng-password-meter';
 import './templates';
 import './filters';
@@ -24,6 +27,7 @@ import './directives';
 // create and bootstrap application
 const requires = [
   'ui.router',
+  'ngMap',
   'ngAnimate',
   'ngMaterial',
   'rzModule',
@@ -33,7 +37,9 @@ const requires = [
   'ngCookies',
   'ngFileUpload',
   'templates',
+  'thatisuday.ng-image-gallery',
   'ncy-angular-breadcrumb',
+  'angular-input-stars',
   // 'ngPasswordMeter',
   'app.filters',
   'app.controllers',

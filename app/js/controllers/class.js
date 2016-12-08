@@ -1,11 +1,44 @@
 
 
-function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter, getClassAlias) {
+function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter, getClassAlias, NgMap) {
 	'ngInject';
 
 	// ViewModel
 	const vm = this;
 
+	// TODO - API key from backend
+	vm.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB8wR3v88fFkRABoERfV3bi3v3wPfvlYg";
+
+	vm.rating = 4;
+
+	// TODO - Images from API
+	vm.images = [
+	    {
+	        title : 'This is amazing photo of nature',
+	        alt : 'amazing nature photo',
+	        url : '/images/eggs.jpg',
+	    },
+			{
+	        title : 'This is amazing photo of nature',
+	        alt : 'amazing nature photo',
+	        url : '/images/eggs-2.jpg',
+	    },
+			{
+	        title : 'This is amazing photo of nature',
+	        alt : 'amazing nature photo',
+	        url : '/images/eggs-3.jpg',
+	    },
+			{
+	        title : 'This is amazing photo of nature',
+	        alt : 'amazing nature photo',
+	        url : '/images/eggs-3.jpg',
+	    },
+			{
+	        title : 'This is amazing photo of nature',
+	        alt : 'amazing nature photo',
+	        url : '/images/eggs-2.jpg',
+	    }
+	];
 
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
