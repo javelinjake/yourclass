@@ -42,7 +42,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
-  $log.warn('savedBookingData', savedBookingData);
+  $log.warn('savedBookingData: ', savedBookingData);
 
 
   /* Additional functions */
@@ -200,7 +200,6 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       else {
         // Save booked data into cookies
         $cookies.putObject('booking', createBookingObject(this, $rootScope.userData));
-        $log.error(vm.booking);
 
         // Change the location, show some booked data in the search string
         $location.search({
@@ -229,7 +228,6 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
   /* Watch and check user data: teacher, student or user taht is not logged in */
   $rootScope.$watch('userData', function(next, prev) {
-    $log.warn('userData', next);
     // Update booking price. Price for student or user that is not logged in is 14% more than actual
     // Checks the response with class data from the promise
     if (!vm.class) return false;

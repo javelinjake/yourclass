@@ -14,7 +14,7 @@ import 'ngsticky';
 import 'angular-dropdowns';
 import 'angular-cookies';
 import 'ng-file-upload';
-import 'ng-image-gallery';
+// import 'ng-image-gallery';
 import 'angular-breadcrumb';
 import 'angular-input-stars';
 //import 'ng-password-meter';
@@ -37,7 +37,7 @@ const requires = [
   'ngCookies',
   'ngFileUpload',
   'templates',
-  'thatisuday.ng-image-gallery',
+  // 'thatisuday.ng-image-gallery',
   'ncy-angular-breadcrumb',
   'angular-input-stars',
   // 'ngPasswordMeter',
