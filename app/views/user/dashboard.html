@@ -2,64 +2,94 @@
 
   <div ng-include="'user/navs/user-nav.html'"></div>
 
-  <div class="row block">
+  <div class="panel-white p4 clearfix account-wrapper">
 
-    <div class="col-sm-3">
+    <div class="account-left">
 
       <div ng-repeat="userImage in userData.photos" ng-if="userImage.isMain == 1" class="thumbnail">
         <img class="img-rounded" ng-src="{{imageUrl}}{{userImage.src}}" />
       </div>
 
       <div class="text-center" ng-if="userData.profile.firstName">
-        <span>{{ userData.profile.firstName }} {{ userData.profile.lastName }}</span>
+        <span class="font-big font-bold">{{ userData.profile.firstName }} {{ userData.profile.lastName }}</span>
         <div>
-          <a href="/user/edit-profile">Edit Profile</a>
+          <a class="italic" href="/user/edit-profile">Edit Profile</a>
         </div>
       </div>
 
     </div>
 
-    <div class="col-sm-9">
+    <div class="account-right">
 
-      <div class="panel">
+      <div class="account-block">
 
-        <div class="panel-heading">
-          <h2 class="panel-title">Listings</h2>
+        <div class="account-heading pb4 mb4">
+          <h2 class="heading-font text-center uppercase m0">Your listings</h2>
+          <p class="text-center font-big m0">The classes that you are teaching</p>
         </div>
 
-        <div class="panel-body">
-          <ul class="list-unstyled row list-block">
-            <li ng-repeat="listing in userDashboard.userListings" class="col-sm-4">
-              <div class="block clearfix">
+        <ul class="list-unstyled row list-block">
+          <li ng-repeat="listing in userDashboard.userListings" class="col-sm-4">
+            <div class="block clearfix">
 
-                <div class="name">
-                  {{ listing.title }}
-                </div>
-                <a ui-sref="Class({ classAlias:listing.alias })">View</a>
-                <a ui-sref="Class({ classAlias:listing.alias })">Edit</a>
-
+              <div class="name">
+                {{ listing.title }}
               </div>
-            </li>
-          </ul>
-        </div>
+              <a ui-sref="Class({ classAlias:listing.alias })">View</a>
+              <a ui-sref="Class({ classAlias:listing.alias })">Edit</a>
+
+            </div>
+          </li>
+        </ul>
 
       </div>
 
-      <div class="panel">
+      <div class="account-block">
 
-        <div class="panel-heading">
-          <h2 class="panel-title">Classes</h2>
+        <div class="account-heading pb4 mb4">
+          <h2 class="heading-font text-center uppercase m0">Your classes</h2>
+          <p class="text-center font-big m0">The classes that you are attending</p>
         </div>
 
-        <div class="panel-body">
-          <ul class="list-unstyled row list-block">
-            <li ng-repeat="listing in userDashboard.userListings" class="col-sm-4">
-              <a ui-sref="Class({ classAlias:listing.alias })">{{ listing.title }}</a>
-            </li>
-          </ul>
-        </div>
+        <ul class="list-unstyled row list-block">
+          <li class="search-item" ng-repeat="listing in userDashboard.userListings" style="{{::listing.image}}" data-size="{{::listing.size}}" data-distance="{{::listing.distance}}">
+            <a class="search-item-content" ui-sref="Class({ classAlias:listing.alias })">
+              <div class="search-item-price">{{::listing.price ? (listing.price | currency : '$' : 2) : 'free'}}</div>
+              <div class="search-item-date">{{::listing.dateStart | date : "dd MMMM" }}</div>
+
+              <div class="search-item-title">{{::listing.title}}</div>
+              <div class="search-item-location">{{::listing.venue}}</div>
+              <div class="search-item-rating">
+                <span uib-rating class="rating-half-star" ng-model="listing.rating" max="10" read-only="true" titles="{{::search.rating.titles}}"></span>
+                <span class="search-item-rating-text">{{::listing.reviews > 0 ? (listing.reviews + (listing.reviews == 1 ? ' review' : ' reviews')) : 'No reviews yet'}}</span>
+              </div>
+              <div class="search-item-description">
+                <span ng-if="listing.booked > 0">{{::listing.booked}} {{::listing.booked === 1 ? 'student' : students}} going</span>
+                <em ng-if="listing.booked > 0 && listing.vacant > 0">&ndash;</em>
+                <span>{{::listing.vacant}} {{::listing.vacant === 1 ? 'spot' : 'spots'}} left!</span>
+                <br>
+                <span ng-if="listing.dateStart && listing.dateEnd">{{::listing.dateStart | date : "hh:mm a" }} - {{::listing.dateEnd | date : "hh:mm a"}}</span>
+                <span class="search-item-link" ng-if="listing.alltimes > 1">more available</span>
+              </div>
+            </a>
+          </li>
+
+          <li ng-repeat="listing in userDashboard.userListings" class="col-sm-4">
+            <div class="block clearfix">
+
+              <div class="name">
+                {{ listing.title }}
+              </div>
+              <a ui-sref="Class({ classAlias:listing.alias })">View</a>
+              <a ui-sref="Class({ classAlias:listing.alias })">Edit</a>
+
+            </div>
+          </li>
+        </ul>
 
       </div>
+
+    </div>
 
     </div>
 
@@ -105,5 +135,3 @@
 
     </div>
   </div>
-
-</div>

@@ -1,0 +1,40 @@
+.account-wrapper {
+  padding-left: 330px;
+  position: relative;
+  .account-left,
+  .nav-pills {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 250px;
+  }
+  .account-right,
+  .tab-content {
+    width: 100%;
+  }
+}
+.account-block {
+  padding-bottom: 40px;
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+.account-heading {
+  border-bottom: 1px solid $gray-lighter;
+}
+
+.add-class-wrapper {
+  width: 400px;
+  margin: 0 auto;
+}
+
+
+.photo-gallery {
+  margin-right: -5px;
+  margin-left: -5px;
+  li {
+    float: left;
+    width: 50%;
+    padding: 5px;
+  }
+}

@@ -24,6 +24,9 @@
 .left {
   float: left;
 }
+.height-300 {
+  height: 340px;
+}
 
 
 // Toggling content
@@ -41,6 +44,12 @@
 }
 .text-hide {
   @include text-hide;
+}
+
+.max-width-2 {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .position-relative {

@@ -263,6 +263,12 @@
 .panel-red {
   background-color: $brand-salmon;
 }
+.panel-white {
+  background-color: $white;
+}
+.panel-blue {
+  background-color: $brand-blue;
+}
 .panel-primary {
   @include panel-variant($panel-primary-border, $panel-primary-text, $panel-primary-heading-bg, $panel-primary-border);
 }
@@ -282,11 +288,8 @@
 .panel-form {
   border: none;
   width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  .panel-heading {
-    background-color: $white;
-  }
+  //margin-left: auto;
+  //margin-right: auto;
 }
 
 

@@ -326,39 +326,228 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-equalizer:before {
+  content: "\e01d";
+}
+.icon-play_circle_filled:before {
+  content: "\e038";
+}
+.icon-play:before {
+  content: "\e039";
+}
+.icon-playlist_add:before {
+  content: "\e03b";
+}
+.icon-list:before {
+  content: "\e065";
+}
+.icon-chat:before {
+  content: "\e0b7";
+}
+.icon-comment:before {
+  content: "\e0b9";
+}
+.icon-add:before {
+  content: "\e145";
+}
+.icon-block:before {
+  content: "\e14b";
+}
+.icon-drafts:before {
+  content: "\e151";
+}
+.icon-filter_list:before {
+  content: "\e152";
+}
+.icon-markunread:before {
+  content: "\e159";
+}
+.icon-money:before {
+  content: "\e227";
+}
+.icon-border_color:before {
+  content: "\e22b";
+}
+.icon-format_list_numbered:before {
+  content: "\e242";
+}
+.icon-money_off:before {
+  content: "\e25c";
+}
+.icon-monetization_on:before {
+  content: "\e263";
+}
+.icon-security:before {
+  content: "\e32a";
+}
+.icon-exposure_plus_1:before {
+  content: "\e3cd";
+}
+.icon-exposure_plus_2:before {
+  content: "\e3ce";
+}
+.icon-timer_off:before {
+  content: "\e426";
+}
+.icon-beenhere:before {
+  content: "\e52d";
+}
+.icon-local_atm:before {
+  content: "\e53e";
+}
+.icon-local_offer:before {
+  content: "\e54e";
+}
+.icon-map:before {
+  content: "\e55b";
+}
+.icon-my_location:before {
+  content: "\e55c";
+}
+.icon-pin_drop:before {
+  content: "\e55e";
+}
+.icon-review:before {
+  content: "\e560";
+}
 .icon-check:before {
-    content: "\e5ca";
+  content: "\e5ca";
 }
-.icon-check_box:before {
-    content: "\e834";
+.icon-wc:before {
+  content: "\e63d";
 }
-.icon-check_box_outline_blank:before {
-    content: "\e835";
+.icon-people:before {
+  content: "\e7fb";
 }
-.icon-navigate_before:before {
-    content: "\e408";
+.icon-people_outline:before {
+  content: "\e7fc";
 }
-.icon-navigate_next:before {
-    content: "\e409";
+.icon-person:before {
+  content: "\e7fd";
 }
-.icon-expand_less:before {
-    content: "\e5ce";
+.icon-person_add:before {
+  content: "\e7fe";
 }
-.icon-expand_more:before {
-    content: "\e5cf";
+.icon-person_outline:before {
+  content: "\e7ff";
 }
-.icon-mail_outline:before {
-    content: "\e0e1";
+.icon-poll:before {
+  content: "\e801";
 }
-.icon-star_border:before {
-    content: "\e83a";
-}
-.icon-star_half:before {
-    content: "\e839";
+.icon-public:before {
+  content: "\e80b";
 }
 .icon-star:before {
-    content: "\e838";
+  content: "\e838";
 }
-.icon-facebook:before {
-    content: "\e900";
+.icon-star_border:before {
+  content: "\e83a";
+}
+.icon-alarm_on:before {
+  content: "\e858";
+}
+.icon-dashboard:before {
+  content: "\e871";
+}
+.icon-done_all:before {
+  content: "\e877";
+}
+.icon-favorite:before {
+  content: "\e87d";
+}
+.icon-language:before {
+  content: "\e894";
+}
+.icon-list2:before {
+  content: "\e896";
+}
+.icon-lock:before {
+  content: "\e897";
+}
+.icon-lock_outline:before {
+  content: "\e899";
+}
+.icon-find:before {
+  content: "\e8b6";
+}
+.icon-stars:before {
+  content: "\e8d0";
+}
+.icon-supervisor_account:before {
+  content: "\e8d3";
+}
+.icon-thumb_up:before {
+  content: "\e8dc";
+}
+.icon-thumbs_up_down:before {
+  content: "\e8dd";
+}
+.icon-verified_user:before {
+  content: "\e8e8";
+}
+.icon-book:before {
+  content: "\e913";
+}
+.icon-date_range:before {
+  content: "\e916";
+}
+.icon-mail_outline:before {
+  content: "\e0e1";
+}
+.icon-navigate_before:before {
+  content: "\e408";
+}
+.icon-navigate_next:before {
+  content: "\e409";
+}
+.icon-check2:before {
+  content: "\e5cb";
+}
+.icon-expand_less:before {
+  content: "\e5ce";
+}
+.icon-expand_more:before {
+  content: "\e5cf";
+}
+.icon-check_box:before {
+  content: "\e834";
+}
+.icon-check_box_outline_blank:before {
+  content: "\e835";
+}
+.icon-star2:before {
+  content: "\e839";
+}
+.icon-star_half:before {
+  content: "\e83b";
+}
+.icon-star_border2:before {
+  content: "\e83c";
+}
+.icon-home:before {
+  content: "\e901";
+}
+.icon-phone:before {
+  content: "\e942";
+}
+.icon-google-plus:before {
+  content: "\ea8b";
+}
+.icon-facebook2:before {
+  content: "\ea90";
+}
+.icon-instagram:before {
+  content: "\ea92";
+}
+.icon-twitter:before {
+  content: "\ea96";
+}
+.icon-youtube:before {
+  content: "\ea9d";
+}
+.icon-pinterest2:before {
+  content: "\ead2";
+}
+.icon-bin:before {
+  content: "\e9ac";
 }

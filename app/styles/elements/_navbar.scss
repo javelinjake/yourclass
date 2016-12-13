@@ -8,6 +8,7 @@ $nav-item-padding: 20px;
 .navbar {
   position: relative;
   padding: 20px 0;
+  background-color: $white;
 
   // Prevent floats from breaking the navbar
   @include clearfix;
@@ -52,7 +53,7 @@ $nav-item-padding: 20px;
   border-radius: 50%;
   overflow: hidden;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: 6px;
 
   img {
     position: relative;
@@ -199,24 +200,24 @@ $nav-item-padding: 20px;
 // the nav the full height of the horizontal nav (above 768px).
 
 .navbar-nav {
-  margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
-
+  > li {
+    float: left;
+  }
   > li > a {
-    height: 58px;
-    line-height: 58px;
+    height: 52px;
+    line-height: 52px;
     padding: 0 15px;
-    color: $white;
+    color: $gray-dark;
     text-transform: uppercase;
     font-family: $font-family-montserrat;
     span {
       padding: 5px 0px;
     }
     &.sign-up span {
-      border: 2px solid $white;
+      border: 2px solid $gray-dark;
       padding: 5px 8px;
       &:hover {
-        background-color: $white;
-        color: $text-color;
+        color: $gray-base;
       }
     }
   }
@@ -244,22 +245,28 @@ $nav-item-padding: 20px;
       }
     }
   }
+}
 
-  // Uncollapse the nav
-  @media (min-width: $grid-float-breakpoint) {
-    float: left;
-    margin: 0;
-
-    > li {
-      float: left;
-      > a {
-        // padding-top:    $navbar-padding-vertical;
-        // padding-bottom: $navbar-padding-vertical;
-        height: 58px;
-        line-height: 58px;
-        padding: 0 15px;
+// Home, search and class pages
+.home,
+.search,
+.class {
+  .navbar-nav {
+    > li > a {
+      color: $white;
+      height: 58px;
+      line-height: 58px;
+      &.sign-up span {
+        border: 2px solid $white;
+        &:hover {
+          background-color: $white;
+          color: $text-color;
+        }
       }
     }
+  }
+  .nav-image {
+    margin-top: 8px;
   }
 }
 

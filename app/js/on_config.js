@@ -130,7 +130,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
     });
 
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/'); // TODO - 404 page here
   $breadcrumbProvider.setOptions({
     prefixStateName: 'Home'
   });

@@ -90,6 +90,9 @@ p {
 .font-bigger {
   font-size: 150%;
 }
+.font-biggest {
+  font-size: 350%;
+}
 .line-height-1 {
   line-height: 1;
 }
@@ -163,6 +166,12 @@ mark,
 
 .white {
   color: $white;
+}
+.black {
+  color: $gray-dark;
+}
+.red {
+  color: $brand-salmon;
 }
 
 // Page header

@@ -9,18 +9,20 @@
 /* Top Navigation */
 .home {
 
+  .main-wrapper {
+    margin-top: -40px;
+  }
+
   .navbar {
     background-color: transparent;
     border: none;
     z-index: 10;
-    padding: 0;
 
     .search-form,
     .navbar-logo {
       display: none; // For now
     }
   }
-  .navbar .navbar-nav > .open > a {background-color: transparent;}
 
     .nav-wrapper {
       padding: 0 220px;
@@ -117,7 +119,56 @@
   }
 }
 
+.icons-list {
+  background-color: transparent;
 
+  @include transition(all .2s ease);
+  a {
+    width: 60px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    display: block;
+
+    @include transition(all .2s ease);
+
+    .icon {
+      @include transition(all .2s ease);
+    }
+  }
+  &.active {
+    .icons-border {
+      background-color: $white;
+    }
+    a {
+      .icon {
+        color: $brand-salmon;
+      }
+    }
+  }
+  .icons-border {
+    border: 2px solid $white;
+    padding: 15px;
+    color: $white;
+    margin-bottom: 10px;
+    span {
+      font-size: 25px;
+    }
+  }
+}
+
+.featured-block {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 15px;
+  left: 0;
+
+  @include transition(all .2s ease);
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
 
 video#bgvid {
     position: absolute;

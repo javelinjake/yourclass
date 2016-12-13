@@ -1,4 +1,4 @@
-function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $q, Upload, $timeout) {
+function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $state, $q, Upload, $timeout) {
   'ngInject';
 
   // ViewModel
@@ -158,6 +158,7 @@ function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $
         });
       }
 
+
       vm.uploadFiles = function(files, errFiles) {
         vm.files = files;
         vm.errFiles = errFiles;
@@ -174,8 +175,6 @@ function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $
           file.upload.then(function(response) {
             $timeout(function() {
               file.result = response.data;
-              $log.info("Image response: ", response.data);
-              // $state.reload();
             });
           }, function(response) {
             if (response.status > 0)
@@ -185,6 +184,52 @@ function UserEditClassCtrl($rootScope, $http, $log, getEditClassAlias, $state, $
               evt.loaded / evt.total));
           });
         });
+      }
+
+      vm.imageCover = function(id) {
+        var imageCoverData = {
+          '_auth_key': $rootScope.authToken, // Authentication token of current user
+          'id': id,
+        };
+
+        // Set Main Image
+        $http.post($rootScope.apiUrl + 'classes/setmainphoto', imageCoverData)
+          .then(function successCallback(response) {
+
+            // Log the response
+            $log.info('success', response);
+
+            //$state.reload();
+
+          }, function errorCallback(response) {
+
+            // Log the response
+            $log.error('error', response);
+
+          });
+      }
+
+      vm.imageRemove = function(id) {
+        var imageRemoveData = {
+          '_auth_key': $rootScope.authToken, // Authentication token of current user
+          'id': id,
+        };
+
+        // Delete Image
+        $http.post($rootScope.apiUrl + 'classes/deletephoto', imageRemoveData)
+          .then(function successCallback(response) {
+
+            // Log the response
+            $log.info('success', response);
+
+            //$state.reload();
+
+          }, function errorCallback(response) {
+
+            // Log the response
+            $log.error('error', response);
+
+          });
       }
 
     vm.options = {

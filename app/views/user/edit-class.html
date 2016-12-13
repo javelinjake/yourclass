@@ -2,11 +2,7 @@
 
   <div ng-include="'user/navs/user-nav.html'"></div>
 
-  <uib-tabset active="userEditClass.tabIndex" vertical="true" type="pills">
-
-
-
-
+  <uib-tabset active="userEditClass.tabIndex" vertical="true" type="pills" class="panel-white p4 clearfix account-wrapper">
 
     <uib-tab index="0">
       <uib-tab-heading>
@@ -15,24 +11,13 @@
       </uib-tab-heading>
 
       <!-- The Basics -->
-      <div class="panel panel-form block">
+      <div class="panel-form">
 
-        <div class="panel-heading">
-
-          <h2 class="panel-title text-center">
-            <span>
-              Edit your class
-            </span>
-          </h2>
-          <p class="text-center">
-            <span>
-              Edit your class description
-            </span>
-          </p>
-
+        <div class="account-heading pb4 mb4">
+          <h2 class="heading-font text-center uppercase m0">Edit your class</h2>
+          <p class="text-center font-big m0">Edit your class description</p>
         </div>
 
-        <div class="panel-body">
           <form name="userEditClass.addClassForm" ng-submit="userEditClass.editClassBasics()" class="form-horizontal">
             <fieldset>
 
@@ -144,7 +129,6 @@
             </fieldset>
           </form>
 
-        </div>
       </div>
 
     </uib-tab>
@@ -160,11 +144,10 @@
       </uib-tab-heading>
 
       <!-- The Details -->
-      <div class="panel panel-form block">
+      <div class="panel-form">
 
-        <div class="panel-heading">
-
-          <h2 class="panel-title text-center">
+        <div class="account-heading pb4 mb4">
+          <h2 class="heading-font text-center uppercase m0">
             <span ng-if="fromAddClass">
               Great you have created <strong>{{ userEditClass.classData.title }}</strong> lets add some more details
             </span>
@@ -172,7 +155,7 @@
               Edit your class details
             </span>
           </h2>
-          <p class="text-center">
+          <p class="text-center font-big m0">
             <span ng-if="fromAddClass">
               You can easily edit the basic details using the navigation on the left
             </span>
@@ -180,71 +163,83 @@
               Now lets add in some more detail about your class. The more information you add the more successful your class will be, so get creative with your descriptions!
             </span>
           </p>
-
         </div>
 
-        <div class="panel-body">
-          <form name="editClassDetailsForm" ng-submit="userEditClass.editClassDetails()" class="form-horizontal">
-            <fieldset>
+        <form name="editClassDetailsForm" ng-submit="userEditClass.editClassDetails()" class="form-horizontal">
+          <fieldset>
 
-              <div class="form-group">
-                <label class="control-label">Short description</label>
-                <div>
-                  <textarea ng-model="userEditClass.classData.brief" class="form-control form-full" rows="2" placeholder="Short description" required></textarea>
-                </div>
+            <div class="form-group">
+              <label class="control-label">Short description</label>
+              <div>
+                <textarea ng-model="userEditClass.classData.brief" class="form-control form-full" rows="2" placeholder="Short description" required></textarea>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label class="control-label">Main description</label>
-                <div>
-                  <textarea ng-model="userEditClass.classData.description" class="form-control form-full" rows="4" placeholder="Main description"></textarea>
-                </div>
+            <div class="form-group">
+              <label class="control-label">Main description</label>
+              <div>
+                <textarea ng-model="userEditClass.classData.description" class="form-control form-full" rows="4" placeholder="Main description"></textarea>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label class="control-label">Cover photo</label>
-                <div>
-                  Will be going here
-                </div>
+            <div class="form-group">
+              <label class="control-label">Cover photo</label>
+              <div>
+                Will be going here
               </div>
-
-              <div class="form-group">
-                <label class="control-label">Other photos</label>
-                <div>
-
-                  <button ngf-select="userEditClass.uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 300, height: 300, quality: .8, type: 'image/jpeg'}" ngf-resize-if="$width > 300 || $height > 300">
-                    Select Files
-                  </button>
-                  <br><br>
-                  Files:
-                  <ul>
-                    <li ng-repeat="f in userEditClass.files" style="font:smaller">{{f.name}}
-                      {{f.$errorParam}}
-                      <span class="progress" ng-show="f.progress >= 0">
-                        <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
-                      </span>
-                    </li>
-                    <li ng-repeat="f in userEditClass.errFiles" style="font:smaller">
-                      {{f.name}}
-                      {{f.$error}}
-                      {{f.$errorParam}}
-                    </li>
-                  </ul>
-                  {{userEditClass.errorMsg}}
+            </div>
 
 
-                </div>
-              </div>
+            <div class="form-group">
+              <label class="control-label">Other photos</label>
 
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Update</button>
-              </div>
+              <ul class="clearfix list-unstyled photo-gallery">
+                <li ng-repeat="photo in userEditClass.classData.photos">
+                  <img src="{{imageUrl}}{{photo.src}}" alt="" class="img-responsive">
+                  <span ng-click="userEditClass.imageCover(photo.id)" class="icon icon-favorite"></span>
+                  <span ng-click="userEditClass.imageRemove(photo.id)" class="icon icon-bin"></span>
+                </li>
+              </ul>
 
-            </fieldset>
+              <form name="myForm">
+                <fieldset>
+                  <legend>Upload on form submit</legend>
+                  <br>Photo:
+                  <input type="file" ngf-select ng-model="picFile" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 1000, height: 1000, quality: .7}" ngf-resize-if="$width > 1000 || $height > 1000">
+                  <i ng-show="myForm.file.$error.required">*required</i><br>
+                  <i ng-show="myForm.file.$error.maxSize">File too large
+                      {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
 
-          </form>
+                  <div ng-repeat="pic in picFile">
+                    <div class="thumbnail col-xs-6">
+                      <img ngf-thumbnail="pic">
+                    </div>
+                  </div>
 
-        </div>
+                  <button class="btn btn-primary btn-block" ng-disabled="myForm.$invalid"
+                          ng-click="userEditClass.uploadFiles(picFile)">Submit</button>
+
+                  <span class="progress">
+                    Progress:
+                    <div style="width:{{picFile.progress}}%"
+                        ng-bind="picFile.progress + '%'"></div>
+                  </span>
+                  <span ng-show="picFile.result">Upload Successful</span>
+                  <span class="err" ng-show="userEditClass.errorMsg">{{userEditClass.errorMsg}}</span>
+                </fieldset>
+
+              </form>
+
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">Update</button>
+            </div>
+
+          </fieldset>
+
+        </form>
+
       </div>
 
     </uib-tab>

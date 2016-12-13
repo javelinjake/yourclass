@@ -1,9 +1,9 @@
-<section class="hero hero-video" style="background-image: url('/images/cat-bg.jpg')">
+<section class="hero hero-video" style="background-image: url('/images/oliver-baking-2.jpg')">
 
-  <video playsinline autoplay muted loop poster="/images/video-bg.jpg" id="bgvid">
+  <!-- <video playsinline autoplay muted loop poster="/images/video-bg.jpg" id="bgvid">
     <source src="http://yourclass.co/videos/baking-video.webm" type="video/webm">
     <source src="http://yourclass.co/videos/baking-video.mp4" type="video/mp4">
-  </video>
+  </video> -->
 
   <div class="container clear">
     <div class="content">
@@ -82,7 +82,7 @@
 
 <section class="top-categories container py4">
 
-  <h2 class="text-center mt0 mb3">Explore Sydney</h2>
+  <h2 class="text-center mt0 mb3">Explore classes in Sydney</h2>
 
   <ul class="list-unstyled row home-blocks">
     <li class="col-sm-3 p0">
@@ -184,7 +184,7 @@
   </ul>
 </section>
 
-<section class="panel-red find-classes">
+<!-- <section class="panel-red find-classes">
   <div class="container py4 white text-center">
     <h2 class="white mt0">
       Find your next class
@@ -198,7 +198,6 @@
 
         <div class="form-group">
           <label class="control-label hidden">Keyword</label>
-          <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
           <md-autocomplete
             md-selected-item="searchform.categories.selected"
             md-search-text="searchform.categories.searched"
@@ -217,7 +216,6 @@
         </div>
         <div class="form-group hide">
           <label class="control-label hidden">Location</label>
-          <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
           <md-autocomplete
             md-selected-item="searchform.locations.selected"
             md-search-text="searchform.locations.searched"
@@ -243,13 +241,244 @@
       </fieldset>
     </form>
   </div>
-</section>
+</section> -->
 
-<section class="container py4 text-center">
-  <h2 class="mt0">Why Your Class?</h2>
-  <p class="font-big">
-    We are an online platform that gives the opportunity to anyone to list, find, book and review in-person classes.
-  </p>
+<section class="panel-red find-classes">
+  <div class="container py4 white text-center">
+
+    <h2 class="mt0 mb4 white">Introducing Your Class</h2>
+    <div class="heading-font font-biggest uppercase line-height-1 mb2">
+      Learn anything.
+    </div>
+    <div class="heading-font font-biggest uppercase line-height-1">
+      Teach anything.
+    </div>
+    <p class="font-bigger mt3 mb3 max-width-2">
+      Your Class is an online platform that enables anyone to list, find, book and review offline (in-person) classes.
+    </p>
+    <div class="clearfix max-width-2">
+
+      <div class="cleafix">
+
+        <div class="col-xs-3 icons-list" ng-class="{'active':home.featureBlockTab === 'list-block'}">
+          <a href="#list" ng-click="home.featureBlockTab = 'list-block'">
+            <div class="icons-border">
+              <span class="icon icon-list"></span>
+            </div>
+            <div class="uppercase font-bold heading-font line-height-1">
+              List
+            </div>
+          </a>
+        </div>
+
+        <div class="col-xs-3 icons-list" ng-class="{'active':home.featureBlockTab === 'find-block'}">
+          <a href="#find" ng-click="home.featureBlockTab = 'find-block'">
+            <div class="icons-border">
+              <span class="icon icon-find"></span>
+            </div>
+            <div class="uppercase font-bold heading-font line-height-1">
+              Find
+            </div>
+          </a>
+        </div>
+
+        <div class="col-xs-3 icons-list" ng-class="{'active':home.featureBlockTab === 'book-block'}">
+          <a href="#book" ng-click="home.featureBlockTab = 'book-block'">
+            <div class="icons-border">
+              <span class="icon icon-book"></span>
+            </div>
+            <div class="uppercase font-bold heading-font line-height-1">
+              Book
+            </div>
+          </a>
+        </div>
+
+        <div class="col-xs-3 icons-list" ng-class="{'active':home.featureBlockTab === 'review-block'}">
+          <a href="#review" ng-click="home.featureBlockTab = 'review-block'">
+            <div class="icons-border">
+              <span class="icon icon-review"></span>
+            </div>
+            <div class="uppercase font-bold heading-font line-height-1">
+              Review
+            </div>
+          </a>
+        </div>
+
+        </div>
+
+        <div class="position-relative col-xs-12 panel-white black p3 height-300">
+
+          <div class="clearfix featured-block active" ng-class="{'active':home.featureBlockTab === 'list-block'}">
+            <div class="font-big red heading-font uppercase mb3">
+              A simple 5 minute class listing process
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-local_atm font-bigger red"></span>
+              <div class="font-big mb1">
+                Income
+              </div>
+              <div class="">
+                Earn enjoyable income teaching what you love
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-date_range font-bigger red"></span>
+              <div class="font-big mb1">
+                Schedule
+              </div>
+              <div class="">
+                Easy to schedule new class times for your class
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-verified_user font-bigger red"></span>
+              <div class="font-big mb1">
+                Verified
+              </div>
+              <div class="">
+                Promote your qualifications and certificates
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-money_off font-bigger red"></span>
+              <div class="font-big mb1">
+                Free
+              </div>
+              <div class="">
+                No setup costs or platform fees
+              </div>
+            </div>
+          </div>
+
+          <div class="clearfix featured-block" ng-class="{'active':home.featureBlockTab === 'find-block'}">
+            <div class="font-big red heading-font uppercase mb3">
+              Find all in-person classes on one platform
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-money font-bigger red"></span>
+              <div class="font-big mb1">
+                Price
+              </div>
+              <div class="">
+                Find the right class in your budget
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-my_location font-bigger red"></span>
+              <div class="font-big mb1">
+                Location
+              </div>
+              <div class="">
+                Find your ideal class in your neighbourhood
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-stars font-bigger red"></span>
+              <div class="font-big mb1">
+                Rating
+              </div>
+              <div class="">
+                Filter by the top reviewed classes
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-exposure_plus_2 font-bigger red"></span>
+              <div class="font-big mb1">
+                Size
+              </div>
+              <div class="">
+                Find the class size that suits you
+              </div>
+            </div>
+          </div>
+
+          <div class="clearfix featured-block" ng-class="{'active':home.featureBlockTab === 'book-block'}">
+            <div class="font-big red heading-font uppercase mb3">
+              Book with confidence using reviews, ratings and verified teachers
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-lock_outline font-bigger red"></span>
+              <div class="font-big mb1">
+                Secure
+              </div>
+              <div class="">
+                Book and pay for classes without leaving our platform
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-security font-bigger red"></span>
+              <div class="font-big mb1">
+                Protection
+              </div>
+              <div class="">
+                Only pay for classes that meet your expectations
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-list2 font-bigger red"></span>
+              <div class="font-big mb1">
+                Clear
+              </div>
+              <div class="">
+                A clear view of all upcoming classes
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-person_add font-bigger red"></span>
+              <div class="font-big mb1">
+                Add friends
+              </div>
+              <div class="">
+                Easily book for friends to enjoy the class together
+              </div>
+            </div>
+          </div>
+
+          <div class="clearfix featured-block" ng-class="{'active':home.featureBlockTab === 'review-block'}">
+            <div class="font-big red heading-font uppercase mb3">
+              View class reviews and add you own
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-thumb_up font-bigger red"></span>
+              <div class="font-big mb1">
+                Genuine
+              </div>
+              <div class="">
+                Reviews can only be left after attending a class
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3 pb4">
+              <span class="icon icon-chat font-bigger red"></span>
+              <div class="font-big mb1">
+                Unfiltered
+              </div>
+              <div class="">
+                Your reviews count the most, so we post all reviews
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-alarm_on font-bigger red"></span>
+              <div class="font-big mb1">
+                Real-time
+              </div>
+              <div class="">
+                Reviews get posted as soon as they're written
+              </div>
+            </div>
+            <div class="col-xs-6 pl3 pr3">
+              <span class="icon icon-people font-bigger red"></span>
+              <div class="font-big mb1">
+                Community
+              </div>
+              <div class="">
+                Help others find the right class by sharing your experience
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  </div>
 </section>
 
 <section class="hero" style="background-image: url('/images/crossfit-bg.jpg')">
@@ -257,7 +486,7 @@
     <div class="content">
       <h2 class="mt0 white heading-font uppercase mb3">Get paid to share what you love</h2>
       <div class="btn btn-white btn-lg">
-        Teach
+        Teach now
       </div>
     </div>
   </div>

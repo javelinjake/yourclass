@@ -46,8 +46,8 @@
     &,
     &:hover,
     &:focus {
-      background-color: $nav-link-hover-bg;
-      border-color: $link-color;
+      background-color: $white;
+      color: $gray-base;
     }
   }
 
@@ -78,33 +78,38 @@
   //background-color: #efefef;
   //padding: 0 500px;
   //margin: 0px -500px 30px;
-  display: table;
+    display: table;
     margin: 0 auto;
-    padding: 15px;
-    background-color: #f5f5f5;
-    box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.1);
-    border: 2px solid rgba(0,0,0,0.1);
-    border-top: none;
+    padding: 30px 0;
+    //background-color: #f5f5f5;
+    //box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.1);
+    //border: 2px solid rgba(0,0,0,0.1);
+    //border-top: none;
   > li {
     float: left;
+    padding: 0 20px;
     // Make the list-items overlay the bottom border
-    margin-bottom: -1px;
+    //margin-bottom: -1px;
 
     &.active {
       a {
         font-weight: bold;
-        color: #555;
+        color: #333;
+        border-color: $brand-blue;
       }
     }
 
     // Actual tabs (as links)
     > a {
-      margin-right: 2px;
+      //margin-right: 2px;
+      padding: 0 5px;
+      border-bottom: 2px solid transparent;
       line-height: $line-height-base;
       //border: 1px solid transparent;
       //border-radius: $border-radius-base $border-radius-base 0 0;
       color: #555;
       &:hover {
+        border-color: $brand-blue;
         //color: #000;
         //border-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
       }
@@ -134,8 +139,8 @@
 // Pills
 // -------------------------
 .nav-pills {
-  float: left;
-  margin-top: 15px;
+  //float: left;
+  //margin-top: 15px;
   > li {
     float: left;
     border-bottom: 1px solid #eeeeee;
@@ -144,9 +149,19 @@
     > a {
       //border-radius: $nav-pills-border-radius;
       color: #888;
-      &:hover {
-        color: #555;
+      padding: 10px 0;
+    }
+    &:first-child > a {
+      padding-top: 0;
+    }
+    &:last-child {
+      border-bottom: none;
+      > a {
+        padding-bottom: 0;
       }
+    }
+    &:hover {
+      color: #555;
     }
     + li {
       margin-left: 2px;
