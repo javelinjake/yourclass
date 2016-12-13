@@ -1,4 +1,4 @@
-function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $state, $q, Upload, $timeout) {
+function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $state, $q, Upload, $timeout, $window, $location) {
   'ngInject';
 
   // ViewModel
@@ -22,9 +22,29 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
     vm.waitForClassData.promise.then(function() {
 
       vm.tabIndex = 0;
-      if ($rootScope.fromAddClass) {
-        vm.tabIndex = 1;
+
+      if ($rootScope.tab) {
+        vm.tabIndex = $rootScope.tab
+      } else {
+        vm.tabIndex = 0;
+        $log.info(vm.tabIndex);
+
+        if ($rootScope.fromAddClass) {
+          vm.tabIndex = 1;
+        }
       }
+
+      // if ($location.search().tab) {
+      //   vm.tabIndex = JSON.parse($location.search().tab);
+      //   $log.info(vm.tabIndex);
+      // } else {
+      //   vm.tabIndex = 0;
+      //   $log.info(vm.tabIndex);
+      //
+      //   if ($rootScope.fromAddClass) {
+      //     vm.tabIndex = 1;
+      //   }
+      // }
 
       $log.info(vm.classData.category.id);
 
@@ -160,6 +180,7 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
 
 
       vm.uploadFiles = function(files, errFiles) {
+        vm.formStatus = "Uploading photos";
         vm.files = files;
         vm.errFiles = errFiles;
         angular.forEach(files, function(file) {
@@ -175,13 +196,20 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
           file.upload.then(function(response) {
             $timeout(function() {
               file.result = response.data;
+
+              vm.formStatus = "Photos uploaded";
+
+              $rootScope.tab = 2;
+              $state.reload();
             });
           }, function(response) {
             if (response.status > 0)
               vm.errorMsg = response.status + ': ' + response.data;
+
+              vm.formStatus = "Photo upload error";
+
           }, function(evt) {
-            file.progress = Math.min(100, parseInt(100.0 *
-              evt.loaded / evt.total));
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
           });
         });
       }
@@ -199,7 +227,8 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
             // Log the response
             $log.info('success', response);
 
-            //$state.reload();
+            $rootScope.tab = 2;
+            $state.reload();
 
           }, function errorCallback(response) {
 
@@ -209,7 +238,7 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
           });
       }
 
-      vm.imageRemove = function(id) {
+      vm.imageRemove = function(id, e) {
         var imageRemoveData = {
           '_auth_key': $rootScope.authToken, // Authentication token of current user
           'id': id,
@@ -222,6 +251,8 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
             // Log the response
             $log.info('success', response);
 
+            // Hide the photo
+            angular.element(e.target).parent().parent().remove();
             //$state.reload();
 
           }, function errorCallback(response) {
