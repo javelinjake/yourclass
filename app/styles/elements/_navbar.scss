@@ -247,29 +247,6 @@ $nav-item-padding: 20px;
   }
 }
 
-// Home, search and class pages
-.home,
-.search,
-.class {
-  .navbar-nav {
-    > li > a {
-      color: $white;
-      height: 58px;
-      line-height: 58px;
-      &.sign-up span {
-        border: 2px solid $white;
-        &:hover {
-          background-color: $white;
-          color: $text-color;
-        }
-      }
-    }
-  }
-  .nav-image {
-    margin-top: 8px;
-  }
-}
-
 
 // Navbar form
 //

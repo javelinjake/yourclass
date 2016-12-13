@@ -54,8 +54,10 @@
               </div>
             </div>
             <div class="checkout-details-bottom">
-              <button class="checkout-details-confirm btn btn-primary" ng-click="checkout.details.click()" ng-disabled="checkout.details.status">Confirm Details</button>
-              <div class="checkout-confirm-note" ng-show="checkout.details.submitted && details.$invalid">Please fill in all required fields</div>
+              <div class="checkout-details-confirm">
+                <button class="checkout-details-button btn btn-primary" ng-click="checkout.details.click()" ng-disabled="checkout.details.status">Confirm Details</button>
+                <div class="checkout-confirm-note" ng-show="checkout.details.submitted && details.$invalid">Please fill in all required fields</div>
+              </div>
             </div>
           </form>
           <!-- Details End -->
@@ -143,10 +145,12 @@
                   </div>
 
                   <div class="col-md-12 col-sm-12">
-                    <button class="checkout-payment-confirm btn btn-primary btn-block" ng-click="checkout.payment.click()">Submit Payment</button>
-                    <div class="checkout-confirm-note" ng-show="checkout.payment.submitted && payment.$invalid">Please fill in all required fields</div>
-                    <div class="checkout-payment-flag">
-                      <img src="images/promisepay.jpg" alt="Promisepay banner">
+                    <div class="checkout-payment-confirm">
+                      <button class="checkout-payment-button btn btn-primary btn-block" ng-click="checkout.payment.click()">Submit Payment</button>
+                      <div class="checkout-confirm-note" ng-show="checkout.payment.submitted && payment.$invalid">Please fill in all required fields</div>
+                      <div class="checkout-payment-flag">
+                        <img src="images/promisepay.jpg" alt="Promisepay banner">
+                      </div>
                     </div>
                   </div>
                 </div>

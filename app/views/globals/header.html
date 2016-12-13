@@ -14,7 +14,7 @@
         </a>
       </div>
 
-      <form class="search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform" ng-if="!isIndex">
+      <form class="navbar-search search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform" ng-if="!isIndex">
         <fieldset class="search-form-fieldset">
 
           <div class="form-group">
@@ -64,43 +64,45 @@
         </fieldset>
       </form>
 
-            <div class="navbar-links">
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!userLoggedIn">
-                        <a href="#" ng-click="LogInModal('sm')">
-                          <span>Log In</span>
-                        </a>
-                    </li>
-                    <li ng-if="!userLoggedIn">
-                        <a href="#" ng-click="SignUpModal('sm')" class="sign-up">
-                          <span>Sign Up</span>
-                        </a>
-                    </li>
-                    <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
-                        <a href="/user/dashboard" role="button" uib-dropdown-toggle>
-                            My Account
-                            <div ng-repeat="image in userData.photos" ng-if="image.isMain == 1" class="nav-image">
-                              <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
-                            <li role="menuitem">
-                                <a href="/user/dashboard">Dashboard</a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="/user/edit">Edit profile</a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="/user/account">Account details</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li role="menuitem">
-                                <a href="#" ng-click="logOut()">Log out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      <div class="navbar-title">{{$state.current.title}}</div>
+
+      <div class="navbar-links">
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-if="!userLoggedIn">
+            <a href="#" ng-click="LogInModal('sm')" class="sign-in">
+              <span>Log In</span>
+            </a>
+          </li>
+          <li ng-if="!userLoggedIn">
+            <a href="#" ng-click="SignUpModal('sm')" class="sign-up">
+              <span>Sign Up</span>
+            </a>
+          </li>
+          <li class="dropdown" uib-dropdown ng-if="userLoggedIn">
+            <a href="/user/dashboard" role="button" uib-dropdown-toggle>
+              My Account
+              <div ng-repeat="image in userData.photos" ng-if="image.isMain == 1" class="nav-image">
+                <img class="img-responsive" ng-src="{{imageUrl}}{{image.src}}" />
+              </div>
+            </a>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+              <li role="menuitem">
+                <a href="/user/dashboard">Dashboard</a>
+              </li>
+              <li role="menuitem">
+                <a href="/user/edit">Edit profile</a>
+              </li>
+              <li role="menuitem">
+                <a href="/user/account">Account details</a>
+              </li>
+              <li class="divider"></li>
+              <li role="menuitem">
+                <a href="#" ng-click="logOut()">Log out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </nav>

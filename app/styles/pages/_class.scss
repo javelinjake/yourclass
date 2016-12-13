@@ -251,41 +251,12 @@ $booking-width: 400px;
 
 /* OTHER: */
 
-/* Top Navigation */
-.class {
-  .navbar {
-    background-color: transparent;
-    z-index: 10;
-    border-bottom: none;
-  }
-}
-
-/* Hero */
-.class {
-  .hero {
-    margin-top: -($navbar-height);
-
-    .content {
-      max-width: 450px;
-      margin: 0 auto;
-      padding: 120px 0 70px;
-    }
-
-    h1 {
-      margin-bottom: 0;
-    }
-
-    .lead {
-      font-size: 16px;
-    }
-  }
-}
-
 /* Panels */
 .class {
 
   .container {
 
+    // Cuz Booking block has float property
     &:before,
     &:after {
       display: none;

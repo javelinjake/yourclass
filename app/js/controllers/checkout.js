@@ -106,35 +106,40 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
 
       $log.info('Confirm "Payment" step.');
 
-      // var that = this;
+      var _that = this;
+
+      // Add billing and card details into result Object
+      result.billing = this.billing;
+      result.card = this.card;
+
+      $log.warn(result);
+      $log.warn(JSON.stringify(result));
 
       /* Send data */
-      /*$http
+      $http
         .post($rootScope.apiUrl + 'students/book?_auth_key=' + $cookies.get('auth_key'), result)
-        .then(function() {
+        .then(function(response) {
           $log.info('Payment success');
+          $log.warn(response);
 
           // Increase step
           vm.step = 2;
 
           // Mark stage as completed and unlock next step (confirmation)
-          this.disabled = true;
-          this.status = true;
+          _that.disabled = true;
+          _that.status = true;
           vm.details.disabled = true;
           vm.confirmation.disabled = false;
 
-          // Add billing and card details into result Object
-          result.billing = this.billing;
-          result.card = this.card;
-
           // Clear cookies
           $cookies.remove('booking');
-        }, function() {
+        }, function(response) {
           $log.info('Payment error');
-        });*/
+          $log.warn(response);
+        });
       /* Send data End */
 
-      // Increase step
+      /*// Increase step
       vm.step = 2;
 
       // Mark stage as completed and unlock next step (confirmation)
@@ -151,7 +156,7 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       $log.warn(JSON.stringify(result));
 
       // Clear cookies
-      $cookies.remove('booking');
+      $cookies.remove('booking');*/
     },
     submitted: false,
     disabled: true,

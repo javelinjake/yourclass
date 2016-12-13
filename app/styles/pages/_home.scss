@@ -13,40 +13,7 @@
     margin-top: -40px;
   }
 
-  .navbar {
-    background-color: transparent;
-    border: none;
-    z-index: 10;
-
-    .search-form,
-    .navbar-logo {
-      display: none; // For now
-    }
-  }
-
-    .nav-wrapper {
-      padding: 0 220px;
-    }
-
-    &-links {
-      //z-index: 20;
-    }
-
-  }
-
-
-/* Hero */
-.home {
-  .hero {
-    //margin-top: -($navbar-height);
-  }
 }
-.home {
-  .search-form {
-    margin-bottom: 0;
-  }
-}
-
 
 
 .home-blocks {
