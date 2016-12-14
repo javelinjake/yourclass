@@ -148,13 +148,6 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       vm.details.disabled = true;
       vm.confirmation.disabled = false;
 
-      // Add billing and card details into result Object
-      result.billing = this.billing;
-      result.card = this.card;
-
-      $log.warn(result);
-      $log.warn(JSON.stringify(result));
-
       // Clear cookies
       $cookies.remove('booking');*/
     },
