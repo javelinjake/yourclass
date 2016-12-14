@@ -199,6 +199,7 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
       }
       else {
         // Save booked data into cookies
+        $log.warn($rootScope.userData);
         $cookies.putObject('booking', createBookingObject(this, $rootScope.userData));
 
         // Change the location, show some booked data in the search string

@@ -7,7 +7,7 @@
         <md-tab-label>Details</md-tab-label>
         <md-tab-body>
           <!-- Details -->
-          <form class="checkout-details" name="details" ng-class="{'submitted': checkout.details.submitted}" ng-submit="checkout.details.submit(details.$valid)">
+          <form class="checkout-details checkout-content-inner" name="details" ng-class="{'submitted': checkout.details.submitted}" ng-submit="checkout.details.submit(details.$valid)">
             <div class="checkout-details-top">
               <a class="checkout-details-back" ui-sref="Class({classAlias: checkout.details.class.alias})" target="_blank">Back to 'Class name'</a>
             </div>
@@ -26,6 +26,9 @@
                   <span class="checkout-details-class-total"><strong>Total price:</strong> {{::checkout.details.class.price * (checkout.details.students.length) | currency : '$'}}</span>
                 </div>
               </div>
+              <ul class="checkout-content-errors" ng-show="checkout.errors.length > 0">
+                <li ng-repeat="error in checkout.errors">{{error}}</li>
+              </ul>
               <div class="checkout-details-members">
                 <div class="checkout-details-members-header">Who are the students attending this class?</div>
                 <ul class="checkout-details-members-list">
@@ -59,6 +62,9 @@
                 <div class="checkout-confirm-note" ng-show="checkout.details.submitted && details.$invalid">Please fill in all required fields</div>
               </div>
             </div>
+            <div class="checkout-content-loader" ng-show="checkout.details.loader">
+              <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+            </div>
           </form>
           <!-- Details End -->
         </md-tab-body>
@@ -67,11 +73,14 @@
         <md-tab-label>Payment</md-tab-label>
         <md-tab-body>
           <!-- Payment -->
-          <form class="checkout-payment" name="payment" ng-class="{'submitted': checkout.payment.submitted}" ng-submit="checkout.payment.submit(payment.$valid)">
+          <form class="checkout-payment checkout-content-inner" name="payment" ng-class="{'submitted': checkout.payment.submitted}" ng-submit="checkout.payment.submit(payment.$valid)">
             <div class="checkout-payment-top">
               Total amount<br/>
               <strong>{{::checkout.details.class.price * (checkout.details.students.length) | currency : '$'}}</strong>
             </div>
+            <ul class="checkout-content-errors text-center" ng-show="checkout.errors.length > 0">
+              <li ng-repeat="error in checkout.errors">{{error}}</li>
+            </ul>
             <div class="checkout-payment-content row">
 
               <div class="checkout-payment-details billing col-md-4 col-sm-6">
@@ -158,6 +167,9 @@
 
             </div>
             <div class="checkout-payment-bottom"></div>
+            <div class="checkout-content-loader" ng-show="checkout.payment.loader">
+              <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+            </div>
           </form>
           <!-- Payment End -->
         </md-tab-body>
@@ -165,7 +177,7 @@
       <md-tab id="tab3" ng-disabled="checkout.confirmation.disabled">
         <md-tab-label>Confirmation</md-tab-label>
         <md-tab-body>
-          <div class="checkout-confirmation">
+          <div class="checkout-confirmation checkout-content-inner">
             <h2 class="checkout-confirmation-top">
               Great, your confirmed in this class!
             </h2>
