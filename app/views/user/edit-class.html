@@ -2,20 +2,20 @@
 
   <div ng-include="'user/navs/user-nav.html'"></div>
 
-  <uib-tabset active="userEditClass.tabIndex" vertical="true" type="pills" class="panel-white p4 clearfix account-wrapper">
+  <uib-tabset active="userEditClass.tabIndex" vertical="true" type="pills" class="panel-blue clearfix account-wrapper">
 
     <uib-tab index="0">
       <uib-tab-heading>
-        <div class="strong">The Basics</div>
+        <div class="strong heading-font font-big">The Basics</div>
         <div>Name, category, price and size</div>
       </uib-tab-heading>
 
       <!-- The Basics -->
-      <div class="panel-form">
+      <div class="account-content-wrapper">
 
         <div class="account-heading pb4 mb4">
-          <h2 class="heading-font text-center uppercase m0">Edit your class</h2>
-          <p class="text-center font-big m0">Edit your class description</p>
+          <h2 class="heading-font text-center uppercase m0 mb1">The basics</h2>
+          <p class="text-center font-big m0">Edit the basic details about your class</p>
         </div>
 
           <form name="userEditClass.addClassForm" ng-submit="userEditClass.editClassBasics()" class="form-horizontal">
@@ -137,30 +137,25 @@
 
 
 
-    <uib-tab index="1" heading="Vertical 2">
+    <uib-tab index="1">
       <uib-tab-heading>
-        <div class="strong">The Details</div>
+        <div class="strong heading-font font-big">The Details</div>
         <div>Brief, description and photos</div>
       </uib-tab-heading>
 
       <!-- The Details -->
-      <div class="panel-form">
+      <div class="account-content-wrapper">
 
         <div class="account-heading pb4 mb4">
-          <h2 class="heading-font text-center uppercase m0">
-            <span ng-if="fromAddClass">
-              Great you have created <strong>{{ userEditClass.classData.title }}</strong> lets add some more details
-            </span>
-            <span ng-if="!fromAddClass">
-              Edit your class details
-            </span>
+          <h2 class="heading-font text-center uppercase m0 mb1">
+            The details
           </h2>
           <p class="text-center font-big m0">
-            <span ng-if="fromAddClass">
+            <span ng-if="!fromAddClass">
               You can easily edit the basic details using the navigation on the left
             </span>
-            <span ng-if="!fromAddClass">
-              Now lets add in some more detail about your class. The more information you add the more successful your class will be, so get creative with your descriptions!
+            <span ng-if="fromAddClass">
+              Great you have created <strong>{{ userEditClass.classData.title }}</strong>, now lets add in some more detail about your class. The more information you add the more successful your class will be, so get creative with your descriptions!
             </span>
           </p>
         </div>
@@ -183,56 +178,6 @@
             </div>
 
             <div class="form-group">
-              <label class="control-label">Cover photo</label>
-              <div>
-                Will be going here
-              </div>
-            </div>
-
-
-            <div class="form-group">
-              <label class="control-label">Other photos</label>
-
-              <ul class="clearfix list-unstyled photo-gallery">
-                <li ng-repeat="photo in userEditClass.classData.photos">
-                  <img src="{{imageUrl}}{{photo.src}}" alt="" class="img-responsive">
-                  <span ng-click="userEditClass.imageCover(photo.id)" class="icon icon-favorite"></span>
-                  <span ng-click="userEditClass.imageRemove(photo.id)" class="icon icon-bin"></span>
-                </li>
-              </ul>
-
-              <form name="myForm">
-                <fieldset>
-                  <legend>Upload on form submit</legend>
-                  <br>Photo:
-                  <input type="file" ngf-select ng-model="picFile" multiple accept="image/*" ngf-max-height="5000" ngf-max-width="5000" ngf-max-size="5MB" ngf-resize="{width: 1000, height: 1000, quality: .7}" ngf-resize-if="$width > 1000 || $height > 1000">
-                  <i ng-show="myForm.file.$error.required">*required</i><br>
-                  <i ng-show="myForm.file.$error.maxSize">File too large
-                      {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-
-                  <div ng-repeat="pic in picFile">
-                    <div class="thumbnail col-xs-6">
-                      <img ngf-thumbnail="pic">
-                    </div>
-                  </div>
-
-                  <button class="btn btn-primary btn-block" ng-disabled="myForm.$invalid"
-                          ng-click="userEditClass.uploadFiles(picFile)">Submit</button>
-
-                  <span class="progress">
-                    Progress:
-                    <div style="width:{{picFile.progress}}%"
-                        ng-bind="picFile.progress + '%'"></div>
-                  </span>
-                  <span ng-show="picFile.result">Upload Successful</span>
-                  <span class="err" ng-show="userEditClass.errorMsg">{{userEditClass.errorMsg}}</span>
-                </fieldset>
-
-              </form>
-
-            </div>
-
-            <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block">Update</button>
             </div>
 
@@ -246,11 +191,73 @@
 
 
 
-
-
-    <uib-tab index="2" heading="Vertical 3">
+    <uib-tab index="2">
       <uib-tab-heading>
-        <div class="strong">The Location</div>
+        <div class="strong heading-font font-big">The Photos</div>
+        <div>Cover photo and class photos</div>
+      </uib-tab-heading>
+
+      <!-- The Details -->
+      <div class="account-content-wrapper account-content-wrapper-wider">
+
+        <div class="account-heading pb4 mb4">
+          <h2 class="heading-font text-center uppercase m0 mb1">
+            The Photos
+          </h2>
+          <p class="text-center font-big m0">
+            Make your class page stand out by adding a class page and add additional images to show off what your class has to offer!
+          </p>
+        </div>
+
+            <div class="form-group">
+              <label class="control-label">Cover photo</label>
+              <div ng-repeat="photo in userEditClass.classData.photos" ng-if="photo.isMain == 1">
+                <img class="img-responsive" ng-src="{{imageUrl}}{{photo.src}}" />
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="control-label">Class photos</label>
+
+              <ul class="clearfix list-unstyled photo-gallery">
+                <li ng-repeat="photo in userEditClass.classData.photos">
+                  <div class="background-image" style="background-image: url('{{imageUrl}}{{photo.src}}')">
+                    <!-- <img src="{{imageUrl}}{{photo.src}}" alt="" class="img-responsive"> -->
+                    <span ng-click="photo.isMain == 1 || userEditClass.imageCover(photo.id)" class="icon icon-favorite" ng-class="{'active':photo.isMain == 1}"></span>
+                    <span ng-click="userEditClass.imageRemove(photo.id, $event)" class="icon icon-bin"></span>
+                  </div>
+                </li>
+              </ul>
+
+              <button class="btn btn-alternative btn-block mt3" ngf-select="userEditClass.uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-size="5MB">
+                Add new photos
+              </button>
+
+              <ul class="list-unstyled">
+                <li ng-repeat="f in userEditClass.errFiles">
+                  {{f.name}} {{f.$error}} {{f.$errorParam}}
+                </li>
+                <li ng-repeat="f in userEditClass.files">
+                  {{f.name}} {{f.$errorParam}}
+                  <h3>{{f.progress}}</h3>
+                  <span class="image-progress-bar">
+                    <div style="width:{{f.progress}}%" class="font-white px4 py2">Progress</div>
+                  </span>
+                </li>
+              </ul>
+
+            </div>
+
+      </div>
+
+    </uib-tab>
+
+
+
+    <uib-tab index="3">
+      <uib-tab-heading>
+        <div class="strong heading-font font-big">The Location</div>
         <div>Venue and facilities</div>
       </uib-tab-heading>
 
@@ -263,14 +270,14 @@
 
 
 
-    <uib-tab index="3" heading="Vertical 4">
+    <uib-tab index="4">
       <uib-tab-heading>
-        <div class="strong">The Dates</div>
+        <div class="strong heading-font font-big">The Dates</div>
         <div>Calendar and times</div>
       </uib-tab-heading>
 
       <!-- The Dates -->
-      <div class="panel panel-form block">
+      <div class="panel account-content-wrapper block">
 
         <div class="panel-heading">
 

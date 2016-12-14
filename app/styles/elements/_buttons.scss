@@ -155,8 +155,13 @@ a.btn {
   @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
 }
 .btn-alternative {
-  @include button-variant($btn-alternative-color, $btn-alternative-bg, $btn-alternative-border);
-  border-width: 1px;
+  @include button-variant($brand-salmon, $btn-alternative-bg, $brand-salmon);
+  border-width: 2px;
+  &:hover, &:focus, &:active {
+    background-color: $brand-salmon;
+    color: $btn-alternative-bg;
+    border-color: $brand-salmon;
+  }
 }
 .btn-white {
   @include button-variant($white, transparent, $white);
@@ -203,13 +208,6 @@ a.btn {
       color: $btn-link-disabled-color;
       text-decoration: none;
     }
-  }
-}
-.btn-alternative {
-  &:hover, &:focus, &:active {
-    background-color: $btn-alternative-color;
-    color: $btn-alternative-bg;
-    border-color: $btn-alternative-color;
   }
 }
 

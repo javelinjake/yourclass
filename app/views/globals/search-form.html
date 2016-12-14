@@ -1,0 +1,49 @@
+<form class="navbar-search search-form clearfix" name="form" ng-submit="searchform.search()" ng-controller="SearchFormCtrl as searchform">
+  <fieldset class="search-form-fieldset">
+
+    <div class="form-group">
+      <label class="control-label hidden">Keyword</label>
+      <!--<input ng-model="class" type="text" class="form-control" placeholder="Class"/>-->
+      <md-autocomplete
+        md-selected-item="searchform.categories.selected"
+        md-search-text="searchform.categories.searched"
+        md-items="category in searchform.categories.query(searchform.categories.searched, 'cat')"
+        md-item-text="category.title"
+        md-min-length="0"
+        md-selected-item-change="searchform.categories.change(category)"
+        placeholder="Category">
+        <md-item-template>
+          <span md-highlight-text="searchform.categories.searched" md-highlight-flags="i">{{category.title}}</span>
+        </md-item-template>
+        <md-not-found>
+          No categories matching "{{searchform.categories.searched}}" were found.
+        </md-not-found>
+      </md-autocomplete>
+    </div>
+    <div class="form-group">
+      <label class="control-label hidden">Location</label>
+      <!--<input ng-model="location" type="text" class="form-control" placeholder="Location"/>-->
+      <md-autocomplete
+        md-selected-item="searchform.locations.selected"
+        md-search-text="searchform.locations.searched"
+        md-items="location in searchform.locations.query(searchform.locations.searched, 'loc')"
+        md-item-text="location.title"
+        md-min-length="0"
+        md-selected-item-change="searchform.locations.change(location)"
+        placeholder="Location">
+        <md-item-template>
+          <span md-highlight-text="searchform.locations.searched" md-highlight-flags="i">{{location.title}}</span>
+        </md-item-template>
+        <md-not-found>
+          No locations matching "{{searchform.locations.searched}}" were found.
+        </md-not-found>
+      </md-autocomplete>
+    </div>
+    <div class="search-form-submit">
+      <button type="submit" class="btn btn-primary btn-block" ng-disabled="!searchform.categories.selected">
+        <span class="text">Search</span>
+      </button>
+    </div>
+
+  </fieldset>
+</form>

@@ -135,12 +135,6 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider, $breadc
     prefixStateName: 'Home'
   });
 
-  // TODO - Need to change for production, should just be able to remove
-  // $httpProvider.defaults.headers.common = {};
-  // $httpProvider.defaults.headers.post = {};
-  // $httpProvider.defaults.headers.put = {};
-  // $httpProvider.defaults.headers.patch = {};
-
 }
 
 export default OnConfig;

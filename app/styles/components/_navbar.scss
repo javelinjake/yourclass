@@ -2,32 +2,8 @@
 
 .navbar {
   z-index: 10;
-  border-bottom: none;
-  background-color: transparent;
 
-  body.checkout &,
-  body.user-dashboard & {
-    background-color: $white;
-  }
-
-  // Elements
-  &-logo {
-    height: 58px;
-    padding: 4px 0;
-
-    body.home & {
-      display: none;
-    }
-  }
-
-  &-search {
-    // On the Home Page is not displayed via NG-IF
-    body.checkout & {
-      display: none;
-    }
-  }
-
-  &-title {
+  .navbar-title {
     display: none;
     margin: 0;
     padding: 12px 0;
@@ -37,80 +13,53 @@
     color: $white;
     text-transform: uppercase;
     text-align: center;
-
-    body.checkout & {
-      display: block;
-      color: #333;
-    }
-  }
-
-  // Left links
-  .dropdown {
-
-    $block: &;
-
-    &-toggle {
-      height: 58px;
-      background-color: transparent;
-      line-height: 58px;
-      color: $white;
-
-      body.checkout &,
-      body.user-dashboard & {
-        color: $text-color;
-      }
-
-      .nav-image {
-        margin-top: 8px;
-      }
-    }
-    &-menu {}
-
-    &.open {
-      .dropdown-toggle {
-        background-color: transparent;
-        color: $white;
-
-        body.checkout &,
-        body.user-dashboard & {
-          color: $text-color;
-        }
-      }
-    }
-
-  }
-
-  // Elements
-  .navbar-nav {
-    .sign {
-      &-in {
-        color: $white;
-
-        span {}
-      }
-      &-up {
-        color: $white;
-
-        span {
-          border: 2px solid $white;
-
-          &:hover {
-            background-color: $white;
-            color: $text-color;
-          }
-        }
-      }
-    }
-  }
-
-  // Wrapper
-  .nav-wrapper {
-    padding: 0 220px;
   }
 }
 
 /* Pages */
-// .home {}
-// .search {}
-// .class {}
-// .checkout {}
+
+// Home
+.home {
+  .navbar {
+    .navbar-logo {
+      display: none;
+    }
+  }
+}
+
+// Checkout
+.checkout {
+  .navbar .navbar-title {
+    display: block;
+    color: #333;
+  }
+  .navbar-search {
+    display: none;
+  }
+}
+
+// Pages with hero image
+.home,
+.search,
+.class {
+  .navbar {
+    background-color: transparent;
+  }
+ .navbar-nav {
+   > li > a {
+     color: $white;
+     height: 58px;
+     line-height: 58px;
+     &.sign-up span {
+       border: 2px solid $white;
+       &:hover {
+         background-color: $white;
+         color: $text-color;
+       }
+     }
+   }
+ }
+ .nav-image {
+   margin-top: 8px;
+ }
+}
