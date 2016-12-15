@@ -6,8 +6,6 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
   // ViewModel
   const vm = this;
 
-  $log.info('CheckoutCtrl');
-
 
   /* Check if user is known and redirect to the home page if not */
   // if (!$rootScope.userLoggedIn) { $state.go('Home'); return false; }
@@ -54,8 +52,7 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
   };
 
   var sendResult = function(result, onSuccessCallback, onErrorCallback) {
-    $log.warn(result);
-    $log.warn(JSON.stringify(result));
+    $log.info(result);
 
     $http
       .post($rootScope.apiUrl + 'students/book?_auth_key=' + $cookies.get('auth_key'), result)
@@ -66,16 +63,16 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
         if (response.data.result) {
           vm.errors.length = 0;
           onSuccessCallback && onSuccessCallback();
+          $cookies.remove('booking');
         }
         else {
           vm.errors = response.data.errors;
           onErrorCallback && onErrorCallback();
         }
-
-        $cookies.remove('booking');
       }, function() {
         $log.info('Payment error');
         vm.errors = ['An error occurred. Please reload the page or try to book another class.'];
+        onErrorCallback && onErrorCallback();
       });
   };
 
@@ -99,15 +96,19 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       if (!this.class.price) {
         /* Send data */
         vm.details.loader = true;
-        sendResult(result, function() {
-          vm.step = 2;
+        sendResult(result,
+          function() {
+            vm.step = 2;
 
-          // Mark stage as completed and unlock next step (confirmation)
-          vm.details.disabled = true;
-          vm.details.status = true;
-          vm.details.loader = false;
-          vm.confirmation.disabled = false;
-        });
+            // Mark stage as completed and unlock next step (confirmation)
+            vm.details.disabled = true;
+            vm.details.status = true;
+            vm.details.loader = false;
+            vm.confirmation.disabled = false;
+          },
+          function() {
+            vm.details.loader = false;
+          });
         /* Send data End */
       } else {
         vm.step = 1;
@@ -153,17 +154,21 @@ function CheckoutCtrl($http, $rootScope, $scope, $log, $cookies, $location, $fil
       result.card = this.card;
 
       /* Send data */
-      vm.details.loader = true;
-      sendResult(result, function() {
-        vm.step = 2;
+      vm.payment.loader = true;
+      sendResult(result,
+        function() {
+          vm.step = 2;
 
-        // Mark stage as completed and unlock next step (confirmation)
-        vm.payment.disabled = true;
-        vm.payment.status = true;
-        vm.details.disabled = true;
-        vm.details.loader = false;
-        vm.confirmation.disabled = false;
-      });
+          // Mark stage as completed and unlock next step (confirmation)
+          vm.payment.disabled = true;
+          vm.payment.status = true;
+          vm.payment.loader = false;
+          vm.details.disabled = true;
+          vm.confirmation.disabled = false;
+        },
+        function() {
+          vm.payment.loader = false;
+        });
       /* Send data End */
     },
     submitted: false,

@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="checkout-content-loader" ng-show="checkout.details.loader">
-              <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+              <md-progress-circular md-mode="indeterminate" md-diameter="100" ng-disabled="!checkout.details.loader"></md-progress-circular>
             </div>
           </form>
           <!-- Details End -->
