@@ -1,0 +1,52 @@
+// Form buttons
+form {
+
+  &.ng-submitted {
+    .btn-primary {
+      cursor: $cursor-disabled;
+      overflow: hidden;
+      position: relative;
+      .text {
+        display: block;
+        @include translate(0, 40px);
+        @include opacity(0);
+        visibility: hidden;
+      }
+      &:before {
+        @include opacity(1);
+        visibility: visible;
+        @include translate(0, 0);
+      }
+      &:after {
+        @include opacity(1);
+        visibility: visible;
+        @include translate(0, 0);
+      }
+    }
+  }
+  &.ng-success {
+    .btn-primary {
+      background: $brand-light-green;
+    }
+    .text,
+    .btn-primary:before,
+    .btn-primary:after {
+      @include translate(0, -40px);
+      @include opacity(0);
+      visibility: hidden;
+    }
+    .text-success {
+      @include translate(0, 0);
+      @include opacity(1);
+      visibility: visible;
+    }
+  }
+  &.ng-fail {
+    .text-fail {
+      @include translate(0, 0);
+      @include opacity(1);
+      visibility: visible;
+    }
+  }
+
+}

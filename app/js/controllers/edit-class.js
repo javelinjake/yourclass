@@ -27,28 +27,11 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
         vm.tabIndex = $rootScope.tab
       } else {
         vm.tabIndex = 0;
-        $log.info(vm.tabIndex);
 
         if ($rootScope.fromAddClass) {
           vm.tabIndex = 1;
         }
       }
-
-      // if ($location.search().tab) {
-      //   vm.tabIndex = JSON.parse($location.search().tab);
-      //   $log.info(vm.tabIndex);
-      // } else {
-      //   vm.tabIndex = 0;
-      //   $log.info(vm.tabIndex);
-      //
-      //   if ($rootScope.fromAddClass) {
-      //     vm.tabIndex = 1;
-      //   }
-      // }
-
-      $log.info(vm.classData.category.id);
-
-      //vm.classData.category.id.selected = vm.classData.category.id[0];
 
       // Get categories
       $http.get($rootScope.apiUrl + 'classes/categories')
@@ -90,40 +73,38 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
       }
 
       // Add class basic
-      vm.editClassBasics = function() {
-
-        // console.log(vm.addClassForm.title.$pristine);
+      vm.editClassBasics = function(e) {
 
         // Price buttons and custom price
-        //vm.customPrice = false;
         if (vm.classData.price == 'custom') {
           vm.classData.price = vm.priceInput;
         }
 
         // Size buttons and custom size
-        //vm.customSize = false;
         if (vm.classData.size == 'custom') {
           vm.classData.size = vm.sizeInput;
         }
 
-        // if (!vm.classData.subcategory.id) {
-        //   vm.classData.subcategory.id = "";
-        // }
+        vm.classData.category.id = vm.classData.category.id;
+        if (vm.classData.subcategory) {
+          vm.classData.subcategory.id = vm.classData.subcategory.id
+        }
 
         var classData = {
           '_auth_key': $rootScope.authToken,
           '_id': vm.classData.id,
           'title': vm.classData.title,
-          //'categoryId': vm.classData.category.id,
-          //'subcategoryId': vm.classData.subcategory.id,
+          'categoryId': vm.classData.category.id,
+          'subcategoryId': vm.classData.subcategory.id,
           'price': vm.classData.price,
           'size': vm.classData.size
-          //'venueType': 'private' // Default for now
         };
 
         $http.post($rootScope.apiUrl + 'classes/update', classData).success((data) => {
-          $log.info(data);
-          $log.info('Class updated the basics');
+          angular.element(e.target).addClass('ng-success');
+          $timeout(function() {
+            angular.element(e.target).removeClass('ng-success ng-submitted');
+          }, 5000);
 
           // convert title to alias TODO - Check with Slava and put in filters?
           function slugify(text)
@@ -137,25 +118,20 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
             }
 
           // Check to see if title was changed
-          if (!vm.addClassForm.title.$pristine) {
+          if (!vm.basicsForm.title.$pristine) {
             // Set to false as you will be redirected to details tab
             $rootScope.fromAddClass = false;
             // Reload with new URL
             $state.go('User-Edit-Class', {classEditName: slugify(vm.classData.title)});
-          } else {
-            // Just reload the page TODO - Any need to reload?
-            // $state.reload();
-
-            //vm.tabIndex = 0;
           }
 
         }).error((err, status) => {
-
+          angular.element(e.target).addClass('ng-fail');
         });
       }
 
       // Add class details
-      vm.editClassDetails = function() {
+      vm.editClassDetails = function(e) {
 
         var classData = {
           '_auth_key': $rootScope.authToken,
@@ -165,16 +141,12 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
         };
 
         $http.post($rootScope.apiUrl + 'classes/update', classData).success((data) => {
-          $log.info(data);
-          $log.info('Class updated the details');
-
-          // Just reload the page
-          //$state.reload();
-
-          //vm.tabIndex = 1;
-
+          angular.element(e.target).addClass('ng-success');
+          $timeout(function() {
+            angular.element(e.target).removeClass('ng-success ng-submitted');
+          }, 5000);
         }).error((err, status) => {
-
+          angular.element(e.target).addClass('ng-fail');
         });
       }
 
@@ -196,8 +168,6 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
           file.upload.then(function(response) {
             $timeout(function() {
               file.result = response.data;
-
-              vm.formStatus = "Photos uploaded";
 
               $rootScope.tab = 2;
               $state.reload();

@@ -18,7 +18,7 @@
           <p class="text-center font-big m0">Edit the basic details about your class</p>
         </div>
 
-          <form name="userEditClass.addClassForm" ng-submit="userEditClass.editClassBasics()" class="form-horizontal">
+          <form name="userEditClass.basicsForm" ng-submit="userEditClass.editClassBasics($event)" class="form-horizontal">
             <fieldset>
 
               <div class="form-group">
@@ -123,7 +123,11 @@
               </div>
 
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Update</button>
+                <button type="submit" class="btn btn-primary btn-block" ng-disabled="userEditClass.basicsForm.$invalid">
+                  <span class="text">Update basics</span>
+                  <span class="text-success">Basics updated</span>
+                  <span class="text-fail">Details update failed</span>
+                </button>
               </div>
 
             </fieldset>
@@ -140,11 +144,11 @@
     <uib-tab index="1">
       <uib-tab-heading>
         <div class="strong heading-font font-big">The Details</div>
-        <div>Brief, description and photos</div>
+        <div>Brief and description</div>
       </uib-tab-heading>
 
       <!-- The Details -->
-      <div class="account-content-wrapper">
+      <div class="account-content-wrapper account-content-wrapper-wider">
 
         <div class="account-heading pb4 mb4">
           <h2 class="heading-font text-center uppercase m0 mb1">
@@ -160,28 +164,39 @@
           </p>
         </div>
 
-        <form name="editClassDetailsForm" ng-submit="userEditClass.editClassDetails()" class="form-horizontal">
-          <fieldset>
+        <form name="detailsForm" ng-submit="userEditClass.editClassDetails($event)" class="form-horizontal" novalidate>
 
             <div class="form-group">
               <label class="control-label">Short description</label>
               <div>
-                <textarea ng-model="userEditClass.classData.brief" class="form-control form-full" rows="2" placeholder="Short description" required></textarea>
+                <textarea name="shortDescription" ng-model="userEditClass.classData.brief" class="form-control form-full" rows="3" ng-minlength="50" ng-maxlength="200" placeholder="Short description" required></textarea>
+
+                <p class="panel-error p1 text-center font-bold" ng-show="detailsForm.shortDescription.$error.required && !detailsForm.shortDescription.$pristine">This field is required</p>
+                <p class="panel-error p1 text-center font-bold" ng-show="detailsForm.shortDescription.$error.minlength">Too short, please write a bit more</p>
+                <p class="panel-error p1 text-center font-bold" ng-show="detailsForm.shortDescription.$error.maxlength">Too long, please write less</p>
+
               </div>
             </div>
 
             <div class="form-group">
               <label class="control-label">Main description</label>
               <div>
-                <textarea ng-model="userEditClass.classData.description" class="form-control form-full" rows="4" placeholder="Main description"></textarea>
+                <textarea name="mainDescription" ng-model="userEditClass.classData.description" class="form-control form-full" rows="10" ng-minlength="50" ng-maxlength="2000" placeholder="Main description" required></textarea>
+
+                <p class="panel-error p1 text-center font-bold" ng-show="detailsForm.mainDescription.$error.required && !detailsForm.mainDescription.$pristine">This field is required</p>
+                <p class="panel-error p1 text-center font-bold" ng-show="detailsForm.mainDescription.$error.minlength">Too short, please write a bit more</p>
+                <p class="panel-error p1 text-center font-bold" ng-show="detailsForm.mainDescription.$error.maxlength">Too long, please write less</p>
+
               </div>
             </div>
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block">Update</button>
+              <button type="submit" class="btn btn-primary btn-block" ng-disabled="detailsForm.$invalid">
+                <span class="text">Update details</span>
+                <span class="text-success">Details updated</span>
+                <span class="text-fail">Details update failed</span>
+              </button>
             </div>
-
-          </fieldset>
 
         </form>
 
@@ -216,16 +231,27 @@
               </div>
             </div>
 
-
             <div class="form-group">
               <label class="control-label">Class photos</label>
 
               <ul class="clearfix list-unstyled photo-gallery">
                 <li ng-repeat="photo in userEditClass.classData.photos">
                   <div class="background-image" style="background-image: url('{{imageUrl}}{{photo.src}}')">
-                    <!-- <img src="{{imageUrl}}{{photo.src}}" alt="" class="img-responsive"> -->
                     <span ng-click="photo.isMain == 1 || userEditClass.imageCover(photo.id)" class="icon icon-favorite" ng-class="{'active':photo.isMain == 1}"></span>
                     <span ng-click="userEditClass.imageRemove(photo.id, $event)" class="icon icon-bin"></span>
+                  </div>
+                </li>
+
+                <!-- Uploading images -->
+                <li ng-repeat="f in userEditClass.files">
+                  <div class="background-image" style="background-image: url('{{f | ngfDataUrl}}')"></div>
+                  <div class="image-progress-bar">
+                    <div class="text">
+                      <strong>{{f.progress}}%</strong> Uploaded
+                    </div>
+                    <div class="progress-wrapper">
+                      <div style="width:{{f.progress}}%"></div>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -238,13 +264,7 @@
                 <li ng-repeat="f in userEditClass.errFiles">
                   {{f.name}} {{f.$error}} {{f.$errorParam}}
                 </li>
-                <li ng-repeat="f in userEditClass.files">
-                  {{f.name}} {{f.$errorParam}}
-                  <h3>{{f.progress}}</h3>
-                  <span class="image-progress-bar">
-                    <div style="width:{{f.progress}}%" class="font-white px4 py2">Progress</div>
-                  </span>
-                </li>
+
               </ul>
 
             </div>
@@ -262,6 +282,59 @@
       </uib-tab-heading>
 
       <!-- The Location -->
+      <div class="account-content-wrapper">
+
+        <div class="account-heading pb4 mb4">
+          <h2 class="heading-font text-center uppercase m0 mb1">
+            The Location
+          </h2>
+          <p class="text-center font-big m0">
+            Select an existing venue or add a new one, don't forget to add the facilities!
+          </p>
+        </div>
+
+        <div class="form-group">
+          <div class="">
+            Existing venues
+          </div>
+          <div class="">
+            Add venue
+          </div>
+
+          <!-- Add location -->
+          <form name="venueForm" ng-submit="userEditClass.addClassVenue($event)" class="form-horizontal" novalidate>
+
+              <div class="form-group">
+                <label class="control-label">Name</label>
+                <div>
+                  <input type="text" name="name" ng-model="userEditClass.venueData.title" class="form-control form-full" placeholder="e.g. Home, Sydney Park, Rockdale Bakery" required>
+
+                  <p class="panel-error p1 text-center font-bold" ng-show="venueForm.name.$error.required && !venueForm.name.$pristine">Venue name is required</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label">Capacity</label>
+                <div>
+                  <input type="number" name="capacity" ng-model="userEditClass.venueData.capacity" class="form-control form-full" placeholder="What capacity is your venue?" required>
+
+                  <p class="panel-error p1 text-center font-bold" ng-show="venueForm.capacity.$error.required && !venueForm.capacity.$pristine">Venue capacity is required</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" ng-disabled="venueForm.$invalid">
+                  <span class="text">Add location</span>
+                  <span class="text-success">Location added</span>
+                  <span class="text-fail">Location add failed</span>
+                </button>
+              </div>
+
+          </form>
+
+        </div>
+
+      </div>
 
 
     </uib-tab>

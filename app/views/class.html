@@ -1,4 +1,4 @@
-<section class="hero" style="background-image: url('/images/outside-yoga.jpg')">
+<section class="hero" style="background-image: url('{{imageUrl}}{{class.classImage.src}}')">
     <div class="container clear position-relative">
 
         <div class="class-teacher">
@@ -197,10 +197,10 @@
         <div class="class-content booking-padding">
 
             <h2 class="mt0">Photos</h2>
-            <div class="class-photos layout-{{class.images.length}}">
+            <div class="class-photos layout-{{class.classImages.length}}">
 
               <ng-image-gallery
-                images="class.images"
+                images="class.classImages"
                 thumbnails="true"
                 inline="false"
                 img-bubbles="false"

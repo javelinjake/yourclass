@@ -11,35 +11,6 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
 
 	vm.rating = 4;
 
-	// TODO - Images from API
-	vm.images = [
-	    {
-	        title : 'This is amazing photo of nature',
-	        alt : 'amazing nature photo',
-	        url : '/images/eggs.jpg',
-	    },
-			{
-	        title : 'This is amazing photo of nature',
-	        alt : 'amazing nature photo',
-	        url : '/images/eggs-2.jpg',
-	    },
-			{
-	        title : 'This is amazing photo of nature',
-	        alt : 'amazing nature photo',
-	        url : '/images/eggs-3.jpg',
-	    },
-			{
-	        title : 'This is amazing photo of nature',
-	        alt : 'amazing nature photo',
-	        url : '/images/eggs-3.jpg',
-	    },
-			{
-	        title : 'This is amazing photo of nature',
-	        alt : 'amazing nature photo',
-	        url : '/images/eggs-2.jpg',
-	    }
-	];
-
   /* Get booking saved data from cookies */
   var savedBookingData = $cookies.getObject('booking');
   $log.warn('savedBookingData: ', savedBookingData);
@@ -115,6 +86,28 @@ function ClassCtrl($http, $rootScope, $scope, $log, $cookies, $location, $filter
     .success((response) => {
       // Create class data
   		vm.class = response.data;
+
+			vm.classImageObject = vm.class.photos;
+			vm.classImage = "";
+
+			vm.classImages = [];
+
+			// Get class cover image
+			for (var key in vm.classImageObject) {
+			  if (vm.classImageObject.hasOwnProperty(key)) {
+					if (vm.classImageObject[key].isMain == 1) {
+						vm.classImage = vm.classImageObject[key];
+					}
+
+					// Create new object for images
+					var imageItem = vm.classImageObject[key];
+
+					vm.classImages.push({
+        		alt : vm.class.title + ' - Image: ' + imageItem.id,
+        		url : $rootScope.imageUrl + imageItem.src
+					});
+			  }
+			}
 
       // Update booking block with class ID, title and venue
       vm.booking.class.id      = vm.class.id || null;

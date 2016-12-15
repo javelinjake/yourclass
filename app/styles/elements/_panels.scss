@@ -269,6 +269,10 @@
 .panel-blue {
   background-color: $brand-blue;
 }
+.panel-error {
+  background-color: $brand-pink;
+  color: $white;
+}
 .panel-primary {
   @include panel-variant($panel-primary-border, $panel-primary-text, $panel-primary-heading-bg, $panel-primary-border);
 }

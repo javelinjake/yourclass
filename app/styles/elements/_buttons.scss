@@ -58,9 +58,23 @@
   }
 
   .text {
+    display: block;
     @include translate(0, 0);
     @include opacity(1);
     visibility: visible;
+    @include transition(all ease-in-out .2s);
+  }
+  .text-success,
+  .text-fail {
+    line-height: 1;
+    display: block;
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 100%;
+    @include translate(0, 40px);
+    @include opacity(0);
+    visibility: hidden;
     @include transition(all ease-in-out .2s);
   }
   &:before {

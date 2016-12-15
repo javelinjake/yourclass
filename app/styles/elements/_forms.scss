@@ -179,6 +179,8 @@ output {
   // [converter] extracted textarea& to textarea.form-control
 }
 
+
+
 .pass-meter {
 	width: 100%;
   &.hidden {
@@ -241,6 +243,8 @@ output {
 // Reset height for `textarea`s
 textarea.form-control {
   height: auto;
+  line-height: 1.5;
+  padding: 16px;
 }
 
 
