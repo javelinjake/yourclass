@@ -17,6 +17,7 @@ import 'ng-file-upload';
 import 'ng-image-gallery';
 import 'angular-breadcrumb';
 import 'angular-input-stars';
+import 'angular-ui-mask';
 //import 'ng-password-meter';
 import './templates';
 import './filters';
@@ -40,6 +41,7 @@ const requires = [
   'thatisuday.ng-image-gallery',
   'ncy-angular-breadcrumb',
   'angular-input-stars',
+  'ui.mask',
   // 'ngPasswordMeter',
   'app.filters',
   'app.controllers',
