@@ -314,6 +314,15 @@
               </div>
 
               <div class="form-group">
+                <label class="control-label">Location</label>
+                <div>
+                  <input type="text" name="location" class="form-control form-full" placeholder="Start typing venue address" ng-autocomplete ng-model="userEditClass.venueLocation" options="userEditClass.venueLocationOptions" details="userEditClass.venueLocationDetails" required>
+
+                  <p class="panel-error p1 text-center font-bold" ng-show="venueForm.location.$error.required && !venueForm.location.$pristine">Venue name is required</p>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label class="control-label">Capacity</label>
                 <div>
                   <input type="number" name="capacity" ng-model="userEditClass.venueData.capacity" class="form-control form-full" placeholder="What capacity is your venue?" required>

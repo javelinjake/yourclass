@@ -233,6 +233,54 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
           });
       }
 
+
+      // Venue
+      // Get venues
+      var venueGetData = {
+        'teacherId': $rootScope.userData.id
+      };
+
+      $http.get($rootScope.apiUrl + 'venues/list', venueGetData).success((data) => {
+        vm.venueData = data.data;
+      }).error((err, status) => {
+
+      });
+
+      $http.get($rootScope.apiUrl + 'venues/features').success((data) => {
+        vm.venueFeatureData = data.data;
+      }).error((err, status) => {
+
+      });
+
+      // Venue location options
+      vm.venueLocationOptions = {
+        country: 'au'
+      }
+
+      // Add class details
+      vm.addClassVenue = function(e) {
+
+        var venueData = {
+          'title': vm.venueData.title,
+          'teacherId': $rootScope.userData.id,
+          'capacity': vm.venueData.capacity,
+          'featureIds': [1,2,3],
+          'address': vm.venueLocation,
+          'lat': vm.venueLocationDetails.geometry.location.lat(),
+          'lon': vm.venueLocationDetails.geometry.location.lng()
+        };
+
+        $http.post($rootScope.apiUrl + 'venues/create', venueData).success((data) => {
+          angular.element(e.target).addClass('ng-success');
+          $timeout(function() {
+            angular.element(e.target).removeClass('ng-success ng-submitted');
+          }, 5000);
+        }).error((err, status) => {
+          angular.element(e.target).addClass('ng-fail');
+        });
+      }
+
+
     vm.options = {
       minDate: new Date(),
       showWeeks: false

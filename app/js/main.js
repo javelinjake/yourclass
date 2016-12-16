@@ -16,7 +16,9 @@ import 'angular-cookies';
 import 'ng-file-upload';
 import 'ng-image-gallery';
 import 'angular-breadcrumb';
-import 'angular-input-stars';
+import 'ng-autocomplete';
+import 'angular-multi-select';
+//import 'angular-input-stars';
 import 'angular-ui-mask';
 //import 'ng-password-meter';
 import './templates';
@@ -40,7 +42,9 @@ const requires = [
   'templates',
   'thatisuday.ng-image-gallery',
   'ncy-angular-breadcrumb',
-  'angular-input-stars',
+  'ngAutocomplete',
+  'angular-multi-select',
+  // 'angular-input-stars',
   'ui.mask',
   // 'ngPasswordMeter',
   'app.filters',
