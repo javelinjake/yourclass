@@ -332,6 +332,24 @@
               </div>
 
               <div class="form-group">
+                <label class="control-label">Features</label>
+                <div ng-repeat="feature in userEditClass.venueFeatureData">
+                  <label class="checkbox" for="{{feature.id}}">{{feature.title}}</label>
+                  <!-- <input type="checkbox" ng-model="userEditClass.venueFeatures[feature.id]" name="group" id="{{feature.id}}" /> -->
+                  <input
+                    type="checkbox"
+                    name="selectedFeatures[]"
+                    value="{{feature.id}}"
+                    ng-checked="userEditClass.selection.indexOf(feature.id) > -1"
+                    ng-click="userEditClass.toggleSelection(feature.id)" id="{{feature.id}}">
+                </div>
+              </div>
+
+              <button type="button" name="button" ng-click="userEditClass.featureTest()">Feature Test</button>
+
+              {{userEditClass.venueFeatures | json}}
+
+              <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block" ng-disabled="venueForm.$invalid">
                   <span class="text">Add location</span>
                   <span class="text-success">Location added</span>

@@ -17,7 +17,6 @@ import 'ng-file-upload';
 import 'ng-image-gallery';
 import 'angular-breadcrumb';
 import 'ng-autocomplete';
-import 'angular-multi-select';
 //import 'angular-input-stars';
 import 'angular-ui-mask';
 //import 'ng-password-meter';
@@ -43,7 +42,6 @@ const requires = [
   'thatisuday.ng-image-gallery',
   'ncy-angular-breadcrumb',
   'ngAutocomplete',
-  'angular-multi-select',
   // 'angular-input-stars',
   'ui.mask',
   // 'ngPasswordMeter',

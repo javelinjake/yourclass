@@ -242,20 +242,29 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
 
       $http.get($rootScope.apiUrl + 'venues/list', venueGetData).success((data) => {
         vm.venueData = data.data;
-      }).error((err, status) => {
-
       });
 
       $http.get($rootScope.apiUrl + 'venues/features').success((data) => {
         vm.venueFeatureData = data.data;
-      }).error((err, status) => {
-
       });
 
       // Venue location options
       vm.venueLocationOptions = {
         country: 'au'
       }
+
+      vm.featureList = [];
+
+      vm.toggleSelection = function toggleSelection(feature) {
+        var idx = vm.featureList.indexOf(feature);
+        if (idx > -1) {
+          vm.featureList.splice(idx, 1);
+        }
+        else {
+          vm.featureList.push(feature);
+        }
+        $log.info(vm.featureList);
+      };
 
       // Add class details
       vm.addClassVenue = function(e) {
@@ -264,7 +273,7 @@ function UserEditClassCtrl($rootScope, $scope, $http, $log, getEditClassAlias, $
           'title': vm.venueData.title,
           'teacherId': $rootScope.userData.id,
           'capacity': vm.venueData.capacity,
-          'featureIds': [1,2,3],
+          'featureIds': vm.featureList,
           'address': vm.venueLocation,
           'lat': vm.venueLocationDetails.geometry.location.lat(),
           'lon': vm.venueLocationDetails.geometry.location.lng()
